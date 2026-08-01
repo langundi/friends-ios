@@ -25,9 +25,14 @@ struct ProfileScreen: View {
                         .font(.title2)
                         .fontWeight(.semibold)
                     
-                    Text("5 Friends")
-                        .font(.title2)
-                        .fontWeight(.semibold)
+                    Button {
+                        router.push(to: .friendList)
+                    } label: {
+                        Text("5 Friends")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    }
+                    .buttonStyle(.plain)
                 }
                 
                 Spacer(minLength: 0)

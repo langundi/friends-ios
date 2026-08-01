@@ -13,6 +13,7 @@ enum ScreenEnum: Hashable {
     case timeline
     case notification
     case profile
+    case friendList
 }
 
 protocol Router {
@@ -52,6 +53,8 @@ final class AppRouter: Router {
             NotificationScreen()
         case .profile:
             ProfileScreen()
+        case .friendList:
+            FriendListScreen()
         }
     }
 }
