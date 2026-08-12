@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct SignInScreen: View {
-    @Environment(AppRouter.self) var router
-    @State private var viewmodel = AuthViewModel()
+    @Environment(AuthRouter.self) var router
+    @Environment(AuthViewModel.self) var viewModel
+    
     @State private var email: String = ""
     @State private var password: String = ""
     
@@ -45,7 +46,7 @@ struct SignInScreen: View {
             Section {
                 Button {
                     Task {
-                        await viewmodel.loginUser(email: email, password: password)
+                        await viewModel.loginUser(email: email, password: password)
                     }
                 } label: {
                     Text("Sign In")
@@ -65,7 +66,7 @@ struct SignInScreen: View {
             .listRowBackground(Color.clear)
         }
         .overlay(alignment: .center) {
-            if viewmodel.isLoading {
+            if viewModel.isLoading {
                 LoadingOverlay()
             }
         }

@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ProfileScreen: View {
     @Environment(AppRouter.self) var router
-    @State private var viewmodel = ProfileViewModel()
+    @State private var viewModel: ProfileViewModel
     
-    private var posts = 17
-    private var columns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 3)
+    private var columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 3)
+    
+    init(factory: ViewModelFactory) {
+        _viewModel = State(initialValue: factory.makeProfileViewModel())
+    }
     
     var body: some View {
         ScrollView {
@@ -20,19 +24,23 @@ struct ProfileScreen: View {
                 Circle()
                     .frame(maxWidth: 60, maxHeight: 60)
                 
-                HStack(alignment: .center, spacing: 16) {
-                    Text("\(posts) Posts")
-                        .font(.title2)
-                        .fontWeight(.semibold)
+                VStack(alignment: .leading, spacing: 12) {
+                    Text(viewModel.username)
+                        .font(.title3)
+                        .fontWeight(.medium)
                     
-                    Button {
-                        router.push(to: .friendList)
-                    } label: {
-                        Text("5 Friends")
-                            .font(.title2)
-                            .fontWeight(.semibold)
+                    HStack(alignment: .center, spacing: 32) {
+                        Text("\(viewModel.posts.count) Posts")
+                            .font(.title3)
+                        
+                        Button {
+                            router.push(to: .friendList)
+                        } label: {
+                            Text("5 Friends")
+                                .font(.title3)
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
                 
                 Spacer(minLength: 0)
@@ -43,26 +51,31 @@ struct ProfileScreen: View {
             LazyVGrid(
                 columns: columns,
                 alignment: .center,
-                spacing: 12
+                spacing: 8
             ) {
-                ForEach(0..<posts, id: \.self) { column in
-                    Rectangle()
+                ForEach(viewModel.posts) { post in
+                    KFImage(URL(string: post.imageURL))
+                        .resizable()
+                        .onSuccess { result in
+                            print("Image loaded from cache: \(result.cacheType)")
+                        }
+                        .onFailure { error in
+                            print("KF error: \(error)")
+                        }
                         .frame(maxWidth: .infinity)
                         .aspectRatio(1.0, contentMode: .fit)
-                        .foregroundStyle(.gray.opacity(0.15))
                 }
             }
-            .padding([.leading, .trailing])
+            .padding([.leading, .trailing], 8)
             .padding(.bottom, 16)
         }
         .scrollIndicators(.hidden)
-        .navigationTitle("@username")
         .toolbarTitleDisplayMode(.inlineLarge)
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button {
                     Task {
-                        await viewmodel.signOutUser()
+                        await viewModel.signOutUser()
                     }
                 } label: {
                     Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.forward")
@@ -70,12 +83,23 @@ struct ProfileScreen: View {
                 }
             }
         }
+        .overlay(alignment: .center) {
+            if viewModel.isLoading {
+                LoadingOverlay()
+            }
+        }
+        .task {
+            await viewModel.loadProfile()
+        }
+        .refreshable {
+            await viewModel.refreshProfile()
+        }
     }
 }
 
 #Preview {
     NavigationStack {
-        ProfileScreen()
+        ProfileScreen(factory: ViewModelFactory())
     }
     .withPreviewEnvironments()
 }

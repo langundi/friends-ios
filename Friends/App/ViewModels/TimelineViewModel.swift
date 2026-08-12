@@ -9,16 +9,18 @@ import Foundation
 
 @Observable
 final class TimelineViewModel {
-    private let authService = AuthService.shared
-    private let timelineService = TimelineService.shared
-    private let alertManager = AlertManager.shared
-    private let defaults = UserDefaults.standard
+    private let timelineService: TimelineService
     
-    var posts: [PostResponse] = []
+    init(timelineService: TimelineService) {
+        self.timelineService = timelineService
+    }
+    
     var isLoading: Bool = false
+    var posts: [PostResponse] = []
+    
     var isLoggedIn: Bool {
-        get { defaults.bool(forKey: Constants.isUserLoggedIn) }
-        set { defaults.set(newValue, forKey: Constants.isUserLoggedIn) }
+        get { UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) }
+        set { UserDefaults.standard.set(newValue, forKey: Constants.isUserLoggedIn) }
     }
     
     func getTimeline() async {
@@ -30,12 +32,12 @@ final class TimelineViewModel {
         do {
             posts = try await timelineService.getTimeline()
         } catch let networkError as NetworkError {
-            alertManager.showAlert(
+            AlertManager.shared.showAlert(
                 title: "An error occured",
                 message: networkError.message
             )
         } catch {
-            alertManager.showAlert(
+            AlertManager.shared.showAlert(
                 title: "An error occured",
                 message: error.localizedDescription
             )
@@ -45,7 +47,7 @@ final class TimelineViewModel {
 
 extension TimelineViewModel {
     static var mock: TimelineViewModel {
-        let vm = TimelineViewModel()
+        let vm = TimelineViewModel(timelineService: TimelineService(client: APIClient.shared))
         vm.posts = [
             PostResponse(
                 id: 1,
@@ -74,14 +76,14 @@ extension TimelineViewModel {
     }
     
     static var mockEmpty: TimelineViewModel {
-        let vm = TimelineViewModel()
+        let vm = TimelineViewModel(timelineService: TimelineService(client: APIClient.shared))
         vm.posts = []
         vm.isLoading = false
         return vm
     }
     
     static var mockLoading: TimelineViewModel {
-        let vm = TimelineViewModel()
+        let vm = TimelineViewModel(timelineService: TimelineService(client: APIClient.shared))
         vm.isLoading = true
         return vm
     }

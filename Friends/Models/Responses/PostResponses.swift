@@ -7,7 +7,7 @@
 
 import Foundation
 
-nonisolated struct PostResponse: Identifiable, Decodable {
+struct PostResponse: Identifiable, Decodable {
     let id: Int
     let userID: Int
     let caption: String
@@ -19,5 +19,17 @@ nonisolated struct PostResponse: Identifiable, Decodable {
         case userID = "user_id"
         case imageURL = "image_url"
         case createdAt = "created_at"
+    }
+}
+
+struct UploadImageResponse: Decodable {
+    let uploadUrl: String
+    let publicUrl: String
+    let objectKey: String
+    
+    enum CodingKeys: String, CodingKey {
+        case uploadUrl = "upload_url"
+        case publicUrl = "public_url"
+        case objectKey = "object_key"
     }
 }

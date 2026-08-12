@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct SignUpScreen: View {
-    @Environment(AppRouter.self) var router
-    @Environment(AlertManager.self) var alert
-    @State private var viewmodel = AuthViewModel()
+    @Environment(AuthRouter.self) var router
+    @Environment(AuthViewModel.self) var viewmodel
+    
     @State private var username: String = ""
     @State private var email: String = ""
     @State private var password: String = ""

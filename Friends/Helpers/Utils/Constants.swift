@@ -14,6 +14,6 @@ nonisolated struct Constants {
     
     // MARK: - Keychains
     static let accessToken = "accessToken"
-    static nonisolated let refreshToken = "refreshToken"
+    static let refreshToken = "refreshToken"
     
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 struct APIClient {
     static let shared = APIClient()
@@ -32,6 +33,24 @@ struct APIClient {
             _ = try await tokenManager.refreshToken()
             try await executeVoid(endpoint: endpoint)
         }
+    }
+    
+    func uploadImageWith(presignedUrl: String, imageData: Data) async throws {
+        guard let url = URL(string: presignedUrl) else {
+            throw NetworkError.invalidURL
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = HTTPMethod.put.rawValue
+        request.setValue("image/jpeg", forHTTPHeaderField: "Content-Type")
+        
+        let (_, response) = try await URLSession.shared.upload(for: request, from: imageData)
+        
+        guard let response = response as? HTTPURLResponse else {
+            throw NetworkError.unknown
+        }
+        
+        print("Upload Status: \(response.statusCode)")
     }
     
     private func execute<T: Decodable>(endpoint: Endpoint) async throws -> T {

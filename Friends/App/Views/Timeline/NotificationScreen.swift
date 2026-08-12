@@ -9,7 +9,11 @@ import SwiftUI
 
 struct NotificationScreen: View {
     @Environment(AppRouter.self) var router
-    @State private var friendRequestCount = 0
+    @State private var viewModel: NotificationViewModel
+    
+    init(factory: ViewModelFactory) {
+        _viewModel = State(initialValue: factory.makeNotificationViewModel())
+    }
     
     var body: some View {
         Group {
@@ -42,23 +46,20 @@ struct NotificationScreen: View {
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button {
-                    friendRequestCount += 1
+                    router.push(to: .friendRequest)
                 } label: {
                     Label("Friend Request", systemImage: "person.badge.plus")
                         .labelStyle(.iconOnly)
                 }
-                .badge(friendRequestCount)
+                .badge(viewModel.friendRequest)
             }
-        }
-        .task {
-
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        NotificationScreen()
+        NotificationScreen(factory: ViewModelFactory())
     }
     .withPreviewEnvironments()
 }

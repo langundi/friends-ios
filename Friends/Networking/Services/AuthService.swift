@@ -8,10 +8,12 @@
 import Foundation
 
 final class AuthService {
-    static let shared = AuthService()
-    private let client = APIClient.shared
     
-    init() {}
+    private let client: APIClient
+    
+    init(client: APIClient) {
+        self.client = client
+    }
     
     func registerUser(user: RegisterRequest) async throws -> RegisterResponse {
         return try await client.request(endpoint: AuthEndpoint.register(user: user))

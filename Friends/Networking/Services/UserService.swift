@@ -1,0 +1,28 @@
+//
+//  UserService.swift
+//  Friends
+//
+//  Created by Ziqa on 11/08/26.
+//
+
+import Foundation
+
+final class UserService {
+    private let client: APIClient
+    
+    init(client: APIClient) {
+        self.client = client
+    }
+    
+    func getMyProfile() async throws -> UserResponse {
+        let response: UserResponse
+        response = try await client.request(endpoint: UserEndpoint.myProfile)
+        return response
+    }
+    
+    func getFriendProfile(id: Int) async throws -> UserResponse {
+        let response: UserResponse
+        response = try await client.request(endpoint: UserEndpoint.friendProfile(id: id))
+        return response
+    }
+}

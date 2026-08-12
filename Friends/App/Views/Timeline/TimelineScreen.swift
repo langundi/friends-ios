@@ -11,15 +11,19 @@ import Kingfisher
 struct TimelineScreen: View {
     @AppStorage(Constants.isUserLoggedIn) var isLoggedIn: Bool = true
     @Environment(AppRouter.self) var router
-    @State private var viewmodel = TimelineViewModel()
+    @State private var viewModel: TimelineViewModel
+    
+    init(factory: ViewModelFactory) {
+        _viewModel = State(initialValue: factory.makeTimelineViewModel())
+    }
     
     var body: some View {
         Group {
-            if viewmodel.isLoading {
+            if viewModel.isLoading {
                 LoadingOverlay()
             } else {
                 TimelineStackView()
-                    .environment(viewmodel)
+                    .environment(viewModel)
             }
         }
         .navigationTitle("Timeline")
@@ -34,7 +38,7 @@ struct TimelineScreen: View {
                 }
                 
                 Button {
-
+                    router.push(to: .newPost)
                 } label: {
                     Label("New Post", systemImage: "plus")
                         .labelStyle(.iconOnly)
@@ -42,28 +46,13 @@ struct TimelineScreen: View {
             }
         }
         .overlay(alignment: .center) {
-            if viewmodel.isLoading {
+            if viewModel.isLoading {
                 LoadingOverlay()
             }
         }
         .task {
-            await viewmodel.getTimeline()
+            await viewModel.getTimeline()
         }
-    }
-    
-    private func printTokens() {
-        guard let accessToken: String =
-                try? Keychain.get(Constants.accessToken) else { return }
-        guard let refreshToken: String =
-                try? Keychain.get(Constants.refreshToken) else { return }
-        
-        print("Access Token: \(accessToken)")
-        print("Refresh Token: \(refreshToken)")
-    }
-    
-    private func deleteTokens() {
-        _ = Keychain.delete(Constants.accessToken)
-        _ = Keychain.delete(Constants.refreshToken)
     }
 }
 
@@ -75,7 +64,7 @@ private struct TimelineStackView: View {
             ContentUnavailableView(
                 "Nothing Here",
                 systemImage: "photo.on.rectangle.angled",
-                description: Text("Upload or follow friends to see their posts.")
+                description: Text("Follow friends to see their posts.")
             )
         } else {
             ScrollView(.vertical) {
@@ -103,7 +92,7 @@ private struct TimelineStackView: View {
 
 #Preview {
     NavigationStack {
-        TimelineScreen()
+        TimelineScreen(factory: ViewModelFactory())
     }
     .withPreviewEnvironments()
 }

@@ -8,17 +8,40 @@
 import SwiftUI
 
 enum ScreenEnum: Hashable {
-    case signUp
     case signIn
+    case signUp
     case timeline
+    case newPost
     case notification
+    case friendRequest
     case profile
     case friendList
+    
+    @ViewBuilder
+    func build(factory: ViewModelFactory) -> some View {
+        switch self {
+        case .signIn:
+            SignInScreen()
+        case .signUp:
+            SignUpScreen()
+        case .timeline:
+            TimelineScreen(factory: factory)
+        case .newPost:
+            NewPostScreen(factory: factory)
+        case .notification:
+            NotificationScreen(factory: factory)
+        case .friendRequest:
+            FriendRequestScreen(factory: factory)
+        case .profile:
+            ProfileScreen(factory: factory)
+        case .friendList:
+            FriendListScreen(factory: factory)
+        }
+    }
 }
 
 protocol Router {
     var path: NavigationPath { get set }
-    
     func push(to screen: ScreenEnum)
     func pop()
     func popToRoot()
@@ -39,22 +62,21 @@ final class AppRouter: Router {
     func popToRoot() {
         path.removeLast(path.count)
     }
+}
+
+@Observable
+final class AuthRouter: Router {
+    var path = NavigationPath()
     
-    @ViewBuilder
-    func build(_ screen: ScreenEnum) -> some View {
-        switch screen {
-        case .signUp:
-            SignUpScreen()
-        case .signIn:
-            SignInScreen()
-        case .timeline:
-            TimelineScreen()
-        case .notification:
-            NotificationScreen()
-        case .profile:
-            ProfileScreen()
-        case .friendList:
-            FriendListScreen()
-        }
+    func push(to screen: ScreenEnum) {
+        path.append(screen)
+    }
+    
+    func pop() {
+        path.removeLast()
+    }
+    
+    func popToRoot() {
+        path.removeLast(path.count)
     }
 }

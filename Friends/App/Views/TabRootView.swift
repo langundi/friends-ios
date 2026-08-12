@@ -8,34 +8,41 @@
 import SwiftUI
 
 struct TabRootView: View {
-    @Environment(AppRouter.self) var router
+    @State private var timelineRouter = AppRouter()
+    @State private var profileRouter = AppRouter()
+    
+    let factory: ViewModelFactory
+    
+    init(factory: ViewModelFactory) {
+        self.factory = factory
+    }
     
     var body: some View {
-        @Bindable var router = router
-        
         TabView {
             Tab("", systemImage: "house") {
-                NavigationStack(path: $router.path) {
-                    router.build(.timeline)
+                NavigationStack(path: $timelineRouter.path) {
+                    ScreenEnum.timeline.build(factory: factory)
                         .navigationDestination(for: ScreenEnum.self) { screen in
-                            router.build(screen)
+                            screen.build(factory: factory)
                         }
                 }
+                .environment(timelineRouter)
             }
             
             Tab("", systemImage: "person") {
-                NavigationStack(path: $router.path) {
-                    router.build(.profile)
+                NavigationStack(path: $profileRouter.path) {
+                    ScreenEnum.profile.build(factory: factory)
                         .navigationDestination(for: ScreenEnum.self) { screen in
-                            router.build(screen)
+                            screen.build(factory: factory)
                         }
                 }
+                .environment(profileRouter)
             }
         }
     }
 }
 
 #Preview {
-    TabRootView()
+    TabRootView(factory: ViewModelFactory())
         .withPreviewEnvironments()
 }

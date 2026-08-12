@@ -8,10 +8,11 @@
 import Foundation
 
 final class TimelineService {
-    static let shared = TimelineService()
-    private let client = APIClient.shared
+    private let client: APIClient
     
-    private init() { }
+    init(client: APIClient) {
+        self.client = client
+    }
     
     func getTimeline() async throws -> [PostResponse] {
         let response: [PostResponse]

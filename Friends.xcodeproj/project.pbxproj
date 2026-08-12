@@ -16,11 +16,28 @@
 		810EE02A301A54E5005FED56 /* TimelineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810EE029301A54E5005FED56 /* TimelineService.swift */; };
 		810EE02C301A5539005FED56 /* PostResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810EE02B301A5539005FED56 /* PostResponses.swift */; };
 		810EE02E301A5CE1005FED56 /* NotificationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810EE02D301A5CE1005FED56 /* NotificationScreen.swift */; };
+		811B9477302C13F500C3F545 /* NewPostScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811B9476302C13F500C3F545 /* NewPostScreen.swift */; };
+		811B9479302C23C600C3F545 /* NewPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811B9478302C23C600C3F545 /* NewPostViewModel.swift */; };
+		811B947B302C7A2A00C3F545 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811B947A302C7A2A00C3F545 /* UIImage+Extensions.swift */; };
+		811E6053302B293800542203 /* PostEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E6052302B293800542203 /* PostEndpoint.swift */; };
+		811E6055302B2D7900542203 /* PostRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E6054302B2D7900542203 /* PostRequests.swift */; };
+		811E6057302B2E4A00542203 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E6056302B2E4A00542203 /* PostService.swift */; };
+		811E6059302B364700542203 /* UserEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E6058302B364700542203 /* UserEndpoint.swift */; };
+		811E605B302B372300542203 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E605A302B372300542203 /* UserService.swift */; };
+		811E605D302B375C00542203 /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E605C302B375C00542203 /* UserResponse.swift */; };
+		811E6061302B757200542203 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E6060302B757200542203 /* CameraManager.swift */; };
+		811E6063302B7E2B00542203 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E6062302B7E2B00542203 /* ImagePicker.swift */; };
 		815DCAA6301D9A4200AD470A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 815DCAA5301D9A4200AD470A /* Kingfisher */; };
 		815DCAA8301DA16F00AD470A /* TabRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815DCAA7301DA16F00AD470A /* TabRootView.swift */; };
 		815DCAAB301DA41E00AD470A /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815DCAAA301DA41E00AD470A /* ProfileScreen.swift */; };
 		815DCAAD301DA4A100AD470A /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815DCAAC301DA4A100AD470A /* ProfileViewModel.swift */; };
 		815DCAAF301DADAC00AD470A /* FriendListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815DCAAE301DADAC00AD470A /* FriendListScreen.swift */; };
+		815DCAB1301DC3CE00AD470A /* FriendRequestScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815DCAB0301DC3CE00AD470A /* FriendRequestScreen.swift */; };
+		815DCAB3301DC54300AD470A /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815DCAB2301DC54300AD470A /* NotificationViewModel.swift */; };
+		81618158301F256200A2DDA0 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81618157301F256200A2DDA0 /* DIContainer.swift */; };
+		81618166301F367000A2DDA0 /* AuthRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81618165301F367000A2DDA0 /* AuthRootView.swift */; };
+		8161816D301F4A8D00A2DDA0 /* FriendRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161816C301F4A8D00A2DDA0 /* FriendRequestViewModel.swift */; };
+		8161816F301F4C1100A2DDA0 /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161816E301F4C1100A2DDA0 /* FriendListViewModel.swift */; };
 		818F24F83018B0BC00678EF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 818F24F43018B0BC00678EF5 /* Assets.xcassets */; };
 		818F24F93018B0BC00678EF5 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818F24F13018B0BC00678EF5 /* Router.swift */; };
 		818F24FA3018B0BC00678EF5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818F24F53018B0BC00678EF5 /* ContentView.swift */; };
@@ -53,10 +70,27 @@
 		810EE029301A54E5005FED56 /* TimelineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineService.swift; sourceTree = "<group>"; };
 		810EE02B301A5539005FED56 /* PostResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostResponses.swift; sourceTree = "<group>"; };
 		810EE02D301A5CE1005FED56 /* NotificationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScreen.swift; sourceTree = "<group>"; };
+		811B9476302C13F500C3F545 /* NewPostScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostScreen.swift; sourceTree = "<group>"; };
+		811B9478302C23C600C3F545 /* NewPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewModel.swift; sourceTree = "<group>"; };
+		811B947A302C7A2A00C3F545 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
+		811E6052302B293800542203 /* PostEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEndpoint.swift; sourceTree = "<group>"; };
+		811E6054302B2D7900542203 /* PostRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRequests.swift; sourceTree = "<group>"; };
+		811E6056302B2E4A00542203 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
+		811E6058302B364700542203 /* UserEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEndpoint.swift; sourceTree = "<group>"; };
+		811E605A302B372300542203 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		811E605C302B375C00542203 /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
+		811E6060302B757200542203 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		811E6062302B7E2B00542203 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		815DCAA7301DA16F00AD470A /* TabRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabRootView.swift; sourceTree = "<group>"; };
 		815DCAAA301DA41E00AD470A /* ProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		815DCAAC301DA4A100AD470A /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		815DCAAE301DADAC00AD470A /* FriendListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListScreen.swift; sourceTree = "<group>"; };
+		815DCAB0301DC3CE00AD470A /* FriendRequestScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestScreen.swift; sourceTree = "<group>"; };
+		815DCAB2301DC54300AD470A /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
+		81618157301F256200A2DDA0 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
+		81618165301F367000A2DDA0 /* AuthRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRootView.swift; sourceTree = "<group>"; };
+		8161816C301F4A8D00A2DDA0 /* FriendRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestViewModel.swift; sourceTree = "<group>"; };
+		8161816E301F4C1100A2DDA0 /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		818F24C73018AFB500678EF5 /* Friends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Friends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		818F24F13018B0BC00678EF5 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		818F24F43018B0BC00678EF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -124,8 +158,29 @@
 			children = (
 				818F25243018BAED00678EF5 /* TimelineScreen.swift */,
 				810EE02D301A5CE1005FED56 /* NotificationScreen.swift */,
+				815DCAB0301DC3CE00AD470A /* FriendRequestScreen.swift */,
 			);
 			path = Timeline;
+			sourceTree = "<group>";
+		};
+		811E605E302B751C00542203 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				811E6060302B757200542203 /* CameraManager.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		811E605F302B755800542203 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				818F250D3018B44400678EF5 /* AuthService.swift */,
+				810EE029301A54E5005FED56 /* TimelineService.swift */,
+				818F25303018E05B00678EF5 /* TokenManager.swift */,
+				811E6056302B2E4A00542203 /* PostService.swift */,
+				811E605A302B372300542203 /* UserService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		815DCAA9301DA41600AD470A /* Profile */ = {
@@ -135,6 +190,14 @@
 				815DCAAE301DADAC00AD470A /* FriendListScreen.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		81618149301F13DA00A2DDA0 /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				81618157301F256200A2DDA0 /* DIContainer.swift */,
+			);
+			path = DI;
 			sourceTree = "<group>";
 		};
 		818F24BE3018AFB500678EF5 = {
@@ -164,8 +227,8 @@
 		818F24F33018B0BC00678EF5 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				811E605F302B755800542203 /* Services */,
 				818F25263018BB1900678EF5 /* Endpoints */,
-				818F250C3018B43900678EF5 /* Services */,
 				818F25083018B3F600678EF5 /* NetworkError.swift */,
 				818F250A3018B41400678EF5 /* APIClient.swift */,
 			);
@@ -178,10 +241,12 @@
 				818F252B3018BBA900678EF5 /* Info.plist */,
 				818F24F43018B0BC00678EF5 /* Assets.xcassets */,
 				818F24FF3018B14500678EF5 /* App */,
+				811E605E302B751C00542203 /* Core */,
+				81618149301F13DA00A2DDA0 /* DI */,
+				818F25133018B48100678EF5 /* Helpers */,
 				818F25163018B4D700678EF5 /* Models */,
 				818F24F23018B0BC00678EF5 /* Navigation */,
 				818F24F33018B0BC00678EF5 /* Networking */,
-				818F25133018B48100678EF5 /* Helpers */,
 			);
 			path = Friends;
 			sourceTree = "<group>";
@@ -201,11 +266,13 @@
 		818F25003018B21B00678EF5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				81D20B093023191D00F44505 /* NewPost */,
 				815DCAA9301DA41600AD470A /* Profile */,
 				810EE0263019F943005FED56 /* Timeline */,
 				810EE01F3019EB51005FED56 /* Components */,
 				810EE01E3019EB45005FED56 /* Auth */,
 				815DCAA7301DA16F00AD470A /* TabRootView.swift */,
+				81618165301F367000A2DDA0 /* AuthRootView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -216,18 +283,12 @@
 				818F25043018B2D000678EF5 /* AuthViewModel.swift */,
 				818F25063018B3C300678EF5 /* TimelineViewModel.swift */,
 				815DCAAC301DA4A100AD470A /* ProfileViewModel.swift */,
+				8161816E301F4C1100A2DDA0 /* FriendListViewModel.swift */,
+				815DCAB2301DC54300AD470A /* NotificationViewModel.swift */,
+				8161816C301F4A8D00A2DDA0 /* FriendRequestViewModel.swift */,
+				811B9478302C23C600C3F545 /* NewPostViewModel.swift */,
 			);
 			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		818F250C3018B43900678EF5 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				818F250D3018B44400678EF5 /* AuthService.swift */,
-				810EE029301A54E5005FED56 /* TimelineService.swift */,
-				818F25303018E05B00678EF5 /* TokenManager.swift */,
-			);
-			path = Services;
 			sourceTree = "<group>";
 		};
 		818F25133018B48100678EF5 /* Helpers */ = {
@@ -253,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				818F25193018B56E00678EF5 /* AuthRequests.swift */,
+				811E6054302B2D7900542203 /* PostRequests.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -263,6 +325,7 @@
 				818F251B3018B66A00678EF5 /* AuthResponses.swift */,
 				818F252C3018BBD700678EF5 /* JSONResponse.swift */,
 				810EE02B301A5539005FED56 /* PostResponses.swift */,
+				811E605C302B375C00542203 /* UserResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -280,6 +343,8 @@
 				818F25273018BB3200678EF5 /* Endpoint.swift */,
 				818F25293018BB4B00678EF5 /* AuthEndpoint.swift */,
 				810EE027301A5460005FED56 /* TimelineEndpoint.swift */,
+				811E6052302B293800542203 /* PostEndpoint.swift */,
+				811E6058302B364700542203 /* UserEndpoint.swift */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -288,6 +353,7 @@
 			isa = PBXGroup;
 			children = (
 				818F25333018EF7100678EF5 /* View+Extensions.swift */,
+				811B947A302C7A2A00C3F545 /* UIImage+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -300,6 +366,15 @@
 				810EE0223019EC0D005FED56 /* Constants.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		81D20B093023191D00F44505 /* NewPost */ = {
+			isa = PBXGroup;
+			children = (
+				811E6062302B7E2B00542203 /* ImagePicker.swift */,
+				811B9476302C13F500C3F545 /* NewPostScreen.swift */,
+			);
+			path = NewPost;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -378,30 +453,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				811B9477302C13F500C3F545 /* NewPostScreen.swift in Sources */,
 				810EE0253019F587005FED56 /* ToolbarButtonStyle.swift in Sources */,
 				818F25053018B2D000678EF5 /* AuthViewModel.swift in Sources */,
 				818F25093018B3F600678EF5 /* NetworkError.swift in Sources */,
+				815DCAB3301DC54300AD470A /* NotificationViewModel.swift in Sources */,
 				818F25073018B3C300678EF5 /* TimelineViewModel.swift in Sources */,
 				815DCAA8301DA16F00AD470A /* TabRootView.swift in Sources */,
 				815DCAAF301DADAC00AD470A /* FriendListScreen.swift in Sources */,
+				811E6055302B2D7900542203 /* PostRequests.swift in Sources */,
+				815DCAB1301DC3CE00AD470A /* FriendRequestScreen.swift in Sources */,
+				811B947B302C7A2A00C3F545 /* UIImage+Extensions.swift in Sources */,
 				818F250E3018B44400678EF5 /* AuthService.swift in Sources */,
 				810EE0123019D9D9005FED56 /* AlertManager.swift in Sources */,
+				8161816D301F4A8D00A2DDA0 /* FriendRequestViewModel.swift in Sources */,
 				810EE0233019EC0D005FED56 /* Constants.swift in Sources */,
+				811E6063302B7E2B00542203 /* ImagePicker.swift in Sources */,
 				818F252D3018BBD700678EF5 /* JSONResponse.swift in Sources */,
 				818F250B3018B41400678EF5 /* APIClient.swift in Sources */,
+				81618158301F256200A2DDA0 /* DIContainer.swift in Sources */,
+				81618166301F367000A2DDA0 /* AuthRootView.swift in Sources */,
 				818F24F93018B0BC00678EF5 /* Router.swift in Sources */,
+				811E605B302B372300542203 /* UserService.swift in Sources */,
 				818F25343018EF7100678EF5 /* View+Extensions.swift in Sources */,
 				815DCAAD301DA4A100AD470A /* ProfileViewModel.swift in Sources */,
 				810EE02C301A5539005FED56 /* PostResponses.swift in Sources */,
 				818F252A3018BB4B00678EF5 /* AuthEndpoint.swift in Sources */,
 				810EE01D3019E6E9005FED56 /* PrimaryButtonStyle.swift in Sources */,
+				811E6057302B2E4A00542203 /* PostService.swift in Sources */,
 				810EE0213019EB68005FED56 /* LoadingOverlay.swift in Sources */,
 				810EE02A301A54E5005FED56 /* TimelineService.swift in Sources */,
+				811B9479302C23C600C3F545 /* NewPostViewModel.swift in Sources */,
+				811E6059302B364700542203 /* UserEndpoint.swift in Sources */,
+				811E6053302B293800542203 /* PostEndpoint.swift in Sources */,
 				818F25233018BACF00678EF5 /* SignUpScreen.swift in Sources */,
 				818F25313018E05B00678EF5 /* TokenManager.swift in Sources */,
 				815DCAAB301DA41E00AD470A /* ProfileScreen.swift in Sources */,
 				818F25253018BAED00678EF5 /* TimelineScreen.swift in Sources */,
 				818F251A3018B56E00678EF5 /* AuthRequests.swift in Sources */,
+				811E6061302B757200542203 /* CameraManager.swift in Sources */,
 				818F25283018BB3200678EF5 /* Endpoint.swift in Sources */,
 				818F24FA3018B0BC00678EF5 /* ContentView.swift in Sources */,
 				818F25153018B4B200678EF5 /* KeychainWrapper.swift in Sources */,
@@ -409,7 +499,9 @@
 				818F25023018B23400678EF5 /* SignInScreen.swift in Sources */,
 				818F24FB3018B0BC00678EF5 /* FriendsApp.swift in Sources */,
 				818F251C3018B66A00678EF5 /* AuthResponses.swift in Sources */,
+				8161816F301F4C1100A2DDA0 /* FriendListViewModel.swift in Sources */,
 				810EE028301A5460005FED56 /* TimelineEndpoint.swift in Sources */,
+				811E605D302B375C00542203 /* UserResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,6 +640,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Friends/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to capture photos.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app uses the photo library to select photos.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -581,6 +675,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Friends/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to capture photos.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app uses the photo library to select photos.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

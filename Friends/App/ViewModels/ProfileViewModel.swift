@@ -9,21 +9,35 @@ import Foundation
 
 @Observable
 final class ProfileViewModel {
-    private let authService = AuthService.shared
-    private let alertManager = AlertManager.shared
-    private let defaults = UserDefaults.standard
+    private let authService: AuthService
+    private let userService: UserService
+    private let postService: PostService
     
-    var isLoading: Bool = false
-    var isLoggedIn: Bool {
-        get { defaults.bool(forKey: Constants.isUserLoggedIn) }
-        set { defaults.set(newValue, forKey: Constants.isUserLoggedIn) }
+    init(authService: AuthService, userService: UserService, postService: PostService) {
+        self.authService = authService
+        self.userService = userService
+        self.postService = postService
     }
     
+    // ViewModel Properties
+    var isLoading: Bool = false
+    private var hasLoaded = false
+    var username: String = ""
+    var posts: [PostResponse] = []
+    
+    // User Defaults
+    var isLoggedIn: Bool {
+        get { UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) }
+        set { UserDefaults.standard.set(newValue, forKey: Constants.isUserLoggedIn) }
+    }
+    
+    /// Signs out user and deletes access and refresh tokens from keychain.
     func signOutUser() async {
         isLoading = true
         defer { isLoading = false }
         
         do {
+            // Signs out user automatically when keychain is empty
             guard let refreshToken: String = try? Keychain.get(Constants.refreshToken) else {
                 isLoggedIn = false
                 throw NetworkError.sessionExpired
@@ -37,12 +51,68 @@ final class ProfileViewModel {
             
             isLoggedIn = false
         } catch let networkError as NetworkError {
-            alertManager.showAlert(
+            AlertManager.shared.showAlert(
                 title: "An error occured",
                 message: networkError.message
             )
         } catch {
-            alertManager.showAlert(
+            AlertManager.shared.showAlert(
+                title: "An error occured",
+                message: error.localizedDescription
+            )
+        }
+    }
+    
+    /// Load user profile and posts.
+    func loadProfile() async {
+        guard !hasLoaded else { return }
+        
+        isLoading = true
+        defer { isLoading = false }
+        
+        async let profile: () = getMyProfile()
+        async let posts: () = getMyPosts()
+        
+        _ = await (profile, posts)
+        
+        hasLoaded = true
+    }
+    
+    /// Re-fetches profile and posts.
+    func refreshProfile() async {
+        hasLoaded = false
+        await loadProfile()
+    }
+    
+    /// Fetch user profile.
+    private func getMyProfile() async {
+        do {
+            let user = try await userService.getMyProfile()
+            username = user.username
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(
+                title: "An error occured",
+                message: networkError.message
+            )
+        } catch {
+            AlertManager.shared.showAlert(
+                title: "An error occured",
+                message: error.localizedDescription
+            )
+        }
+    }
+    
+    /// Fetch user posts.
+    private func getMyPosts() async {
+        do {
+            posts = try await postService.getMyPosts()
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(
+                title: "An error occured",
+                message: networkError.message
+            )
+        } catch {
+            AlertManager.shared.showAlert(
                 title: "An error occured",
                 message: error.localizedDescription
             )

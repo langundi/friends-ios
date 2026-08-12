@@ -9,14 +9,16 @@ import Foundation
 
 @Observable
 final class AuthViewModel {
-    private let authService = AuthService.shared
-    private let alertManager = AlertManager.shared
-    private let defaults = UserDefaults.standard
+    private let authService: AuthService
+    
+    init(authService: AuthService) {
+        self.authService = authService
+    }
     
     var isLoading: Bool = false
     var isLoggedIn: Bool {
-        get { defaults.bool(forKey: Constants.isUserLoggedIn) }
-        set { defaults.set(newValue, forKey: Constants.isUserLoggedIn) }
+        get { UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) }
+        set { UserDefaults.standard.set(newValue, forKey: Constants.isUserLoggedIn) }
     }
     
     func registerUser(username: String, email: String, password: String) async {
@@ -29,12 +31,12 @@ final class AuthViewModel {
             let response = try await authService.registerUser(user: user)
             print(response)
         } catch let networkError as NetworkError {
-            alertManager.showAlert(
+            AlertManager.shared.showAlert(
                 title: "An error occured",
                 message: networkError.message
             )
         } catch {
-            alertManager.showAlert(
+            AlertManager.shared.showAlert(
                 title: "An error occured",
                 message: error.localizedDescription
             )
@@ -52,12 +54,12 @@ final class AuthViewModel {
             print(response)
             isLoggedIn = true
         } catch let networkError as NetworkError {
-            alertManager.showAlert(
+            AlertManager.shared.showAlert(
                 title: "An error occured",
                 message: networkError.message
             )
         } catch {
-            alertManager.showAlert(
+            AlertManager.shared.showAlert(
                 title: "An error occured",
                 message: error.localizedDescription
             )

@@ -9,7 +9,13 @@ import SwiftUI
 
 struct FriendListScreen: View {
     
+    @State private var viewModel: FriendListViewModel
+    
     private var friendCount = 10
+    
+    init(factory: ViewModelFactory) {
+        _viewModel = State(initialValue: factory.makeFriendListViewModel())
+    }
     
     var body: some View {
         List {
@@ -47,7 +53,7 @@ struct FriendListScreen: View {
 
 #Preview {
     NavigationStack {
-        FriendListScreen()
+        FriendListScreen(factory: ViewModelFactory())
             .withPreviewEnvironments()
     }
 }

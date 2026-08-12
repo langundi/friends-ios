@@ -8,26 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
-    @AppStorage(Constants.isUserLoggedIn) var isLoggedIn: Bool = false
-    @Environment(AppRouter.self) var router
     @Environment(AlertManager.self) var alert
+    @AppStorage(Constants.isUserLoggedIn) var isLoggedIn: Bool = false
+    @State private var authRouter = AuthRouter()
+    
+    private let factory = ViewModelFactory()
     
     var body: some View {
-        @Bindable var router = router
+        @Bindable var router = authRouter
         @Bindable var alert = alert
         
         Group {
             if isLoggedIn {
-                TabRootView()
+                TabRootView(factory: factory)
                 .transition(.opacity)
             } else {
-                NavigationStack(path: $router.path) {
-                    router.build(.signIn)
-                        .navigationDestination(for: ScreenEnum.self) { screen in
-                            router.build(screen)
-                        }
-                }
+                AuthRootView(factory: factory)
                 .transition(.opacity)
+                .environment(authRouter)
             }
         }
         .alert(alert.alertTitle, isPresented: $alert.isShowingAlert) {
@@ -48,6 +46,10 @@ struct ContentView: View {
         }
         .onChange(of: isLoggedIn) {
             router.popToRoot()
+        }
+        .onChange(of: router.path) { oldValue, newValue in
+            print("[DEBUG] prev route: \(oldValue)")
+            print("[DEBUG] new route: \(newValue)")
         }
         .animation(.snappy(duration: 0.25), value: isLoggedIn)
     }
