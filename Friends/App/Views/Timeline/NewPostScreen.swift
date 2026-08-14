@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NewPostScreen: View {
     @Environment(AppRouter.self) var router
-    @State private var viewModel: NewPostViewModel
+    @State private var viewModel: TimelineViewModel
     @State private var image: UIImage?
     @State private var caption: String = ""
     @State private var isShowingImagePicker: Bool = false
@@ -17,7 +17,7 @@ struct NewPostScreen: View {
     @FocusState private var isTextFieldFocused
     
     init(factory: ViewModelFactory) {
-        _viewModel = State(initialValue: factory.makeNewPostViewModel())
+        _viewModel = State(initialValue: factory.timelineViewModel)
     }
     
     private var isImageTaken: Bool {
@@ -68,7 +68,7 @@ struct NewPostScreen: View {
                     pickerSource = .library
                 } label: {
                     Label("Library", systemImage: "photo.fill")
-                        .labelStyle(.iconOnly)
+                        .padding(.horizontal)
                 }
                 .buttonStyle(ToolbarButtonStyle())
                 
@@ -76,7 +76,7 @@ struct NewPostScreen: View {
                     pickerSource = .camera
                 } label: {
                     Label("Camera", systemImage: "camera.fill")
-                        .labelStyle(.iconOnly)
+                        .padding(.horizontal)
                 }
                 .buttonStyle(ToolbarButtonStyle())
             }
@@ -88,6 +88,7 @@ struct NewPostScreen: View {
                 LoadingOverlay()
             }
         }
+        .toolbarVisibility(.hidden, for: .tabBar)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -97,9 +98,14 @@ struct NewPostScreen: View {
                         }
                     }
                 } label: {
-                    Text("Post")
-                        .fontWeight(.semibold)
-                        .foregroundStyle(isImageTaken ? .blue : .gray)
+                    HStack {
+                        Image(systemName: "checkmark")
+                            .font(.caption)
+                        
+                        Text("Post")
+                            .fontWeight(.semibold)
+                    }
+                    .foregroundStyle(isImageTaken ? .blue : .gray)
                 }
                 .allowsHitTesting(isImageTaken)
             }
@@ -111,6 +117,7 @@ struct NewPostScreen: View {
     }
 }
 
+/// A delegate enum for UIImagePickerController source type to fix SwiftUI picker bug.
 private enum PickerSource: Identifiable {
     case camera
     case library
@@ -129,4 +136,5 @@ private enum PickerSource: Identifiable {
     NavigationStack {
         NewPostScreen(factory: ViewModelFactory())
     }
+    .withPreviewEnvironments()
 }

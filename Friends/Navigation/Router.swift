@@ -16,6 +16,7 @@ enum ScreenEnum: Hashable {
     case friendRequest
     case profile
     case friendList
+    case search
     
     @ViewBuilder
     func build(factory: ViewModelFactory) -> some View {
@@ -36,6 +37,8 @@ enum ScreenEnum: Hashable {
             ProfileScreen(factory: factory)
         case .friendList:
             FriendListScreen(factory: factory)
+        case .search:
+            SearchFriendScreen(factory: factory)
         }
     }
 }

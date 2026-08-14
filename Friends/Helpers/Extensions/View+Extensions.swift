@@ -21,10 +21,10 @@ extension View {
     
     @ViewBuilder
     func withPreviewEnvironments() -> some View {
-//        let router = AppRouter()
+        let router = AppRouter()
         let alert = AlertManager.shared
         
-        self
+        self.environment(router)
             .environment(alert)
     }
     

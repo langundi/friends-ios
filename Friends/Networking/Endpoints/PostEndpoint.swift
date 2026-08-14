@@ -10,6 +10,7 @@ import Foundation
 enum PostEndpoint: Endpoint {
     case newPost(request: NewPostRequest)
     case getPresignedUrl(request: UploadImageRequest)
+    case getTimeline
     case getPost(Id: Int)
     case getMyPosts
     case getUsersPosts(userId: Int)
@@ -26,7 +27,7 @@ enum PostEndpoint: Endpoint {
         switch self {
         case .newPost, .getPresignedUrl:
             return .post
-        case .getPost, .getMyPosts, .getUsersPosts:
+        case .getPost, .getTimeline, .getMyPosts, .getUsersPosts:
             return .get
         case .deletePost:
             return .delete
@@ -39,6 +40,8 @@ enum PostEndpoint: Endpoint {
             return "/post"
         case .getPost(let id), .deletePost(let id):
             return "/post/\(id)"
+        case .getTimeline:
+            return "/post/timeline"
         case .getMyPosts:
             return"/post/user/me"
         case .getUsersPosts(let userId):

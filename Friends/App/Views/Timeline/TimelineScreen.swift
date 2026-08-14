@@ -7,9 +7,9 @@
 
 import SwiftUI
 import Kingfisher
+import OSLog
 
 struct TimelineScreen: View {
-    @AppStorage(Constants.isUserLoggedIn) var isLoggedIn: Bool = true
     @Environment(AppRouter.self) var router
     @State private var viewModel: TimelineViewModel
     
@@ -27,8 +27,19 @@ struct TimelineScreen: View {
             }
         }
         .navigationTitle("Timeline")
-        .toolbarTitleDisplayMode(.inlineLarge)
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    Task {
+                        await viewModel.refreshTimeline()
+                    }
+                } label: {
+                    Label("Refresh Timeline", systemImage: "arrow.counterclockwise")
+                        .labelStyle(.iconOnly)
+                }
+            }
+            
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button {
                     router.push(to: .notification)
@@ -40,7 +51,7 @@ struct TimelineScreen: View {
                 Button {
                     router.push(to: .newPost)
                 } label: {
-                    Label("New Post", systemImage: "plus")
+                    Label("New Post", systemImage: "camera")
                         .labelStyle(.iconOnly)
                 }
             }
@@ -61,22 +72,32 @@ private struct TimelineStackView: View {
     
     var body: some View {
         if viewmodel.posts.isEmpty {
-            ContentUnavailableView(
-                "Nothing Here",
-                systemImage: "photo.on.rectangle.angled",
-                description: Text("Follow friends to see their posts.")
-            )
+//            ContentUnavailableView(
+//                "Nothing Here",
+//                systemImage: "photo.on.rectangle.angled",
+//                description: Text("Follow friends to see their posts.")
+//            )
+            
+            ContentUnavailableView {
+                Image(systemName: "person.2.fill")
+            } description: {
+                Text("Let's add some friends!")
+            } actions: {
+                Button {
+                    // navigate to search friend
+                } label: {
+                    Label("Find Friend", systemImage: "magnifyingglass")
+                }
+
+            }
         } else {
             ScrollView(.vertical) {
                 LazyVStack(alignment: .center, spacing: 36) {
                     ForEach(viewmodel.posts) { post in
                         KFImage(URL(string: post.imageURL))
                             .resizable()
-                            .onSuccess { result in
-                                print("Image loaded from cache: \(result.cacheType)")
-                            }
                             .onFailure { error in
-                                print("KF error: \(error)")
+                                Logger.kingfisher.error("KF Error: \(error)")
                             }
                             .frame(maxWidth: .infinity)
                             .aspectRatio(1.0, contentMode: .fit)

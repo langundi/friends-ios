@@ -10,6 +10,7 @@ import SwiftUI
 struct TabRootView: View {
     @State private var timelineRouter = AppRouter()
     @State private var profileRouter = AppRouter()
+    @State private var searchRouter = AppRouter()
     
     let factory: ViewModelFactory
     
@@ -37,6 +38,16 @@ struct TabRootView: View {
                         }
                 }
                 .environment(profileRouter)
+            }
+            
+            Tab(role: .search) {
+                NavigationStack(path: $searchRouter.path) {
+                    ScreenEnum.search.build(factory: factory)
+                        .navigationDestination(for: ScreenEnum.self) { screen in
+                            screen.build(factory: factory)
+                        }
+                }
+                .environment(searchRouter)
             }
         }
     }

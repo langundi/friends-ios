@@ -10,8 +10,9 @@ import SwiftUI
 struct LoadingOverlay: View {
     var body: some View {
         ProgressView()
+            .controlSize(.large)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-            .background(.gray.opacity(0.15))
+            .background(.gray.opacity(0.2))
     }
 }
 

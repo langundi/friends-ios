@@ -7,8 +7,10 @@
 
 import SwiftUI
 import Kingfisher
+import OSLog
 
 struct ProfileScreen: View {
+    @AppStorage(Constants.isUserLoggedIn) var isLoggedIn: Bool = true
     @Environment(AppRouter.self) var router
     @State private var viewModel: ProfileViewModel
     
@@ -56,11 +58,8 @@ struct ProfileScreen: View {
                 ForEach(viewModel.posts) { post in
                     KFImage(URL(string: post.imageURL))
                         .resizable()
-                        .onSuccess { result in
-                            print("Image loaded from cache: \(result.cacheType)")
-                        }
                         .onFailure { error in
-                            print("KF error: \(error)")
+                            Logger.kingfisher.error("KF Error: \(error)")
                         }
                         .frame(maxWidth: .infinity)
                         .aspectRatio(1.0, contentMode: .fit)
@@ -74,9 +73,14 @@ struct ProfileScreen: View {
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button {
-                    Task {
-                        await viewModel.signOutUser()
-                    }
+                    AlertManager.shared.showAlert(
+                        title: "Sign Out",
+                        message: "Are you sure you want to sign out?",
+                        primaryAction: .init(title: "Yes", action: {
+                            Task {
+                                await viewModel.signOutUser()
+                            }
+                        }), secondaryAction: .init(title: "Cancel"))
                 } label: {
                     Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.forward")
                         .labelStyle(.iconOnly)

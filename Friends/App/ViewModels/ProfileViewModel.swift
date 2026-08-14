@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 @Observable
 final class ProfileViewModel {
@@ -21,12 +22,10 @@ final class ProfileViewModel {
     
     // ViewModel Properties
     var isLoading: Bool = false
-    private var hasLoaded = false
     var username: String = ""
     var posts: [PostResponse] = []
-    
-    // User Defaults
-    var isLoggedIn: Bool {
+    private var hasLoaded: Bool = false
+    private var isLoggedIn: Bool {
         get { UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) }
         set { UserDefaults.standard.set(newValue, forKey: Constants.isUserLoggedIn) }
     }
@@ -107,10 +106,15 @@ final class ProfileViewModel {
         do {
             posts = try await postService.getMyPosts()
         } catch let networkError as NetworkError {
-            AlertManager.shared.showAlert(
-                title: "An error occured",
-                message: networkError.message
-            )
+            switch networkError {
+            case .noDataRecieved:
+                Logger.network.warning("Profile Posts: \(networkError.message)")
+            default:
+                AlertManager.shared.showAlert(
+                    title: "An error occured",
+                    message: networkError.message
+                )
+            }
         } catch {
             AlertManager.shared.showAlert(
                 title: "An error occured",

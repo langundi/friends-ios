@@ -10,10 +10,12 @@ import Foundation
 struct NewPostRequest: Encodable {
     let caption: String
     let imageUrl: String
+    let objectKey: String
     
     enum CodingKeys: String, CodingKey {
         case caption
         case imageUrl = "image_url"
+        case objectKey = "object_key"
     }
 }
 
