@@ -13,11 +13,15 @@ struct ProfileScreen: View {
     @AppStorage(Constants.isUserLoggedIn) var isLoggedIn: Bool = true
     @Environment(AppRouter.self) var router
     @State private var viewModel: ProfileViewModel
+    @State private var timelineViewModel: TimelineViewModel
+    @State private var showDeleteButton = false
     
     private var columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 3)
     
     init(factory: ViewModelFactory) {
         _viewModel = State(initialValue: factory.makeProfileViewModel())
+        
+        timelineViewModel = factory.timelineViewModel
     }
     
     var body: some View {
@@ -63,6 +67,17 @@ struct ProfileScreen: View {
                         }
                         .frame(maxWidth: .infinity)
                         .aspectRatio(1.0, contentMode: .fit)
+                        .contextMenu {
+                            Button(role: .destructive) {
+                                Task {
+                                    await viewModel.deletePost(id: post.id, objectKey: post.objectKey)
+                                    await timelineViewModel.refreshTimeline()
+                                }
+                            } label: {
+                                Label("Delete Post", systemImage: "trash")
+                            }
+                            
+                        }
                 }
             }
             .padding([.leading, .trailing], 8)

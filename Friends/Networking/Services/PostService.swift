@@ -78,4 +78,8 @@ final class PostService {
     func getUsersPosts(userID: Int) async throws -> [PostResponse] {
         try await client.request(endpoint: PostEndpoint.getUsersPosts(userId: userID))
     }
+    
+    func deletePost(request: DeletePostRequest) async throws {
+        try await client.requestVoid(endpoint: PostEndpoint.deletePost(request: request))
+    }
 }

@@ -14,7 +14,7 @@ enum PostEndpoint: Endpoint {
     case getPost(Id: Int)
     case getMyPosts
     case getUsersPosts(userId: Int)
-    case deletePost(Id: Int)
+    case deletePost(request: DeletePostRequest)
     
     var headers: [String : String]? {
         switch self {
@@ -36,9 +36,9 @@ enum PostEndpoint: Endpoint {
     
     var path: String {
         switch self {
-        case .newPost:
+        case .newPost, .deletePost:
             return "/post"
-        case .getPost(let id), .deletePost(let id):
+        case .getPost(let id):
             return "/post/\(id)"
         case .getTimeline:
             return "/post/timeline"
@@ -64,6 +64,8 @@ enum PostEndpoint: Endpoint {
             return post
         case .getPresignedUrl(let file):
             return file
+        case .deletePost(let post):
+            return post
         default:
             return nil
         }

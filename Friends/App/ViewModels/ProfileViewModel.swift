@@ -86,6 +86,31 @@ final class ProfileViewModel {
         await loadProfile()
     }
     
+    func deletePost(id: Int, objectKey: String) async {
+        isLoading = true
+        defer { isLoading = false }
+        
+        let request = DeletePostRequest(id: id, objectKey: objectKey)
+        
+        do {
+            try await postService.deletePost(request: request)
+            
+            let posts = try await postService.getMyPosts()
+            
+            postService.setPosts(posts)
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(
+                title: "An error occured",
+                message: networkError.message
+            )
+        } catch {
+            AlertManager.shared.showAlert(
+                title: "An error occured",
+                message: error.localizedDescription
+            )
+        }
+    }
+    
     /// Fetch user profile.
     private func getMyProfile() async {
         do {
