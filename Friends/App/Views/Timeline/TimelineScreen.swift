@@ -22,7 +22,7 @@ struct TimelineScreen: View {
             if viewModel.isLoading {
                 LoadingOverlay()
             } else {
-                TimelineStackView()
+                TimelineStackView(posts: viewModel.timelinePosts)
                     .environment(viewModel)
             }
         }
@@ -68,16 +68,10 @@ struct TimelineScreen: View {
 }
 
 private struct TimelineStackView: View {
-    @Environment(TimelineViewModel.self) var viewmodel
+    var posts: [PostResponse]
     
     var body: some View {
-        if viewmodel.posts.isEmpty {
-//            ContentUnavailableView(
-//                "Nothing Here",
-//                systemImage: "photo.on.rectangle.angled",
-//                description: Text("Follow friends to see their posts.")
-//            )
-            
+        if posts.isEmpty {
             ContentUnavailableView {
                 Image(systemName: "person.2.fill")
             } description: {
@@ -93,7 +87,7 @@ private struct TimelineStackView: View {
         } else {
             ScrollView(.vertical) {
                 LazyVStack(alignment: .center, spacing: 36) {
-                    ForEach(viewmodel.posts) { post in
+                    ForEach(posts) { post in
                         KFImage(URL(string: post.imageURL))
                             .resizable()
                             .onFailure { error in
@@ -119,13 +113,13 @@ private struct TimelineStackView: View {
 }
 
 #Preview("With Posts") {
-    TimelineStackView()
-        .environment(TimelineViewModel.mock)
+    let mock = TimelineViewModel.mock.timelinePosts
+    TimelineStackView(posts: mock)
         .withPreviewEnvironments()
 }
 
 #Preview("Empty State") {
-    TimelineStackView()
-        .environment(TimelineViewModel.mockEmpty)
+    let mock = TimelineViewModel.mockEmpty.timelinePosts
+    TimelineStackView(posts: mock)
         .withPreviewEnvironments()
 }

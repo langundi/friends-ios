@@ -47,6 +47,10 @@ final class ViewModelFactory {
         return NotificationViewModel()
     }
     
+    func makeNewPostViewModel() -> NewPostViewModel {
+        return NewPostViewModel(postService: postService)
+    }
+    
     func makeFriendRequestViewModel() -> FriendRequestViewModel {
         return FriendRequestViewModel()
     }

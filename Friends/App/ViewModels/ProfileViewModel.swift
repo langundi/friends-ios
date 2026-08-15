@@ -23,7 +23,10 @@ final class ProfileViewModel {
     // ViewModel Properties
     var isLoading: Bool = false
     var username: String = ""
-    var posts: [PostResponse] = []
+    var posts: [PostResponse] {
+        postService.getPosts()
+    }
+    
     private var hasLoaded: Bool = false
     private var isLoggedIn: Bool {
         get { UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) }
@@ -104,7 +107,8 @@ final class ProfileViewModel {
     /// Fetch user posts.
     private func getMyPosts() async {
         do {
-            posts = try await postService.getMyPosts()
+            let posts = try await postService.getMyPosts()
+            postService.setPosts(posts)
         } catch let networkError as NetworkError {
             switch networkError {
             case .noDataRecieved:

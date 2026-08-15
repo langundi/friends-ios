@@ -11,6 +11,7 @@ import Foundation
 final class PostService {
     private let client: APIClient
     
+    /// Current user posts, different from timeline posts.
     private(set) var posts: [PostResponse] = []
     
     init(client: APIClient) {
@@ -27,6 +28,12 @@ final class PostService {
     /// - Parameter posts: An array of post.
     func setPosts(_ posts: [PostResponse]) {
         self.posts = posts
+    }
+    
+    /// Get posts.
+    /// - Returns: An array of post.
+    func getPosts() -> [PostResponse] {
+        return posts
     }
     
     /// Make a new post to server.

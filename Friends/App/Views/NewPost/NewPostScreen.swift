@@ -9,7 +9,8 @@ import SwiftUI
 
 struct NewPostScreen: View {
     @Environment(AppRouter.self) var router
-    @State private var viewModel: TimelineViewModel
+    @State private var viewModel: NewPostViewModel
+    @State private var timelineViewModel: TimelineViewModel
     @State private var image: UIImage?
     @State private var caption: String = ""
     @State private var isShowingImagePicker: Bool = false
@@ -17,7 +18,9 @@ struct NewPostScreen: View {
     @FocusState private var isTextFieldFocused
     
     init(factory: ViewModelFactory) {
-        _viewModel = State(initialValue: factory.timelineViewModel)
+        _viewModel = State(initialValue: factory.makeNewPostViewModel())
+        
+        timelineViewModel = factory.timelineViewModel
     }
     
     private var isImageTaken: Bool {
@@ -94,6 +97,7 @@ struct NewPostScreen: View {
                 Button {
                     Task {
                         await viewModel.uploadNewPost(image: image!, caption: caption) {
+                            timelineViewModel.hasLoaded = false
                             router.pop()
                         }
                     }
@@ -101,6 +105,7 @@ struct NewPostScreen: View {
                     HStack {
                         Image(systemName: "checkmark")
                             .font(.caption)
+                            .fontWeight(.medium)
                         
                         Text("Post")
                             .fontWeight(.semibold)
@@ -113,6 +118,13 @@ struct NewPostScreen: View {
         .fullScreenCover(item: $pickerSource) { picker in
             ImagePicker(selectedImage: $image, sourceType: picker.sourceType)
                 .ignoresSafeArea()
+        }
+    }
+    
+    func refreshAndPop() {
+        Task {
+            await timelineViewModel.refreshTimeline()
+            router.pop()
         }
     }
 }

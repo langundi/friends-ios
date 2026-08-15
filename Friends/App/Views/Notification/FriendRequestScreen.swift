@@ -30,10 +30,17 @@ struct FriendRequestScreen: View {
                         
                     }
                     
-                    Button("Accept", role: .confirm) {
-                        
+                    if #available(iOS 26.0, *) {
+                        Button("Accept", role: .confirm) {
+                            
+                        }
+                        .foregroundStyle(.blue)
+                    } else {
+                        Button("Accept") {
+                            
+                        }
+                        .foregroundStyle(.blue)
                     }
-                    .foregroundStyle(.blue)
                 }
                 .listRowSeparator(.hidden)
             }

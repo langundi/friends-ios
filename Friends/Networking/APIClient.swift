@@ -88,10 +88,12 @@ struct APIClient {
         do {
             json = try decoder.decode(JSONResponse<T>.self, from: data)
         } catch let error as DecodingError {
+            Logger.network.debug("Decoding Error: \(error)")
             throw NetworkError.decodingError(error)
         }
         
         guard (200..<300).contains(response.statusCode) else {
+            Logger.network.error("API Error: \(json.error)")
             throw NetworkError.apiError(
                 statusCode: response.statusCode,
                 message: json.error?.message ?? "Unknown error."
@@ -139,10 +141,12 @@ struct APIClient {
         do {
             json = try decoder.decode(JSONResponse<NoData>.self, from: data)
         } catch let error as DecodingError {
+            Logger.network.debug("Decoding Error: \(error)")
             throw NetworkError.decodingError(error)
         }
         
         guard (200..<300).contains(httpResponse.statusCode) else {
+            Logger.network.error("API Error: \(json.error)")
             throw NetworkError.apiError(
                 statusCode: httpResponse.statusCode,
                 message: json.error?.message ?? "Unknown error"

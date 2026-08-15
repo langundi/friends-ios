@@ -11,8 +11,7 @@ struct ContentView: View {
     @Environment(AlertManager.self) var alert
     @AppStorage(Constants.isUserLoggedIn) var isLoggedIn: Bool = false
     @State private var authRouter = AuthRouter()
-    
-    private let factory = ViewModelFactory()
+    @State private var factory = ViewModelFactory()
     
     var body: some View {
         @Bindable var router = authRouter
@@ -45,6 +44,7 @@ struct ContentView: View {
             Text(alert.alertMessage)
         }
         .onChange(of: isLoggedIn) {
+            factory = ViewModelFactory()
             router.popToRoot()
         }
         .onChange(of: router.path) { oldValue, newValue in
