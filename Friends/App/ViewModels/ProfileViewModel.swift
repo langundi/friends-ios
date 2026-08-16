@@ -99,10 +99,16 @@ final class ProfileViewModel {
             
             postService.setPosts(posts)
         } catch let networkError as NetworkError {
-            AlertManager.shared.showAlert(
-                title: "An error occured",
-                message: networkError.message
-            )
+            switch networkError {
+            case .noDataRecieved:
+                Logger.network.warning("Profile Posts: \(networkError.message)")
+                postService.setPosts([])
+            default:
+                AlertManager.shared.showAlert(
+                    title: "An error occured",
+                    message: networkError.message
+                )
+            }
         } catch {
             AlertManager.shared.showAlert(
                 title: "An error occured",
@@ -117,6 +123,7 @@ final class ProfileViewModel {
             let user = try await userService.getMyProfile()
             username = user.username
         } catch let networkError as NetworkError {
+            Logger.network.warning("Profile: \(networkError.message)")
             AlertManager.shared.showAlert(
                 title: "An error occured",
                 message: networkError.message

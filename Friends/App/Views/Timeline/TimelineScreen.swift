@@ -26,7 +26,6 @@ struct TimelineScreen: View {
                     .environment(viewModel)
             }
         }
-        .navigationTitle("Timeline")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -67,43 +66,9 @@ struct TimelineScreen: View {
     }
 }
 
-private struct TimelineStackView: View {
-    var posts: [PostResponse]
-    
-    var body: some View {
-        if posts.isEmpty {
-            ContentUnavailableView {
-                Image(systemName: "person.2.fill")
-            } description: {
-                Text("Let's add some friends!")
-            } actions: {
-                Button {
-                    // navigate to search friend
-                } label: {
-                    Label("Find Friend", systemImage: "magnifyingglass")
-                }
 
-            }
-        } else {
-            ScrollView(.vertical) {
-                LazyVStack(alignment: .center, spacing: 36) {
-                    ForEach(posts) { post in
-                        KFImage(URL(string: post.imageURL))
-                            .resizable()
-                            .onFailure { error in
-                                Logger.kingfisher.error("KF Error: \(error)")
-                            }
-                            .frame(maxWidth: .infinity)
-                            .aspectRatio(1.0, contentMode: .fit)
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
-                    }
-                }
-                .padding()
-            }
-            .scrollIndicators(.hidden)
-        }
-    }
-}
+
+
 
 #Preview {
     NavigationStack {
@@ -114,12 +79,11 @@ private struct TimelineStackView: View {
 
 #Preview("With Posts") {
     let mock = TimelineViewModel.mock.timelinePosts
-    TimelineStackView(posts: mock)
-        .withPreviewEnvironments()
-}
-
-#Preview("Empty State") {
-    let mock = TimelineViewModel.mockEmpty.timelinePosts
-    TimelineStackView(posts: mock)
-        .withPreviewEnvironments()
+    NavigationStack {
+        TimelineStackView(posts: mock)
+            .navigationTitle("Timeline")
+            .navigationBarTitleDisplayMode(.inline)
+    }
+    .withPreviewEnvironments()
+        
 }

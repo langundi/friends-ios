@@ -38,6 +38,10 @@
 		81687402302F1BE4000D7DCA /* Logger+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81687401302F1BE4000D7DCA /* Logger+Extensions.swift */; };
 		81687407302F27AE000D7DCA /* SearchFriendScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81687406302F27AE000D7DCA /* SearchFriendScreen.swift */; };
 		8168745E302F7A53000D7DCA /* NewPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8168745D302F7A53000D7DCA /* NewPostViewModel.swift */; };
+		816874683031A322000D7DCA /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816874673031A322000D7DCA /* PostView.swift */; };
+		8168746A3031AEE1000D7DCA /* CommentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816874693031AEE1000D7DCA /* CommentButton.swift */; };
+		8168746C3031AEED000D7DCA /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8168746B3031AEED000D7DCA /* LikeButton.swift */; };
+		8168746E3031AF03000D7DCA /* TimelineStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8168746D3031AF03000D7DCA /* TimelineStackView.swift */; };
 		818F24F83018B0BC00678EF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 818F24F43018B0BC00678EF5 /* Assets.xcassets */; };
 		818F24F93018B0BC00678EF5 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818F24F13018B0BC00678EF5 /* Router.swift */; };
 		818F24FA3018B0BC00678EF5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818F24F53018B0BC00678EF5 /* ContentView.swift */; };
@@ -91,6 +95,10 @@
 		81687401302F1BE4000D7DCA /* Logger+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Extensions.swift"; sourceTree = "<group>"; };
 		81687406302F27AE000D7DCA /* SearchFriendScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendScreen.swift; sourceTree = "<group>"; };
 		8168745D302F7A53000D7DCA /* NewPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewModel.swift; sourceTree = "<group>"; };
+		816874673031A322000D7DCA /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
+		816874693031AEE1000D7DCA /* CommentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentButton.swift; sourceTree = "<group>"; };
+		8168746B3031AEED000D7DCA /* LikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeButton.swift; sourceTree = "<group>"; };
+		8168746D3031AF03000D7DCA /* TimelineStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineStackView.swift; sourceTree = "<group>"; };
 		818F24C73018AFB500678EF5 /* Friends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Friends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		818F24F13018B0BC00678EF5 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		818F24F43018B0BC00678EF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -148,6 +156,8 @@
 		810EE01F3019EB51005FED56 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				8168746B3031AEED000D7DCA /* LikeButton.swift */,
+				816874693031AEE1000D7DCA /* CommentButton.swift */,
 				810EE0203019EB68005FED56 /* LoadingOverlay.swift */,
 			);
 			path = Components;
@@ -157,6 +167,8 @@
 			isa = PBXGroup;
 			children = (
 				818F25243018BAED00678EF5 /* TimelineScreen.swift */,
+				8168746D3031AF03000D7DCA /* TimelineStackView.swift */,
+				816874673031A322000D7DCA /* PostView.swift */,
 			);
 			path = Timeline;
 			sourceTree = "<group>";
@@ -469,14 +481,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8168746C3031AEED000D7DCA /* LikeButton.swift in Sources */,
 				811B9477302C13F500C3F545 /* NewPostScreen.swift in Sources */,
 				810EE0253019F587005FED56 /* ToolbarButtonStyle.swift in Sources */,
 				818F25053018B2D000678EF5 /* AuthViewModel.swift in Sources */,
+				8168746E3031AF03000D7DCA /* TimelineStackView.swift in Sources */,
 				818F25093018B3F600678EF5 /* NetworkError.swift in Sources */,
 				815DCAB3301DC54300AD470A /* NotificationViewModel.swift in Sources */,
 				818F25073018B3C300678EF5 /* TimelineViewModel.swift in Sources */,
 				815DCAA8301DA16F00AD470A /* TabRootView.swift in Sources */,
 				815DCAAF301DADAC00AD470A /* FriendListScreen.swift in Sources */,
+				816874683031A322000D7DCA /* PostView.swift in Sources */,
 				811E6055302B2D7900542203 /* PostRequests.swift in Sources */,
 				815DCAB1301DC3CE00AD470A /* FriendRequestScreen.swift in Sources */,
 				811B947B302C7A2A00C3F545 /* UIImage+Extensions.swift in Sources */,
@@ -495,6 +510,7 @@
 				811E605B302B372300542203 /* UserService.swift in Sources */,
 				818F25343018EF7100678EF5 /* View+Extensions.swift in Sources */,
 				815DCAAD301DA4A100AD470A /* ProfileViewModel.swift in Sources */,
+				8168746A3031AEE1000D7DCA /* CommentButton.swift in Sources */,
 				810EE02C301A5539005FED56 /* PostResponses.swift in Sources */,
 				818F252A3018BB4B00678EF5 /* AuthEndpoint.swift in Sources */,
 				810EE01D3019E6E9005FED56 /* PrimaryButtonStyle.swift in Sources */,
