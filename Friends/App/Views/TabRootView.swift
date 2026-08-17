@@ -16,6 +16,11 @@ struct TabRootView: View {
     
     init(factory: ViewModelFactory) {
         self.factory = factory
+        
+        // Create Tabs ViewModels
+        _ = factory.makeTimelineViewModel()
+        _ = factory.makeProfileViewModel()
+        _ = factory.makeSearchViewModel()
     }
     
     var body: some View {

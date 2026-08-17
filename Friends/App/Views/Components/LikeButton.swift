@@ -19,7 +19,6 @@ struct LikeButton: View {
                 onAction()
             } label: {
                 Image(systemName: "heart")
-                    .font(.title3)
             }
             .buttonStyle(ToolbarButtonStyle())
 

@@ -18,6 +18,10 @@ final class ProfileViewModel {
         self.authService = authService
         self.userService = userService
         self.postService = postService
+        
+        Task {
+            await loadProfile()
+        }
     }
     
     // ViewModel Properties
@@ -33,7 +37,7 @@ final class ProfileViewModel {
         set { UserDefaults.standard.set(newValue, forKey: Constants.isUserLoggedIn) }
     }
     
-    /// Signs out user and deletes access and refresh tokens from keychain.
+    /// Sign out user and delete access and refresh tokens from keychain.
     func signOutUser() async {
         isLoading = true
         defer { isLoading = false }

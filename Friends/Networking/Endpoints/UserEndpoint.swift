@@ -10,6 +10,7 @@ import Foundation
 enum UserEndpoint: Endpoint {
     case myProfile
     case friendProfile(id: Int)
+    case search(username: String)
     
     var method: HTTPMethod {
         switch self {
@@ -24,6 +25,8 @@ enum UserEndpoint: Endpoint {
             return "/user"
         case .friendProfile(let id):
             return "/user/\(id)"
+        case .search(let username):
+            return "/user/search/\(username)"
         }
     }
     

@@ -9,7 +9,7 @@ import Foundation
 
 final class ViewModelFactory {
     
-    // MARK: - Services
+    // MARK: - Lazy Services
     
     lazy var authService: AuthService = {
         AuthService(client: APIClient.shared)
@@ -23,21 +23,27 @@ final class ViewModelFactory {
         PostService(client: APIClient.shared)
     }()
     
-    // MARK: - ViewModels
+    // MARK: - Lazy ViewModels
     
     lazy var timelineViewModel: TimelineViewModel = {
-       TimelineViewModel(postService: postService)
+        return TimelineViewModel(postService: postService)
     }()
     
     lazy var profileViewModel: ProfileViewModel = {
-        ProfileViewModel(authService: authService, userService: userService, postService: postService)
+        return ProfileViewModel(authService: authService, userService: userService, postService: postService)
     }()
     
-    // MARK: - Make ViewModels
+    lazy var searchViewModel: SearchViewModel = {
+        return SearchViewModel(userService: userService)
+    }()
+    
+    // MARK: - Auth Flow ViewModels
     
     func makeAuthViewModel() -> AuthViewModel {
         return AuthViewModel(authService: authService)
     }
+    
+    // MARK: - Timeline Tab ViewModels
     
     func makeTimelineViewModel() -> TimelineViewModel {
         timelineViewModel
@@ -55,11 +61,19 @@ final class ViewModelFactory {
         return FriendRequestViewModel()
     }
     
+    // MARK: - Profile Tab ViewModels
+    
     func makeProfileViewModel() -> ProfileViewModel {
         profileViewModel
     }
     
     func makeFriendListViewModel() -> FriendListViewModel {
         return FriendListViewModel()
+    }
+    
+    // MARK: - Search Tab ViewModels
+    
+    func makeSearchViewModel() -> SearchViewModel {
+        searchViewModel
     }
 }

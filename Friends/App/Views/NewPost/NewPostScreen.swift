@@ -66,25 +66,28 @@ struct NewPostScreen: View {
         .navigationTitle("New Post")
         .navigationBarTitleDisplayMode(.inline)
         .overlay(alignment: .bottom) {
-            VStack(alignment: .trailing, spacing: 16) {
-                Button {
-                    pickerSource = .library
-                } label: {
-                    Label("Library", systemImage: "photo.fill")
-                        .padding(.horizontal)
+            if !isTextFieldFocused {
+                VStack(alignment: .trailing, spacing: 16) {
+                    Button {
+                        pickerSource = .library
+                    } label: {
+                        Label("Library", systemImage: "photo.fill")
+                            .padding(.horizontal)
+                    }
+                    .buttonStyle(ToolbarButtonStyle())
+                    
+                    Button {
+                        pickerSource = .camera
+                    } label: {
+                        Label("Camera", systemImage: "camera.fill")
+                            .padding(.horizontal)
+                    }
+                    .buttonStyle(ToolbarButtonStyle())
                 }
-                .buttonStyle(ToolbarButtonStyle())
-                
-                Button {
-                    pickerSource = .camera
-                } label: {
-                    Label("Camera", systemImage: "camera.fill")
-                        .padding(.horizontal)
-                }
-                .buttonStyle(ToolbarButtonStyle())
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding()
+                .transition(.opacity)
             }
-            .frame(maxWidth: .infinity, alignment: .trailing)
-            .padding()
         }
         .overlay(alignment: .center) {
             if viewModel.isLoading {
@@ -119,6 +122,7 @@ struct NewPostScreen: View {
             ImagePicker(selectedImage: $image, sourceType: picker.sourceType)
                 .ignoresSafeArea()
         }
+        .animation(.easeInOut, value: isTextFieldFocused)
     }
     
     func refreshAndPop() {

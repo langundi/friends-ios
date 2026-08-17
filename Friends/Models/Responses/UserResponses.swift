@@ -12,3 +12,8 @@ struct UserResponse: Decodable {
     let email: String
     let username: String
 }
+
+struct SearchUsernameResponse: Decodable {
+    let id: Int
+    let username: String
+}

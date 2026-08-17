@@ -47,10 +47,6 @@ struct ContentView: View {
             factory = ViewModelFactory()
             router.popToRoot()
         }
-        .onChange(of: router.path) { oldValue, newValue in
-            print("[DEBUG] prev route: \(oldValue)")
-            print("[DEBUG] new route: \(newValue)")
-        }
         .animation(.snappy(duration: 0.25), value: isLoggedIn)
     }
 }

@@ -19,7 +19,6 @@ struct CommentButton: View {
                 onAction()
             } label: {
                 Image(systemName: "bubble.right")
-                    .font(.title3)
             }
             .buttonStyle(ToolbarButtonStyle())
 

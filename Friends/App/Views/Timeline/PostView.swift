@@ -16,14 +16,10 @@ struct PostView: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: 12) {
-            HStack(spacing: 12) {
-                Circle()
-                    .frame(maxWidth: 45, maxHeight: 45)
-                
-                Text("@username")
-                    .font(.title3)
+            if post.caption != "" {
+                Text(post.caption)
+                    .frame(maxWidth: .infinity, alignment: .center)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
             
             KFImage(URL(string: post.imageURL))
                 .resizable()
@@ -35,10 +31,13 @@ struct PostView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             
             HStack(alignment: .top) {
-                if post.caption != "" {
-                    Text(post.caption)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                HStack(spacing: 12) {
+                    Circle()
+                        .frame(maxWidth: 40, maxHeight: 40)
+                    
+                    Text("@username")
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Spacer()
                 
