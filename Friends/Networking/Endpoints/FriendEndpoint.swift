@@ -12,6 +12,7 @@ enum FriendEndpoint: Endpoint {
     case getFriendshipStatus(userId: Int)
     case sendRequest(receiverId: Int)
     case declineRequest(id: Int)
+    case acceptRequest(id: Int)
     
     var method: HTTPMethod {
         switch self {
@@ -19,6 +20,8 @@ enum FriendEndpoint: Endpoint {
             return .get
         case .sendRequest:
             return .post
+        case .acceptRequest:
+            return .patch
         case .declineRequest:
             return .delete
         }
@@ -34,6 +37,8 @@ enum FriendEndpoint: Endpoint {
             return "/friend-request/send/\(receiverId)"
         case .declineRequest(let id):
             return "/friend-request/decline/\(id)"
+        case .acceptRequest(let id):
+            return "/friend-request/accept/\(id)"
         }
     }
     

@@ -29,4 +29,8 @@ final class FriendService {
     func declineFriendRequest(id: Int) async throws {
         try await client.requestVoid(endpoint: FriendEndpoint.declineRequest(id: id))
     }
+    
+    func acceptFriendRequest(id: Int) async throws {
+        try await client.requestVoid(endpoint: FriendEndpoint.acceptRequest(id: id))
+    }
 }

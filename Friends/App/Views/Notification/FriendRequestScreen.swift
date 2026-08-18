@@ -25,32 +25,13 @@ struct FriendRequestScreen: View {
                     Text("No friend requests.")
                 }
             } else {
-                List {
-                    ForEach(viewModel.friendRequests) { request in
-                        HStack(spacing: 24) {
-                            Circle()
-                                .foregroundStyle(.gray.opacity(0.15))
-                                .frame(maxWidth: 50, maxHeight: 50)
-                            
-                            Text(request.senderUsername)
-                            
-                            Spacer(minLength: 0)
-                            
-                            Button("Decline", role: .destructive) {
-                                Task {
-                                    await viewModel.declineFriendRequest(id: request.id)
-                                }
-                            }
-                            
-                            Button("Accept") {
-                                
-                            }
-                            .foregroundStyle(.blue)
+                ScrollView(.vertical) {
+                    LazyVStack(alignment: .center, spacing: 0) {
+                        ForEach(viewModel.friendRequests) { request in
+                            FriendRequestView(id: request.id, username: request.senderUsername, viewModel: viewModel)
                         }
-                        .listRowSeparator(.hidden)
                     }
                 }
-                .listStyle(.plain)
                 .scrollIndicators(.hidden)
             }
         }

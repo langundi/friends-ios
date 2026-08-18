@@ -74,8 +74,7 @@ struct SearchFriendScreen: View {
                                 router.push(to: .friendRequest)
                             } label: {
                                 HStack {
-                                    Text("Sent You a Request")
-                                        .fontWeight(.semibold)
+                                    Text("Sent you a request")
                                     
                                     Image(systemName: "chevron.right")
                                         .fontWeight(.medium)
@@ -83,7 +82,7 @@ struct SearchFriendScreen: View {
                                 .foregroundStyle(.blue)
                             }
                         case .friends:
-                            Text("Friends with You").italic()
+                            Text("Friends with you").italic()
                         case .none:
                             EmptyView()
                         }

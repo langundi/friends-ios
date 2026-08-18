@@ -93,6 +93,5 @@ struct TimelineScreen: View {
             .navigationTitle("Timeline")
             .navigationBarTitleDisplayMode(.inline)
     }
-    .withPreviewEnvironments()
-        
+    .withPreviewEnvironments()  
 }

@@ -63,6 +63,7 @@
 		818F25313018E05B00678EF5 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818F25303018E05B00678EF5 /* TokenManager.swift */; };
 		818F25343018EF7100678EF5 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818F25333018EF7100678EF5 /* View+Extensions.swift */; };
 		818FFF5C30345E8A00D55DE4 /* FriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818FFF5B30345E8A00D55DE4 /* FriendshipStatus.swift */; };
+		818FFF5E3034AA0000D55DE4 /* FriendRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818FFF5D3034AA0000D55DE4 /* FriendRequestView.swift */; };
 		81DA67A93032F7D10079EE35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67A83032F7D10079EE35 /* SearchViewModel.swift */; };
 		81DA67AB303332120079EE35 /* FriendEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67AA303332120079EE35 /* FriendEndpoint.swift */; };
 		81DA67AD303333010079EE35 /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67AC303333010079EE35 /* FriendService.swift */; };
@@ -128,6 +129,7 @@
 		818F25303018E05B00678EF5 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		818F25333018EF7100678EF5 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		818FFF5B30345E8A00D55DE4 /* FriendshipStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendshipStatus.swift; sourceTree = "<group>"; };
+		818FFF5D3034AA0000D55DE4 /* FriendRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestView.swift; sourceTree = "<group>"; };
 		81DA67A83032F7D10079EE35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		81DA67AA303332120079EE35 /* FriendEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendEndpoint.swift; sourceTree = "<group>"; };
 		81DA67AC303333010079EE35 /* FriendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendService.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 			children = (
 				810EE02D301A5CE1005FED56 /* NotificationScreen.swift */,
 				815DCAB0301DC3CE00AD470A /* FriendRequestScreen.swift */,
+				818FFF5D3034AA0000D55DE4 /* FriendRequestView.swift */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -525,6 +528,7 @@
 				81687407302F27AE000D7DCA /* SearchFriendScreen.swift in Sources */,
 				818F250B3018B41400678EF5 /* APIClient.swift in Sources */,
 				81DA67AF3033337C0079EE35 /* FriendResponses.swift in Sources */,
+				818FFF5E3034AA0000D55DE4 /* FriendRequestView.swift in Sources */,
 				81618158301F256200A2DDA0 /* DIContainer.swift in Sources */,
 				81618166301F367000A2DDA0 /* AuthRootView.swift in Sources */,
 				818F24F93018B0BC00678EF5 /* Router.swift in Sources */,

@@ -55,4 +55,20 @@ final class FriendRequestViewModel {
             Logger.network.error("Error declining friend request: \(error)")
         }
     }
+    
+    func acceptFriendRequest(id: Int) async {
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            try await friendService.acceptFriendRequest(id: id)
+            friendRequests.removeAll { $0.id == id }
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error declining friend request: \(networkError.message)")
+        } catch {
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error declining friend request: \(error)")
+        }
+    }
 }
