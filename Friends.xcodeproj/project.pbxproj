@@ -62,7 +62,12 @@
 		818F252D3018BBD700678EF5 /* JSONResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818F252C3018BBD700678EF5 /* JSONResponse.swift */; };
 		818F25313018E05B00678EF5 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818F25303018E05B00678EF5 /* TokenManager.swift */; };
 		818F25343018EF7100678EF5 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818F25333018EF7100678EF5 /* View+Extensions.swift */; };
+		818FFF5C30345E8A00D55DE4 /* FriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818FFF5B30345E8A00D55DE4 /* FriendshipStatus.swift */; };
 		81DA67A93032F7D10079EE35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67A83032F7D10079EE35 /* SearchViewModel.swift */; };
+		81DA67AB303332120079EE35 /* FriendEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67AA303332120079EE35 /* FriendEndpoint.swift */; };
+		81DA67AD303333010079EE35 /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67AC303333010079EE35 /* FriendService.swift */; };
+		81DA67AF3033337C0079EE35 /* FriendResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67AE3033337C0079EE35 /* FriendResponses.swift */; };
+		81DA67B130333C340079EE35 /* FriendRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67B030333C340079EE35 /* FriendRequests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -122,7 +127,12 @@
 		818F252C3018BBD700678EF5 /* JSONResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONResponse.swift; sourceTree = "<group>"; };
 		818F25303018E05B00678EF5 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		818F25333018EF7100678EF5 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
+		818FFF5B30345E8A00D55DE4 /* FriendshipStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendshipStatus.swift; sourceTree = "<group>"; };
 		81DA67A83032F7D10079EE35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		81DA67AA303332120079EE35 /* FriendEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendEndpoint.swift; sourceTree = "<group>"; };
+		81DA67AC303333010079EE35 /* FriendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendService.swift; sourceTree = "<group>"; };
+		81DA67AE3033337C0079EE35 /* FriendResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendResponses.swift; sourceTree = "<group>"; };
+		81DA67B030333C340079EE35 /* FriendRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +200,7 @@
 				818F25303018E05B00678EF5 /* TokenManager.swift */,
 				811E6056302B2E4A00542203 /* PostService.swift */,
 				811E605A302B372300542203 /* UserService.swift */,
+				81DA67AC303333010079EE35 /* FriendService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -355,6 +366,7 @@
 			children = (
 				818F25193018B56E00678EF5 /* AuthRequests.swift */,
 				811E6054302B2D7900542203 /* PostRequests.swift */,
+				81DA67B030333C340079EE35 /* FriendRequests.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -366,6 +378,7 @@
 				818F252C3018BBD700678EF5 /* JSONResponse.swift */,
 				810EE02B301A5539005FED56 /* PostResponses.swift */,
 				811E605C302B375C00542203 /* UserResponses.swift */,
+				81DA67AE3033337C0079EE35 /* FriendResponses.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -373,6 +386,7 @@
 		818F251D3018B9E000678EF5 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
+				818FFF5B30345E8A00D55DE4 /* FriendshipStatus.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -384,6 +398,7 @@
 				818F25293018BB4B00678EF5 /* AuthEndpoint.swift */,
 				811E6052302B293800542203 /* PostEndpoint.swift */,
 				811E6058302B364700542203 /* UserEndpoint.swift */,
+				81DA67AA303332120079EE35 /* FriendEndpoint.swift */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -490,6 +505,7 @@
 				818F25053018B2D000678EF5 /* AuthViewModel.swift in Sources */,
 				8168746E3031AF03000D7DCA /* TimelineStackView.swift in Sources */,
 				818F25093018B3F600678EF5 /* NetworkError.swift in Sources */,
+				818FFF5C30345E8A00D55DE4 /* FriendshipStatus.swift in Sources */,
 				815DCAB3301DC54300AD470A /* NotificationViewModel.swift in Sources */,
 				818F25073018B3C300678EF5 /* TimelineViewModel.swift in Sources */,
 				815DCAA8301DA16F00AD470A /* TabRootView.swift in Sources */,
@@ -508,6 +524,7 @@
 				8168745E302F7A53000D7DCA /* NewPostViewModel.swift in Sources */,
 				81687407302F27AE000D7DCA /* SearchFriendScreen.swift in Sources */,
 				818F250B3018B41400678EF5 /* APIClient.swift in Sources */,
+				81DA67AF3033337C0079EE35 /* FriendResponses.swift in Sources */,
 				81618158301F256200A2DDA0 /* DIContainer.swift in Sources */,
 				81618166301F367000A2DDA0 /* AuthRootView.swift in Sources */,
 				818F24F93018B0BC00678EF5 /* Router.swift in Sources */,
@@ -521,6 +538,7 @@
 				811E6057302B2E4A00542203 /* PostService.swift in Sources */,
 				810EE0213019EB68005FED56 /* LoadingOverlay.swift in Sources */,
 				811E6059302B364700542203 /* UserEndpoint.swift in Sources */,
+				81DA67AB303332120079EE35 /* FriendEndpoint.swift in Sources */,
 				811E6053302B293800542203 /* PostEndpoint.swift in Sources */,
 				818F25233018BACF00678EF5 /* SignUpScreen.swift in Sources */,
 				818F25313018E05B00678EF5 /* TokenManager.swift in Sources */,
@@ -529,6 +547,7 @@
 				818F251A3018B56E00678EF5 /* AuthRequests.swift in Sources */,
 				811E6061302B757200542203 /* CameraManager.swift in Sources */,
 				818F25283018BB3200678EF5 /* Endpoint.swift in Sources */,
+				81DA67B130333C340079EE35 /* FriendRequests.swift in Sources */,
 				818F24FA3018B0BC00678EF5 /* ContentView.swift in Sources */,
 				818F25153018B4B200678EF5 /* KeychainWrapper.swift in Sources */,
 				810EE02E301A5CE1005FED56 /* NotificationScreen.swift in Sources */,
@@ -538,6 +557,7 @@
 				81687402302F1BE4000D7DCA /* Logger+Extensions.swift in Sources */,
 				8161816F301F4C1100A2DDA0 /* FriendListViewModel.swift in Sources */,
 				811E605D302B375C00542203 /* UserResponses.swift in Sources */,
+				81DA67AD303333010079EE35 /* FriendService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

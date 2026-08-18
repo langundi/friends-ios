@@ -31,15 +31,9 @@ final class AuthViewModel {
             let response = try await authService.registerUser(user: user)
             print(response)
         } catch let networkError as NetworkError {
-            AlertManager.shared.showAlert(
-                title: "An error occured",
-                message: networkError.message
-            )
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
         } catch {
-            AlertManager.shared.showAlert(
-                title: "An error occured",
-                message: error.localizedDescription
-            )
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
         }
     }
     
@@ -54,15 +48,9 @@ final class AuthViewModel {
             print(response)
             isLoggedIn = true
         } catch let networkError as NetworkError {
-            AlertManager.shared.showAlert(
-                title: "An error occured",
-                message: networkError.message
-            )
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
         } catch {
-            AlertManager.shared.showAlert(
-                title: "An error occured",
-                message: error.localizedDescription
-            )
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
         }
     }
 }

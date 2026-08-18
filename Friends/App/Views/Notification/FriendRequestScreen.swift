@@ -15,40 +15,55 @@ struct FriendRequestScreen: View {
     }
     
     var body: some View {
-        List {
-            ForEach(0..<viewModel.friendRequest, id: \.self) { i in
-                HStack(spacing: 24) {
-                    Circle()
-                        .foregroundStyle(.gray.opacity(0.15))
-                        .frame(maxWidth: 50, maxHeight: 50)
-                    
-                    Text("@username")
-                    
-                    Spacer(minLength: 0)
-                    
-                    Button("Decline", role: .destructive) {
-                        
-                    }
-                    
-                    if #available(iOS 26.0, *) {
-                        Button("Accept", role: .confirm) {
+        Group {
+            if viewModel.friendRequests.isEmpty {
+                ContentUnavailableView {
+                    Image(systemName: "person.2.fill")
+                        .font(.largeTitle)
+                        .foregroundStyle(.gray)
+                } description: {
+                    Text("No friend requests.")
+                }
+            } else {
+                List {
+                    ForEach(viewModel.friendRequests) { request in
+                        HStack(spacing: 24) {
+                            Circle()
+                                .foregroundStyle(.gray.opacity(0.15))
+                                .frame(maxWidth: 50, maxHeight: 50)
                             
-                        }
-                        .foregroundStyle(.blue)
-                    } else {
-                        Button("Accept") {
+                            Text(request.senderUsername)
                             
+                            Spacer(minLength: 0)
+                            
+                            Button("Decline", role: .destructive) {
+                                Task {
+                                    await viewModel.declineFriendRequest(id: request.id)
+                                }
+                            }
+                            
+                            Button("Accept") {
+                                
+                            }
+                            .foregroundStyle(.blue)
                         }
-                        .foregroundStyle(.blue)
+                        .listRowSeparator(.hidden)
                     }
                 }
-                .listRowSeparator(.hidden)
+                .listStyle(.plain)
+                .scrollIndicators(.hidden)
             }
         }
-        .listStyle(.plain)
-        .scrollIndicators(.hidden)
         .navigationTitle("Friend Requests")
         .navigationBarTitleDisplayMode(.inline)
+        .overlay {
+            if viewModel.isLoading {
+                LoadingOverlay()
+            }
+        }
+        .task {
+            await viewModel.getFriendRequests()
+        }
     }
 }
 

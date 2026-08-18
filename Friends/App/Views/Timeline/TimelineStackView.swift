@@ -19,13 +19,15 @@ struct TimelineStackView: View {
         if posts.isEmpty {
             ContentUnavailableView {
                 Image(systemName: "person.2.fill")
+                    .font(.largeTitle)
+                    .foregroundStyle(.gray)
             } description: {
                 Text("Let's add some friends!")
             } actions: {
                 Button {
                     router.push(to: .search)
                 } label: {
-                    Label("Find Friend", systemImage: "magnifyingglass")
+                    Label("Find Friends", systemImage: "magnifyingglass")
                 }
 
             }

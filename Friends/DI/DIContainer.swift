@@ -23,6 +23,10 @@ final class ViewModelFactory {
         PostService(client: APIClient.shared)
     }()
     
+    lazy var friendService: FriendService = {
+        FriendService(client: APIClient.shared)
+    }()
+    
     // MARK: - Lazy ViewModels
     
     lazy var timelineViewModel: TimelineViewModel = {
@@ -34,7 +38,11 @@ final class ViewModelFactory {
     }()
     
     lazy var searchViewModel: SearchViewModel = {
-        return SearchViewModel(userService: userService)
+        return SearchViewModel(userService: userService, friendService: friendService)
+    }()
+    
+    lazy var notificationViewModel: NotificationViewModel = {
+        return NotificationViewModel()
     }()
     
     // MARK: - Auth Flow ViewModels
@@ -58,7 +66,7 @@ final class ViewModelFactory {
     }
     
     func makeFriendRequestViewModel() -> FriendRequestViewModel {
-        return FriendRequestViewModel()
+        return FriendRequestViewModel(friendService: friendService)
     }
     
     // MARK: - Profile Tab ViewModels

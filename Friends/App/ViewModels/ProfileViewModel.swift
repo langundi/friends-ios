@@ -14,17 +14,6 @@ final class ProfileViewModel {
     private let userService: UserService
     private let postService: PostService
     
-    init(authService: AuthService, userService: UserService, postService: PostService) {
-        self.authService = authService
-        self.userService = userService
-        self.postService = postService
-        
-        Task {
-            await loadProfile()
-        }
-    }
-    
-    // ViewModel Properties
     var isLoading: Bool = false
     var username: String = ""
     var posts: [PostResponse] {
@@ -35,6 +24,16 @@ final class ProfileViewModel {
     private var isLoggedIn: Bool {
         get { UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) }
         set { UserDefaults.standard.set(newValue, forKey: Constants.isUserLoggedIn) }
+    }
+    
+    init(authService: AuthService, userService: UserService, postService: PostService) {
+        self.authService = authService
+        self.userService = userService
+        self.postService = postService
+        
+        Task {
+            await loadProfile()
+        }
     }
     
     /// Sign out user and delete access and refresh tokens from keychain.
@@ -52,21 +51,20 @@ final class ProfileViewModel {
             let refresh = RefreshRequest(refreshToken: refreshToken)
             try await authService.logoutUser(refresh: refresh)
             
-            _ = Keychain.delete(Constants.accessToken)
-            _ = Keychain.delete(Constants.refreshToken)
-            
+            deleteTokensFromKeychain()
             isLoggedIn = false
         } catch let networkError as NetworkError {
-            AlertManager.shared.showAlert(
-                title: "An error occured",
-                message: networkError.message
-            )
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error signing out: \(networkError.message)")
         } catch {
-            AlertManager.shared.showAlert(
-                title: "An error occured",
-                message: error.localizedDescription
-            )
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error signing out: \(error)")
         }
+    }
+    
+    private func deleteTokensFromKeychain() {
+        _ = Keychain.delete(Constants.accessToken)
+        _ = Keychain.delete(Constants.refreshToken)
     }
     
     /// Load user profile and posts.
@@ -99,25 +97,20 @@ final class ProfileViewModel {
         do {
             try await postService.deletePost(request: request)
             
-            let posts = try await postService.getMyPosts()
-            
-            postService.setPosts(posts)
+            // Refresh posts after delete
+            await getMyPosts()
         } catch let networkError as NetworkError {
             switch networkError {
             case .noDataRecieved:
-                Logger.network.warning("Profile Posts: \(networkError.message)")
                 postService.setPosts([])
+                Logger.network.warning("Profile Posts: \(networkError.message)")
             default:
-                AlertManager.shared.showAlert(
-                    title: "An error occured",
-                    message: networkError.message
-                )
+                AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+                Logger.network.error("Error deleting post: \(networkError.message)")
             }
         } catch {
-            AlertManager.shared.showAlert(
-                title: "An error occured",
-                message: error.localizedDescription
-            )
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error deleting post: \(error)")
         }
     }
     
@@ -127,16 +120,11 @@ final class ProfileViewModel {
             let user = try await userService.getMyProfile()
             username = user.username
         } catch let networkError as NetworkError {
-            Logger.network.warning("Profile: \(networkError.message)")
-            AlertManager.shared.showAlert(
-                title: "An error occured",
-                message: networkError.message
-            )
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error fetching profile: \(networkError.message)")
         } catch {
-            AlertManager.shared.showAlert(
-                title: "An error occured",
-                message: error.localizedDescription
-            )
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error fetching profile: \(error)")
         }
     }
     
@@ -150,16 +138,12 @@ final class ProfileViewModel {
             case .noDataRecieved:
                 Logger.network.warning("Profile Posts: \(networkError.message)")
             default:
-                AlertManager.shared.showAlert(
-                    title: "An error occured",
-                    message: networkError.message
-                )
+                AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+                Logger.network.error("Error fetching posts: \(networkError.message)")
             }
         } catch {
-            AlertManager.shared.showAlert(
-                title: "An error occured",
-                message: error.localizedDescription
-            )
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error fetching posts: \(error)")
         }
     }
 }

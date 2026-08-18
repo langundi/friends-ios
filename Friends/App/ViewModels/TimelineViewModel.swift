@@ -12,15 +12,18 @@ import OSLog
 final class TimelineViewModel {
     private let postService: PostService
     
+    var isLoading: Bool = false
+    var hasLoaded: Bool = false
+    var timelinePosts: [PostResponse] = []
+    var lastFetchedAt: Date?
+    private let staleTreshold: TimeInterval = 10
+    
     init(postService: PostService) {
         self.postService = postService
     }
     
-    var isLoading: Bool = false
-    var timelinePosts: [PostResponse] = []
-    var hasLoaded: Bool = false
-    
     func getTimeline() async {
+        print("get")
         guard !hasLoaded else { return }
         
         isLoading = true
@@ -28,7 +31,12 @@ final class TimelineViewModel {
         
         do {
             timelinePosts = try await postService.getTimeline()
+            
             hasLoaded = true
+            
+            lastFetchedAt = Date()
+            
+            print("last fetch: \(lastFetchedAt)")
         } catch let networkError as NetworkError {
             switch networkError {
             case .noDataRecieved:
@@ -49,8 +57,21 @@ final class TimelineViewModel {
     }
     
     func refreshTimeline() async {
+        print("refresh")
         hasLoaded = false
         await getTimeline()
+    }
+    
+    func refreshIfStale() async {
+        print("stale refresh")
+        print("last: \(lastFetchedAt)")
+        guard let lastFetchedAt else {
+            return
+        }
+        
+        if Date().timeIntervalSince(lastFetchedAt) > staleTreshold {
+            await refreshTimeline()
+        }
     }
 }
 

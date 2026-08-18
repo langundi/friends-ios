@@ -11,6 +11,7 @@ import OSLog
 
 struct TimelineScreen: View {
     @Environment(AppRouter.self) var router
+    @Environment(\.scenePhase) var scenePhase
     @State private var viewModel: TimelineViewModel
     
     init(factory: ViewModelFactory) {
@@ -62,6 +63,14 @@ struct TimelineScreen: View {
         }
         .task {
             await viewModel.getTimeline()
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                Task {
+                    await viewModel.refreshIfStale()
+//                    print("last fetch: \(viewModel.lastFetchedAt)")
+                }
+            }
         }
     }
 }

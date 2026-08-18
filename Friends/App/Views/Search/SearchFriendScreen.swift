@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct SearchFriendScreen: View {
+    @Environment(AppRouter.self) var router
     @State private var viewModel: SearchViewModel
     @State private var searchText: String = ""
+    @FocusState private var isTextFieldActive: Bool
     
     init(factory: ViewModelFactory) {
         _viewModel = State(initialValue: factory.makeSearchViewModel())
@@ -17,31 +19,73 @@ struct SearchFriendScreen: View {
     
     var body: some View {
         Form {
-            Section("Enter a username:") {
-                HStack {
-                    TextField("Username", text: $searchText)
-                        .textInputAutocapitalization(.never)
-                        .textContentType(.username)
-                        .submitLabel(.search)
-                        .onSubmit {
-                            searchUsername()
-                        }
-                    
-                    Button("Search") {
+            Section {
+                TextField("Enter your friend's username", text: $searchText)
+                    .textInputAutocapitalization(.never)
+                    .textContentType(.username)
+                    .submitLabel(.search)
+                    .focused($isTextFieldActive)
+                    .onSubmit {
+                        isTextFieldActive = false
                         searchUsername()
                     }
-                }
             }
             
-            if let username = viewModel.user?.username {
-                Section {
+            Section {
+                Button("Search", systemImage: "magnifyingglass") {
+                    isTextFieldActive = false
+                    searchUsername()
+                }
+                .buttonStyle(PrimaryButtonStyle())
+                .disabled(searchText.isEmpty)
+            }
+            .listSectionSpacing(12)
+            .removeRowInset()
+            
+            if let user = viewModel.searchedUser {
+                Section("") {
                     HStack(spacing: 24) {
-                        Text(username)
+                        Text("@\(user.username)")
                         
                         Spacer(minLength: 0)
                         
-                        Button("Add friend") {
-                            print("add friend pressed")
+                        switch viewModel.status {
+                        case .notAdded:
+                            Button {
+                                Task {
+                                    await viewModel.sendFriendRequest(receiverId: user.id) {
+                                        viewModel.status = .sent
+                                    }
+                                }
+                            } label: {
+                                HStack {
+                                    Image(systemName: "plus")
+                                        .fontWeight(.medium)
+                                    
+                                    Text("Add")
+                                        .fontWeight(.semibold)
+                                }
+                                .foregroundStyle(.blue)
+                            }
+                        case .sent:
+                            Text("Pending").italic()
+                        case .received:
+                            Button {
+                                router.push(to: .friendRequest)
+                            } label: {
+                                HStack {
+                                    Text("Sent You a Request")
+                                        .fontWeight(.semibold)
+                                    
+                                    Image(systemName: "chevron.right")
+                                        .fontWeight(.medium)
+                                }
+                                .foregroundStyle(.blue)
+                            }
+                        case .friends:
+                            Text("Friends with You").italic()
+                        case .none:
+                            EmptyView()
                         }
                     }
                 }
@@ -60,8 +104,16 @@ struct SearchFriendScreen: View {
     }
     
     private func searchUsername() {
+        guard !searchText.isEmpty else {
+            return
+        }
+        
         Task {
             await viewModel.searchUsername(searchText: searchText)
+            
+            if let userID = viewModel.searchedUser?.id {
+                await viewModel.checkFriendshipStatus(userID: userID)
+            }
         }
     }
 }
