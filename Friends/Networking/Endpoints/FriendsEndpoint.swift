@@ -10,6 +10,7 @@ import Foundation
 enum FriendsEndpoint: Endpoint {
     case list
     case status(userID: Int)
+    case unfriend(id: Int)
     
     var method: HTTPMethod {
         switch self {
@@ -17,6 +18,8 @@ enum FriendsEndpoint: Endpoint {
             return .get
         case .status:
             return .get
+        case .unfriend:
+            return .delete
         }
     }
     
@@ -26,6 +29,8 @@ enum FriendsEndpoint: Endpoint {
             return "/friends"
         case .status(let userID):
             return "/friends/\(userID)/status"
+        case .unfriend(let id):
+            return"/friends/\(id)"
         }
     }
     

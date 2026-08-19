@@ -23,7 +23,7 @@ final class ProfileViewModel {
     private var hasLoadedProfile: Bool = false
     
     // FriendList ViewModel Properties
-    var friends: [UsernameResponse] = []
+    var friends: [FriendResponse] = []
     private var hasLoadedFriends: Bool = false
     
     private var isLoggedIn: Bool {
@@ -182,5 +182,21 @@ final class ProfileViewModel {
     func refreshFriendList() async {
         hasLoadedFriends = false
         await getFriendList()
+    }
+    
+    func unfriend(id: Int) async {
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            try await friendService.unfriend(id: id)
+            friends.removeAll { $0.id == id }
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error fetching friend list: \(networkError.message)")
+        } catch {
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error fetching friend list: \(error)")
+        }
     }
 }

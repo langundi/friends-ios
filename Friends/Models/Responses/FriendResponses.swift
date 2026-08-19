@@ -48,3 +48,15 @@ struct FriendshipStatusResponse: Decodable {
         case friendshipStatus = "friendship_status"
     }
 }
+
+struct FriendResponse: Identifiable, Decodable {
+    let id: Int
+    let userID: Int
+    let username: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case userID = "user_id"
+        case username
+    }
+}

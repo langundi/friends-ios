@@ -10,7 +10,7 @@ import SwiftUI
 struct FriendListScreen: View {
     @State private var viewModel: ProfileViewModel
     
-    var sortedFriends: [UsernameResponse] {
+    var sortedFriends: [FriendResponse] {
         viewModel.friends.sorted { $0.username < $1.username }
     }
     
@@ -22,7 +22,9 @@ struct FriendListScreen: View {
         List {
             ForEach(sortedFriends) { friend in
                 FriendRowView(username: friend.username) {
-                    print("unfriend")
+                    Task {
+                        await viewModel.unfriend(id: friend.id)
+                    }
                 } onBlockAction: {
                     print("block")
                 }
