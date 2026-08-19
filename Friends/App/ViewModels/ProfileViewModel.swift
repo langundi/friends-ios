@@ -13,23 +13,29 @@ final class ProfileViewModel {
     private let authService: AuthService
     private let userService: UserService
     private let postService: PostService
+    private let friendService: FriendService
     
     var isLoading: Bool = false
-    var username: String = ""
-    var posts: [PostResponse] {
-        postService.getPosts()
-    }
     
-    private var hasLoaded: Bool = false
+    // Profile ViewModel Properties
+    var username: String = ""
+    var posts: [PostResponse] { postService.getPosts() }
+    private var hasLoadedProfile: Bool = false
+    
+    // FriendList ViewModel Properties
+    var friends: [UsernameResponse] = []
+    private var hasLoadedFriends: Bool = false
+    
     private var isLoggedIn: Bool {
         get { UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) }
         set { UserDefaults.standard.set(newValue, forKey: Constants.isUserLoggedIn) }
     }
     
-    init(authService: AuthService, userService: UserService, postService: PostService) {
+    init(authService: AuthService, userService: UserService, postService: PostService, friendService: FriendService) {
         self.authService = authService
         self.userService = userService
         self.postService = postService
+        self.friendService = friendService
         
         Task {
             await loadProfile()
@@ -69,7 +75,7 @@ final class ProfileViewModel {
     
     /// Load user profile and posts.
     func loadProfile() async {
-        guard !hasLoaded else { return }
+        guard !hasLoadedProfile else { return }
         
         isLoading = true
         defer { isLoading = false }
@@ -79,12 +85,12 @@ final class ProfileViewModel {
         
         _ = await (profile, posts)
         
-        hasLoaded = true
+        hasLoadedProfile = true
     }
     
     /// Re-fetches profile and posts.
     func refreshProfile() async {
-        hasLoaded = false
+        hasLoadedProfile = false
         await loadProfile()
     }
     
@@ -145,5 +151,36 @@ final class ProfileViewModel {
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error fetching posts: \(error)")
         }
+    }
+    
+    // MARK: - Friend List
+    
+    func getFriendList() async {
+        guard !hasLoadedFriends else { return }
+        
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            let response = try await friendService.getFriendList()
+            friends = response
+            hasLoadedFriends = true
+        } catch let networkError as NetworkError {
+            switch networkError {
+            case .noDataRecieved:
+                Logger.network.warning("Friend list: \(networkError.message)")
+            default:
+                AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+                Logger.network.error("Error fetching friend list: \(networkError.message)")
+            }
+        } catch {
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error fetching friend list: \(error)")
+        }
+    }
+    
+    func refreshFriendList() async {
+        hasLoadedFriends = false
+        await getFriendList()
     }
 }

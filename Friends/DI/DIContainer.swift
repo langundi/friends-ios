@@ -34,7 +34,7 @@ final class ViewModelFactory {
     }()
     
     lazy var profileViewModel: ProfileViewModel = {
-        return ProfileViewModel(authService: authService, userService: userService, postService: postService)
+        return ProfileViewModel(authService: authService, userService: userService, postService: postService, friendService: friendService)
     }()
     
     lazy var searchViewModel: SearchViewModel = {
@@ -73,10 +73,6 @@ final class ViewModelFactory {
     
     func makeProfileViewModel() -> ProfileViewModel {
         profileViewModel
-    }
-    
-    func makeFriendListViewModel() -> FriendListViewModel {
-        return FriendListViewModel()
     }
     
     // MARK: - Search Tab ViewModels

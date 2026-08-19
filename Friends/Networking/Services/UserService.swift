@@ -34,8 +34,8 @@ final class UserService {
     
     /// Search user by username.
     /// - Parameter username: A username.
-    /// - Returns: `SearchUsernameResponse`
-    func searchUsername(username: String) async throws -> SearchUsernameResponse {
+    /// - Returns: `UsernameResponse`
+    func searchUsername(username: String) async throws -> UsernameResponse {
         try await client.request(endpoint: UserEndpoint.search(username: username))
     }
     

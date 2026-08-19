@@ -34,7 +34,6 @@
 		81618158301F256200A2DDA0 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81618157301F256200A2DDA0 /* DIContainer.swift */; };
 		81618166301F367000A2DDA0 /* AuthRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81618165301F367000A2DDA0 /* AuthRootView.swift */; };
 		8161816D301F4A8D00A2DDA0 /* FriendRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161816C301F4A8D00A2DDA0 /* FriendRequestViewModel.swift */; };
-		8161816F301F4C1100A2DDA0 /* FriendListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8161816E301F4C1100A2DDA0 /* FriendListViewModel.swift */; };
 		81687402302F1BE4000D7DCA /* Logger+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81687401302F1BE4000D7DCA /* Logger+Extensions.swift */; };
 		81687407302F27AE000D7DCA /* SearchFriendScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81687406302F27AE000D7DCA /* SearchFriendScreen.swift */; };
 		8168745E302F7A53000D7DCA /* NewPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8168745D302F7A53000D7DCA /* NewPostViewModel.swift */; };
@@ -64,8 +63,10 @@
 		818F25343018EF7100678EF5 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818F25333018EF7100678EF5 /* View+Extensions.swift */; };
 		818FFF5C30345E8A00D55DE4 /* FriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818FFF5B30345E8A00D55DE4 /* FriendshipStatus.swift */; };
 		818FFF5E3034AA0000D55DE4 /* FriendRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818FFF5D3034AA0000D55DE4 /* FriendRequestView.swift */; };
+		819DFB7D30356F90007E94DE /* FriendsEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819DFB7C30356F90007E94DE /* FriendsEndpoint.swift */; };
+		819DFB7F303576C7007E94DE /* FriendRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819DFB7E303576C7007E94DE /* FriendRowView.swift */; };
 		81DA67A93032F7D10079EE35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67A83032F7D10079EE35 /* SearchViewModel.swift */; };
-		81DA67AB303332120079EE35 /* FriendEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67AA303332120079EE35 /* FriendEndpoint.swift */; };
+		81DA67AB303332120079EE35 /* FriendRequestEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67AA303332120079EE35 /* FriendRequestEndpoint.swift */; };
 		81DA67AD303333010079EE35 /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67AC303333010079EE35 /* FriendService.swift */; };
 		81DA67AF3033337C0079EE35 /* FriendResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67AE3033337C0079EE35 /* FriendResponses.swift */; };
 		81DA67B130333C340079EE35 /* FriendRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67B030333C340079EE35 /* FriendRequests.swift */; };
@@ -98,7 +99,6 @@
 		81618157301F256200A2DDA0 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		81618165301F367000A2DDA0 /* AuthRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRootView.swift; sourceTree = "<group>"; };
 		8161816C301F4A8D00A2DDA0 /* FriendRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestViewModel.swift; sourceTree = "<group>"; };
-		8161816E301F4C1100A2DDA0 /* FriendListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListViewModel.swift; sourceTree = "<group>"; };
 		81687401302F1BE4000D7DCA /* Logger+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Extensions.swift"; sourceTree = "<group>"; };
 		81687406302F27AE000D7DCA /* SearchFriendScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendScreen.swift; sourceTree = "<group>"; };
 		8168745D302F7A53000D7DCA /* NewPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewModel.swift; sourceTree = "<group>"; };
@@ -130,8 +130,10 @@
 		818F25333018EF7100678EF5 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		818FFF5B30345E8A00D55DE4 /* FriendshipStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendshipStatus.swift; sourceTree = "<group>"; };
 		818FFF5D3034AA0000D55DE4 /* FriendRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestView.swift; sourceTree = "<group>"; };
+		819DFB7C30356F90007E94DE /* FriendsEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsEndpoint.swift; sourceTree = "<group>"; };
+		819DFB7E303576C7007E94DE /* FriendRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRowView.swift; sourceTree = "<group>"; };
 		81DA67A83032F7D10079EE35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
-		81DA67AA303332120079EE35 /* FriendEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendEndpoint.swift; sourceTree = "<group>"; };
+		81DA67AA303332120079EE35 /* FriendRequestEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestEndpoint.swift; sourceTree = "<group>"; };
 		81DA67AC303333010079EE35 /* FriendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendService.swift; sourceTree = "<group>"; };
 		81DA67AE3033337C0079EE35 /* FriendResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendResponses.swift; sourceTree = "<group>"; };
 		81DA67B030333C340079EE35 /* FriendRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequests.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 			children = (
 				815DCAAA301DA41E00AD470A /* ProfileScreen.swift */,
 				815DCAAE301DADAC00AD470A /* FriendListScreen.swift */,
+				819DFB7E303576C7007E94DE /* FriendRowView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -336,7 +339,6 @@
 				818F25043018B2D000678EF5 /* AuthViewModel.swift */,
 				818F25063018B3C300678EF5 /* TimelineViewModel.swift */,
 				815DCAAC301DA4A100AD470A /* ProfileViewModel.swift */,
-				8161816E301F4C1100A2DDA0 /* FriendListViewModel.swift */,
 				815DCAB2301DC54300AD470A /* NotificationViewModel.swift */,
 				8161816C301F4A8D00A2DDA0 /* FriendRequestViewModel.swift */,
 				8168745D302F7A53000D7DCA /* NewPostViewModel.swift */,
@@ -401,7 +403,8 @@
 				818F25293018BB4B00678EF5 /* AuthEndpoint.swift */,
 				811E6052302B293800542203 /* PostEndpoint.swift */,
 				811E6058302B364700542203 /* UserEndpoint.swift */,
-				81DA67AA303332120079EE35 /* FriendEndpoint.swift */,
+				81DA67AA303332120079EE35 /* FriendRequestEndpoint.swift */,
+				819DFB7C30356F90007E94DE /* FriendsEndpoint.swift */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -509,6 +512,7 @@
 				8168746E3031AF03000D7DCA /* TimelineStackView.swift in Sources */,
 				818F25093018B3F600678EF5 /* NetworkError.swift in Sources */,
 				818FFF5C30345E8A00D55DE4 /* FriendshipStatus.swift in Sources */,
+				819DFB7D30356F90007E94DE /* FriendsEndpoint.swift in Sources */,
 				815DCAB3301DC54300AD470A /* NotificationViewModel.swift in Sources */,
 				818F25073018B3C300678EF5 /* TimelineViewModel.swift in Sources */,
 				815DCAA8301DA16F00AD470A /* TabRootView.swift in Sources */,
@@ -518,6 +522,7 @@
 				811E6055302B2D7900542203 /* PostRequests.swift in Sources */,
 				815DCAB1301DC3CE00AD470A /* FriendRequestScreen.swift in Sources */,
 				811B947B302C7A2A00C3F545 /* UIImage+Extensions.swift in Sources */,
+				819DFB7F303576C7007E94DE /* FriendRowView.swift in Sources */,
 				818F250E3018B44400678EF5 /* AuthService.swift in Sources */,
 				810EE0123019D9D9005FED56 /* AlertManager.swift in Sources */,
 				8161816D301F4A8D00A2DDA0 /* FriendRequestViewModel.swift in Sources */,
@@ -542,7 +547,7 @@
 				811E6057302B2E4A00542203 /* PostService.swift in Sources */,
 				810EE0213019EB68005FED56 /* LoadingOverlay.swift in Sources */,
 				811E6059302B364700542203 /* UserEndpoint.swift in Sources */,
-				81DA67AB303332120079EE35 /* FriendEndpoint.swift in Sources */,
+				81DA67AB303332120079EE35 /* FriendRequestEndpoint.swift in Sources */,
 				811E6053302B293800542203 /* PostEndpoint.swift in Sources */,
 				818F25233018BACF00678EF5 /* SignUpScreen.swift in Sources */,
 				818F25313018E05B00678EF5 /* TokenManager.swift in Sources */,
@@ -559,7 +564,6 @@
 				818F24FB3018B0BC00678EF5 /* FriendsApp.swift in Sources */,
 				818F251C3018B66A00678EF5 /* AuthResponses.swift in Sources */,
 				81687402302F1BE4000D7DCA /* Logger+Extensions.swift in Sources */,
-				8161816F301F4C1100A2DDA0 /* FriendListViewModel.swift in Sources */,
 				811E605D302B375C00542203 /* UserResponses.swift in Sources */,
 				81DA67AD303333010079EE35 /* FriendService.swift in Sources */,
 			);

@@ -14,23 +14,33 @@ final class FriendService {
         self.client = client
     }
     
-    func getFriendRequests() async throws -> [FriendRequestResponse] {
-        try await client.request(endpoint: FriendEndpoint.friendRequests)
-    }
+    // MARK: - Friend Request Endpoints
     
-    func getFriendshipStatus(userID: Int) async throws -> FriendshipStatusResponse {
-        try await client.request(endpoint: FriendEndpoint.getFriendshipStatus(userId: userID))
+    func getFriendRequests() async throws -> [FriendRequestResponse] {
+        try await client.request(endpoint: FriendRequestEndpoint.list)
     }
     
     func sendFriendRequest(receiverId: Int) async throws -> NewFriendRequestResponse {
-        try await client.request(endpoint: FriendEndpoint.sendRequest(receiverId: receiverId))
-    }
-    
-    func declineFriendRequest(id: Int) async throws {
-        try await client.requestVoid(endpoint: FriendEndpoint.declineRequest(id: id))
+        try await client.request(endpoint: FriendRequestEndpoint.send(receiverId: receiverId))
     }
     
     func acceptFriendRequest(id: Int) async throws {
-        try await client.requestVoid(endpoint: FriendEndpoint.acceptRequest(id: id))
+        try await client.requestVoid(endpoint: FriendRequestEndpoint.accept(id: id))
     }
+    
+    func declineFriendRequest(id: Int) async throws {
+        try await client.requestVoid(endpoint: FriendRequestEndpoint.decline(id: id))
+    }
+    
+    // MARK: - Friends Endpoints
+    
+    func getFriendshipStatus(userID: Int) async throws -> FriendshipStatusResponse {
+        try await client.request(endpoint: FriendsEndpoint.status(userID: userID))
+    }
+    
+    func getFriendList() async throws -> [UsernameResponse] {
+        try await client.request(endpoint: FriendsEndpoint.list)
+    }
+    
+    
 }

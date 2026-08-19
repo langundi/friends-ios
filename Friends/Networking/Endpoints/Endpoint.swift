@@ -27,7 +27,7 @@ protocol Endpoint {
 }
 
 extension Endpoint {
-    var baseURL: String { "http://192.168.1.8:8080" }
+    var baseURL: String { "http://192.168.1.7:8080" }
     
     var queryItems: [URLQueryItem]? { return nil }
     var headers: [String: String]? { return nil }

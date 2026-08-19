@@ -13,7 +13,7 @@ struct UserResponse: Decodable {
     let username: String
 }
 
-struct SearchUsernameResponse: Decodable {
+struct UsernameResponse: Identifiable, Decodable {
     let id: Int
     let username: String
 }

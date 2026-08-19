@@ -14,7 +14,7 @@ final class SearchViewModel {
     let friendService: FriendService
     
     var isLoading: Bool = false
-    var searchedUser: SearchUsernameResponse?
+    var searchedUser: UsernameResponse?
     var status: FriendshipStatus?
     
     init(userService: UserService, friendService: FriendService) {

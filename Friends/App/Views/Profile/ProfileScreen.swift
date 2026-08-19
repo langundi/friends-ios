@@ -17,6 +17,7 @@ struct ProfileScreen: View {
     @State private var showDeleteButton = false
     
     private var columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 3)
+    private var friendCount: Int { viewModel.friends.count }
     
     init(factory: ViewModelFactory) {
         _viewModel = State(initialValue: factory.makeProfileViewModel())
@@ -42,7 +43,7 @@ struct ProfileScreen: View {
                         Button {
                             router.push(to: .friendList)
                         } label: {
-                            Text("5 Friends")
+                            Text("\(friendCount) Friends")
                                 .font(.title3)
                         }
                         .buttonStyle(.plain)
@@ -109,9 +110,11 @@ struct ProfileScreen: View {
         }
         .task {
             await viewModel.loadProfile()
+            await viewModel.getFriendList()
         }
         .refreshable {
             await viewModel.refreshProfile()
+            await viewModel.refreshFriendList()
         }
     }
 }

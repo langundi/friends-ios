@@ -8,38 +8,23 @@
 import SwiftUI
 
 struct FriendListScreen: View {
+    @State private var viewModel: ProfileViewModel
     
-    @State private var viewModel: FriendListViewModel
-    
-    private var friendCount = 10
+    var sortedFriends: [UsernameResponse] {
+        viewModel.friends.sorted { $0.username < $1.username }
+    }
     
     init(factory: ViewModelFactory) {
-        _viewModel = State(initialValue: factory.makeFriendListViewModel())
+        _viewModel = State(initialValue: factory.makeProfileViewModel())
     }
     
     var body: some View {
         List {
-            ForEach(0..<friendCount, id: \.self) { i in
-                HStack(spacing: 24) {
-                    Circle()
-                        .foregroundStyle(.gray.opacity(0.15))
-                        .frame(maxWidth: 50, maxHeight: 50)
-                    
-                    Text("@username")
-                        .font(.headline)
-                        .padding(.vertical)
-                    
-                    Spacer(minLength: 0)
-                    
-                    Menu("", systemImage: "ellipsis") {
-                        Button("Unfriend", systemImage: "person.slash.fill") {
-                            
-                        }
-                        
-                        Button("Block", systemImage: "nosign") {
-                            
-                        }
-                    }
+            ForEach(sortedFriends) { friend in
+                FriendRowView(username: friend.username) {
+                    print("unfriend")
+                } onBlockAction: {
+                    print("block")
                 }
                 .listRowSeparator(.hidden)
             }
@@ -48,6 +33,12 @@ struct FriendListScreen: View {
         .scrollIndicators(.hidden)
         .navigationTitle("Friends")
         .navigationBarTitleDisplayMode(.inline)
+        .task {
+            await viewModel.getFriendList()
+        }
+        .refreshable {
+            await viewModel.refreshFriendList()
+        }
     }
 }
 
