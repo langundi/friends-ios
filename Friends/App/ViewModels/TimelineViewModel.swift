@@ -10,61 +10,51 @@ import OSLog
 
 @Observable
 final class TimelineViewModel {
-    private let postService: PostService
     
     var isLoading: Bool = false
     var hasLoaded: Bool = false
-    var timelinePosts: [PostResponse] = []
+    var timeline: [PostResponse] = []
     var lastFetchedAt: Date?
     private let staleTreshold: TimeInterval = 10
+    
+    private let postService: PostService
     
     init(postService: PostService) {
         self.postService = postService
     }
     
+    /// Fetch timeline.
     func getTimeline() async {
-        print("get")
         guard !hasLoaded else { return }
-        
         isLoading = true
         defer { isLoading = false }
         
         do {
-            timelinePosts = try await postService.getTimeline()
-            
-            hasLoaded = true
-            
+            timeline = try await postService.getTimeline()
             lastFetchedAt = Date()
-            
-            print("last fetch: \(lastFetchedAt)")
+            hasLoaded = true
         } catch let networkError as NetworkError {
             switch networkError {
             case .noDataRecieved:
-                Logger.network.warning("Error fetching timeline: \(networkError.message)")
                 hasLoaded = true
+                Logger.network.warning("Timeline: \(networkError.message)")
             default:
-                AlertManager.shared.showAlert(
-                    title: "An error occured",
-                    message: networkError.message
-                )
+                AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+                Logger.network.error("Error fetching timeline: \(networkError.message)")
             }
         } catch {
-            AlertManager.shared.showAlert(
-                title: "An error occured",
-                message: error.localizedDescription
-            )
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error fetching timeline: \(error)")
         }
     }
     
+    /// Re-fetch timeline.
     func refreshTimeline() async {
-        print("refresh")
         hasLoaded = false
         await getTimeline()
     }
     
     func refreshIfStale() async {
-        print("stale refresh")
-        print("last: \(lastFetchedAt)")
         guard let lastFetchedAt else {
             return
         }
@@ -75,10 +65,12 @@ final class TimelineViewModel {
     }
 }
 
+// MARK: - Mock Timeline
+
 extension TimelineViewModel {
-    static var mock: TimelineViewModel {
+    static var mockTimeline: TimelineViewModel {
         let vm = TimelineViewModel(postService: PostService(client: APIClient.shared))
-        vm.timelinePosts = [
+        vm.timeline = [
             PostResponse(
                 id: 1,
                 userID: 1,
@@ -109,7 +101,7 @@ extension TimelineViewModel {
                 caption: "Test 4",
                 imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                 objectKey: "posts/1/image.jpeg",
-                createdAt: Date().addingTimeInterval(7200)
+                createdAt: Date().addingTimeInterval(14400)
             ),
             PostResponse(
                 id: 5,
@@ -117,7 +109,7 @@ extension TimelineViewModel {
                 caption: "Test 5",
                 imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                 objectKey: "posts/1/image.jpeg",
-                createdAt: Date().addingTimeInterval(7200)
+                createdAt: Date().addingTimeInterval(28800)
             ),
             PostResponse(
                 id: 6,
@@ -125,7 +117,7 @@ extension TimelineViewModel {
                 caption: "Test 6",
                 imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                 objectKey: "posts/1/image.jpeg",
-                createdAt: Date().addingTimeInterval(7200)
+                createdAt: Date().addingTimeInterval(57600)
             ),
         ]
         vm.isLoading = false
@@ -134,7 +126,7 @@ extension TimelineViewModel {
     
     static var mockEmpty: TimelineViewModel {
         let vm = TimelineViewModel(postService: PostService(client: APIClient.shared))
-        vm.timelinePosts = []
+        vm.timeline = []
         vm.isLoading = false
         return vm
     }

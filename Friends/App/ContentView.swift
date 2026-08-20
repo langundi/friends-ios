@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(AlertManager.self) var alert
     @AppStorage(Constants.isUserLoggedIn) var isLoggedIn: Bool = false
+    @State private var alert = AlertManager.shared
     @State private var authRouter = AuthRouter()
     @State private var factory = ViewModelFactory()
     

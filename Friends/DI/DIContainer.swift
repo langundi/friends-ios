@@ -9,7 +9,7 @@ import Foundation
 
 final class ViewModelFactory {
     
-    // MARK: - Lazy Services
+    // MARK: - Services
     
     lazy var authService: AuthService = {
         AuthService(client: APIClient.shared)
@@ -27,14 +27,24 @@ final class ViewModelFactory {
         FriendService(client: APIClient.shared)
     }()
     
-    // MARK: - Lazy ViewModels
+    // MARK: - Stores
+    
+    lazy var postStore: PostStore = {
+        PostStore(service: postService)
+    }()
+    
+    lazy var userStore: UserStore = {
+        UserStore(service: userService)
+    }()
+    
+    // MARK: - ViewModels
     
     lazy var timelineViewModel: TimelineViewModel = {
         return TimelineViewModel(postService: postService)
     }()
     
     lazy var profileViewModel: ProfileViewModel = {
-        return ProfileViewModel(authService: authService, userService: userService, postService: postService, friendService: friendService)
+        return ProfileViewModel(authService: authService, friendService: friendService, userStore: userStore, postStore: postStore)
     }()
     
     lazy var searchViewModel: SearchViewModel = {

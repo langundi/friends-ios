@@ -14,9 +14,9 @@ struct ProfileScreen: View {
     @Environment(AppRouter.self) var router
     @State private var viewModel: ProfileViewModel
     @State private var timelineViewModel: TimelineViewModel
-    @State private var showDeleteButton = false
     
     private var columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 3)
+    private var postCount: Int { viewModel.posts.count }
     private var friendCount: Int { viewModel.friends.count }
     
     init(factory: ViewModelFactory) {
@@ -37,7 +37,7 @@ struct ProfileScreen: View {
                         .fontWeight(.medium)
                     
                     HStack(alignment: .center, spacing: 32) {
-                        Text("\(viewModel.posts.count) Posts")
+                        Text("\(postCount) Posts")
                             .font(.title3)
                         
                         Button {
@@ -61,13 +61,7 @@ struct ProfileScreen: View {
                 spacing: 8
             ) {
                 ForEach(viewModel.posts) { post in
-                    KFImage(URL(string: post.imageURL))
-                        .resizable()
-                        .onFailure { error in
-                            Logger.kingfisher.error("KF Error: \(error)")
-                        }
-                        .frame(maxWidth: .infinity)
-                        .aspectRatio(1.0, contentMode: .fit)
+                    ImageView(imageURL: post.imageURL)
                         .contextMenu {
                             Button(role: .destructive) {
                                 Task {
@@ -109,11 +103,11 @@ struct ProfileScreen: View {
             }
         }
         .task {
-            await viewModel.loadProfile()
+            await viewModel.loadProfileAndPosts()
             await viewModel.getFriendList()
         }
         .refreshable {
-            await viewModel.refreshProfile()
+            await viewModel.refreshProfileAndPosts()
             await viewModel.refreshFriendList()
         }
     }

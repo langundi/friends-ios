@@ -28,7 +28,6 @@ final class AuthService {
     }
     
     func logoutUser(refresh: RefreshRequest) async throws {
-        // REFRESH HASN'T UPDATED AFTER REFRESH, FIND WAY TO CALL WITH NEW REFRESH
         try await client.requestVoid(endpoint: AuthEndpoint.logout(refresh: refresh))
     }
 }

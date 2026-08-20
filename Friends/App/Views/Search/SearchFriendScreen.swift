@@ -53,7 +53,7 @@ struct SearchFriendScreen: View {
                         case .notAdded:
                             Button {
                                 Task {
-                                    await viewModel.sendFriendRequest(receiverId: user.id) {
+                                    await viewModel.sendFriendRequest(receiverID: user.id) {
                                         viewModel.status = .sent
                                     }
                                 }

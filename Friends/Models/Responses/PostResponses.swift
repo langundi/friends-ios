@@ -38,12 +38,23 @@ struct UploadImageResponse: Decodable {
     }
 }
 
+// MARK: - Post Dummy
+
 extension PostResponse {
     
     static let singlePost = PostResponse(
         id: 1,
         userID: 1,
         caption: "Lorem ipsum dolor sit amet, in anim eiusmod deserunt non eiusmod",
+        imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        objectKey: "posts/1/mock-object-key.jpeg",
+        createdAt: Date()
+    )
+    
+    static let noCaptionPost = PostResponse(
+        id: 1,
+        userID: 1,
+        caption: "",
         imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         objectKey: "posts/1/mock-object-key.jpeg",
         createdAt: Date()

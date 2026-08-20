@@ -10,15 +10,17 @@ import OSLog
 
 @Observable
 final class FriendRequestViewModel {
-    private let friendService: FriendService
     
     var isLoading: Bool = false
     var friendRequests: [FriendRequestResponse] = []
+    
+    private let friendService: FriendService
     
     init(friendService: FriendService) {
         self.friendService = friendService
     }
     
+    /// Fetch user's friend requests.
     func getFriendRequests() async {
         isLoading = true
         defer { isLoading = false }
@@ -29,7 +31,7 @@ final class FriendRequestViewModel {
         } catch let networkError as NetworkError {
             switch networkError {
             case .noDataRecieved:
-                Logger.network.warning("Profile Posts: \(networkError.message)")
+                Logger.network.warning("Friend requests: \(networkError.message)")
             default:
                 AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
                 Logger.network.error("Error fetching friend requests: \(networkError.message)")
@@ -40,6 +42,8 @@ final class FriendRequestViewModel {
         }
     }
     
+    /// Decline a friend request.
+    /// - Parameter id: Friend Request ID.
     func declineFriendRequest(id: Int) async {
         isLoading = true
         defer { isLoading = false }
@@ -56,6 +60,8 @@ final class FriendRequestViewModel {
         }
     }
     
+    /// Accept a friend request.
+    /// - Parameter id: Friend Request ID.
     func acceptFriendRequest(id: Int) async {
         isLoading = true
         defer { isLoading = false }

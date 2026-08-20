@@ -23,23 +23,12 @@ struct TimelineScreen: View {
             if viewModel.isLoading {
                 LoadingOverlay()
             } else {
-                TimelineStackView(posts: viewModel.timelinePosts)
+                TimelineStackView(posts: viewModel.timeline)
                     .environment(viewModel)
             }
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    Task {
-                        await viewModel.refreshTimeline()
-                    }
-                } label: {
-                    Label("Refresh Timeline", systemImage: "arrow.counterclockwise")
-                        .labelStyle(.iconOnly)
-                }
-            }
-            
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button {
                     router.push(to: .notification)
@@ -51,7 +40,7 @@ struct TimelineScreen: View {
                 Button {
                     router.push(to: .newPost)
                 } label: {
-                    Label("New Post", systemImage: "camera")
+                    Label("New Post", systemImage: "plus")
                         .labelStyle(.iconOnly)
                 }
             }
@@ -63,6 +52,9 @@ struct TimelineScreen: View {
         }
         .task {
             await viewModel.getTimeline()
+        }
+        .refreshable {
+            await viewModel.refreshTimeline()
         }
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .active {
@@ -87,7 +79,7 @@ struct TimelineScreen: View {
 }
 
 #Preview("With Posts") {
-    let mock = TimelineViewModel.mock.timelinePosts
+    let mock = TimelineViewModel.mockTimeline.timeline
     NavigationStack {
         TimelineStackView(posts: mock)
             .navigationTitle("Timeline")

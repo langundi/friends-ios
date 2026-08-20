@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import Kingfisher
-import OSLog
 
 struct PostView: View {
     var post: PostResponse
@@ -16,38 +14,32 @@ struct PostView: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: 12) {
-            if post.caption != "" {
-                Text(post.caption)
-                    .frame(maxWidth: .infinity, alignment: .center)
+            HStack(spacing: 12) {
+                Circle()
+                    .frame(maxWidth: 40, maxHeight: 40)
+                
+                Text("@username")
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             
-            KFImage(URL(string: post.imageURL))
-                .resizable()
-                .onFailure { error in
-                    Logger.kingfisher.error("KF Error: \(error)")
-                }
-                .frame(maxWidth: .infinity)
-                .aspectRatio(1.0, contentMode: .fit)
+            ImageView(imageURL: post.imageURL)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             
             HStack(alignment: .top) {
-                HStack(spacing: 12) {
-                    Circle()
-                        .frame(maxWidth: 40, maxHeight: 40)
-                    
-                    Text("@username")
+                if post.caption != "" {
+                    Text(post.caption)
+                        .frame(maxWidth: .infinity, alignment: .center)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Spacer()
                 
                 HStack(spacing: 16) {
-                    CommentButton() {
-                        showComment.toggle()
-                    }
-                    
                     LikeButton() {
                         print("like pressed")
+                    }
+                    
+                    CommentButton() {
+                        showComment.toggle()
                     }
                 }
             }
@@ -64,6 +56,10 @@ struct PostView: View {
     }
 }
 
-#Preview {
+#Preview("Post") {
     PostView(post: PostResponse.singlePost)
+}
+
+#Preview("Captionless") {
+    PostView(post: PostResponse.noCaptionPost)
 }

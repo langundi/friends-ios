@@ -11,7 +11,7 @@ struct NewFriendRequestResponse: Identifiable, Decodable {
     let id: Int
     let senderID: Int
     let receiverID: Int
-    let status: String // try with enum later
+    let status: String
     let createdAt: Date
     
     enum CodingKeys: String, CodingKey {
@@ -26,18 +26,18 @@ struct NewFriendRequestResponse: Identifiable, Decodable {
 struct FriendRequestResponse: Identifiable, Decodable {
     let id: Int
     let senderID: Int
-    let senderUsername: String
     let receiverID: Int
-    let status: String // try with enum later
+    let status: String
     let createdAt: Date
+    let senderUsername: String
     
     enum CodingKeys: String, CodingKey {
         case id
         case senderID = "sender_id"
-        case senderUsername = "sender_username"
         case receiverID = "receiver_id"
         case status
         case createdAt = "created_at"
+        case senderUsername = "sender_username"
     }
 }
 

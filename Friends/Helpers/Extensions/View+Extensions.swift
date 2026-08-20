@@ -8,7 +8,6 @@
 import SwiftUI
 
 extension View {
-    
     @ViewBuilder
     func removeRowInset() -> some View {
         self.listRowBackground(Color.clear)
@@ -16,16 +15,14 @@ extension View {
             .gesture(DragGesture(minimumDistance: 0))
     }
     
-    
     // MARK: - Previews
     
     @ViewBuilder
     func withPreviewEnvironments() -> some View {
-        let router = AppRouter()
         let alert = AlertManager.shared
+        let router = AppRouter()
         
         self.environment(router)
             .environment(alert)
     }
-    
 }

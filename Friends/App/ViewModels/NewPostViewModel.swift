@@ -11,19 +11,22 @@ import OSLog
 
 @Observable
 final class NewPostViewModel {
+    
+    var isLoading: Bool = false
+    
     private let postService: PostService
+    private let postStore: PostStore
     
     init(postService: PostService) {
         self.postService = postService
+        self.postStore = PostStore(service: postService)
     }
-    
-    var isLoading: Bool = false
     
     /// Upload a new post.
     /// - Parameters:
     ///   - image: Post image.
     ///   - caption: Post caption.
-    ///   - completion: Completion closure.
+    ///   - completion: Completion handler.
     func uploadNewPost(image: UIImage, caption: String, completion: @escaping () -> Void) async {
         isLoading = true
         defer { isLoading = false }
@@ -33,33 +36,22 @@ final class NewPostViewModel {
             return
         }
         
-        let filename = UUID().uuidString
-        let request = UploadImageRequest(filename: filename, contentType: "image/jpeg")
-        
         do {
-            // Fetch presigned URL
-            let presignedResponse = try await postService.getPresignedUrl(request: request)
-            
             // Upload image to presigned URL
-            try await postService.uploadImageToBucket(uploadUrl: presignedResponse.uploadURL, imageData: imageData)
-            
-            let newPostRequest = NewPostRequest(
-                caption: caption,
-                imageUrl: presignedResponse.publicURL,
-                objectKey: presignedResponse.objectKey
-            )
+            let filename = UUID().uuidString
+            let uploadImageRequest = UploadImageRequest(filename: filename, contentType: "image/jpeg")
+            let presignedResult = try await postService.getPresignedUrl(request: uploadImageRequest)
+            try await postService.uploadImageToBucket(uploadUrl: presignedResult.uploadURL, imageData: imageData)
             
             // Upload post
-            let newPost = try await postService.newPost(request: newPostRequest)
+            let newPostRequest = NewPostRequest(caption: caption, imageUrl: presignedResult.publicURL, objectKey: presignedResult.objectKey)
+            let postResult = try await postService.newPost(request: newPostRequest)
             
             // Delay to compensate for Kingfisher TLS error
             try? await Task.sleep(for: .seconds(2))
             
-            // Insert new post to posts array in services
-            postService.insert(newPost)
-            
-            Logger.network.info("New post created for id: \(newPost.id)")
-            
+            // Insert new post to post store
+            postStore.insert(postResult)
             completion()
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)

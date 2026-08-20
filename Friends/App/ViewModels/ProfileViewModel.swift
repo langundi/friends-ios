@@ -10,121 +10,71 @@ import OSLog
 
 @Observable
 final class ProfileViewModel {
-    private let authService: AuthService
-    private let userService: UserService
-    private let postService: PostService
-    private let friendService: FriendService
     
     var isLoading: Bool = false
     
-    // Profile ViewModel Properties
-    var username: String = ""
-    var posts: [PostResponse] { postService.getPosts() }
+    // ProfileScreen Properties
+    var username: String {
+        userStore.username
+    }
+    
+    var posts: [PostResponse] {
+        postStore.posts
+    }
+    
     private var hasLoadedProfile: Bool = false
     
-    // FriendList ViewModel Properties
+    // FriendListScreen Properties
     var friends: [FriendResponse] = []
     private var hasLoadedFriends: Bool = false
     
+    // Login State
     private var isLoggedIn: Bool {
         get { UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) }
         set { UserDefaults.standard.set(newValue, forKey: Constants.isUserLoggedIn) }
     }
     
-    init(authService: AuthService, userService: UserService, postService: PostService, friendService: FriendService) {
+    private let authService: AuthService
+    private let friendService: FriendService
+    private let postStore: PostStore
+    private let userStore: UserStore
+    
+    init(authService: AuthService, friendService: FriendService, userStore: UserStore, postStore: PostStore) {
         self.authService = authService
-        self.userService = userService
-        self.postService = postService
         self.friendService = friendService
+        self.userStore = userStore
+        self.postStore = postStore
         
         Task {
-            await loadProfile()
+            await loadProfileAndPosts()
         }
     }
     
-    /// Sign out user and delete access and refresh tokens from keychain.
-    func signOutUser() async {
-        isLoading = true
-        defer { isLoading = false }
-        
-        do {
-            // Signs out user automatically when keychain is empty
-            guard let refreshToken: String = try? Keychain.get(Constants.refreshToken) else {
-                isLoggedIn = false
-                throw NetworkError.sessionExpired
-            }
-            
-            let refresh = RefreshRequest(refreshToken: refreshToken)
-            try await authService.logoutUser(refresh: refresh)
-            
-            deleteTokensFromKeychain()
-            isLoggedIn = false
-        } catch let networkError as NetworkError {
-            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
-            Logger.network.error("Error signing out: \(networkError.message)")
-        } catch {
-            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
-            Logger.network.error("Error signing out: \(error)")
-        }
-    }
-    
-    private func deleteTokensFromKeychain() {
-        _ = Keychain.delete(Constants.accessToken)
-        _ = Keychain.delete(Constants.refreshToken)
-    }
+    // MARK: - Profile and Posts
     
     /// Load user profile and posts.
-    func loadProfile() async {
+    func loadProfileAndPosts() async {
         guard !hasLoadedProfile else { return }
-        
         isLoading = true
         defer { isLoading = false }
         
         async let profile: () = getMyProfile()
         async let posts: () = getMyPosts()
-        
         _ = await (profile, posts)
         
         hasLoadedProfile = true
     }
     
     /// Re-fetches profile and posts.
-    func refreshProfile() async {
+    func refreshProfileAndPosts() async {
         hasLoadedProfile = false
-        await loadProfile()
-    }
-    
-    func deletePost(id: Int, objectKey: String) async {
-        isLoading = true
-        defer { isLoading = false }
-        
-        let request = DeletePostRequest(id: id, objectKey: objectKey)
-        
-        do {
-            try await postService.deletePost(request: request)
-            
-            // Refresh posts after delete
-            await getMyPosts()
-        } catch let networkError as NetworkError {
-            switch networkError {
-            case .noDataRecieved:
-                postService.setPosts([])
-                Logger.network.warning("Profile Posts: \(networkError.message)")
-            default:
-                AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
-                Logger.network.error("Error deleting post: \(networkError.message)")
-            }
-        } catch {
-            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
-            Logger.network.error("Error deleting post: \(error)")
-        }
+        await loadProfileAndPosts()
     }
     
     /// Fetch user profile.
     private func getMyProfile() async {
         do {
-            let user = try await userService.getMyProfile()
-            username = user.username
+            try await userStore.getMyProfile()
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error fetching profile: \(networkError.message)")
@@ -135,14 +85,13 @@ final class ProfileViewModel {
     }
     
     /// Fetch user posts.
-    private func getMyPosts() async {
+    private func getMyPosts() async  {
         do {
-            let posts = try await postService.getMyPosts()
-            postService.setPosts(posts)
+            try await postStore.getMyPosts()
         } catch let networkError as NetworkError {
             switch networkError {
             case .noDataRecieved:
-                Logger.network.warning("Profile Posts: \(networkError.message)")
+                Logger.network.warning("Profile posts: \(networkError.message)")
             default:
                 AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
                 Logger.network.error("Error fetching posts: \(networkError.message)")
@@ -153,21 +102,42 @@ final class ProfileViewModel {
         }
     }
     
-    // MARK: - Friend List
-    
-    func getFriendList() async {
-        guard !hasLoadedFriends else { return }
-        
+    /// Delete a post.
+    /// - Parameters:
+    ///   - id: Post ID.
+    ///   - objectKey: Image path.
+    func deletePost(id: Int, objectKey: String) async {
         isLoading = true
         defer { isLoading = false }
         
         do {
-            let response = try await friendService.getFriendList()
-            friends = response
+            let request = DeletePostRequest(id: id, objectKey: objectKey)
+            try await postStore.deletePost(request: request)
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error deleting post: \(networkError.message)")
+        } catch {
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error deleting post: \(error)")
+        }
+    }
+    
+    // MARK: - Friend List
+    
+    /// Fetch friend list.
+    func getFriendList() async {
+        guard !hasLoadedFriends else { return }
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            let result = try await friendService.getFriendList()
+            friends = result
             hasLoadedFriends = true
         } catch let networkError as NetworkError {
             switch networkError {
             case .noDataRecieved:
+                friends = []
                 Logger.network.warning("Friend list: \(networkError.message)")
             default:
                 AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
@@ -179,11 +149,14 @@ final class ProfileViewModel {
         }
     }
     
+    /// Re-fetches friend list.
     func refreshFriendList() async {
         hasLoadedFriends = false
         await getFriendList()
     }
     
+    /// Remove a friend from friend list.
+    /// - Parameter id: Friendship ID.
     func unfriend(id: Int) async {
         isLoading = true
         defer { isLoading = false }
@@ -198,5 +171,38 @@ final class ProfileViewModel {
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error fetching friend list: \(error)")
         }
+    }
+    
+    // MARK: - Settings
+    
+    /// Sign out user and delete access and refresh tokens from keychain.
+    func signOutUser() async {
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            guard let refreshToken: String = try? Keychain.get(Constants.refreshToken) else {
+                isLoggedIn = false
+                throw NetworkError.sessionExpired
+            }
+            
+            let refresh = RefreshRequest(refreshToken: refreshToken)
+            try await authService.logoutUser(refresh: refresh)
+            
+            deleteTokensFromKeychain()
+            
+            isLoggedIn = false
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error signing out: \(networkError.message)")
+        } catch {
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error signing out: \(error)")
+        }
+    }
+    
+    private func deleteTokensFromKeychain() {
+        _ = Keychain.delete(Constants.accessToken)
+        _ = Keychain.delete(Constants.refreshToken)
     }
 }

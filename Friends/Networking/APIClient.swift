@@ -35,7 +35,7 @@ struct APIClient {
         }
     }
     
-    func uploadImageWith(presignedUrl: String, imageData: Data) async throws {
+    func uploadImage(presignedUrl: String, imageData: Data) async throws {
         guard let url = URL(string: presignedUrl) else {
             throw NetworkError.invalidURL
         }

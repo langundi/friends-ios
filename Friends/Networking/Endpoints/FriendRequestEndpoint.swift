@@ -9,7 +9,7 @@ import Foundation
 
 enum FriendRequestEndpoint: Endpoint {
     case list
-    case send(receiverId: Int)
+    case send(receiverID: Int)
     case accept(id: Int)
     case decline(id: Int)
     
@@ -30,8 +30,8 @@ enum FriendRequestEndpoint: Endpoint {
         switch self {
         case .list:
             return "/friend-request"
-        case .send(let receiverId):
-            return "/friend-request/\(receiverId)"
+        case .send(let receiverID):
+            return "/friend-request/\(receiverID)"
         case .accept(let id):
             return "/friend-request/\(id)"
         case .decline(let id):

@@ -8,19 +8,11 @@
 import Foundation
 
 actor TokenManager {
-    private var currentToken: String?
-    private var refreshTask: Task<String, Error>?
     
-    func validToken() async throws -> String {
-        if let handle = refreshTask {
-            return try await handle.value
-        }
-        
-        guard let token = currentToken else {
-            throw NetworkError.sessionExpired
-        }
-        
-        return token
+    private var refreshTask: Task<String, Error>?
+    private var isLoggedIn: Bool {
+        get { UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) }
+        set { UserDefaults.standard.set(newValue, forKey: Constants.isUserLoggedIn) }
     }
     
     func refreshToken() async throws -> String {
@@ -40,13 +32,14 @@ actor TokenManager {
     
     private func performRefresh() async throws -> String {
         guard let token: String = try? Keychain.get(Constants.refreshToken) else {
+            isLoggedIn = false
             throw NetworkError.sessionExpired
         }
         
         let endpoint = AuthEndpoint.refresh(token: RefreshRequest(refreshToken: token))
         
         guard let url = await URL(string: endpoint.fullURL) else {
-            throw NetworkError.sessionExpired
+            throw NetworkError.invalidURL
         }
         
         let payload = RefreshRequest(refreshToken: token)
@@ -71,10 +64,17 @@ actor TokenManager {
         }
         
         guard (200..<300).contains(response.statusCode) else {
-            throw NetworkError.apiError(
-                statusCode: response.statusCode,
-                message: json.error?.message ?? "Unknown error."
-            )
+            switch response.statusCode {
+            case 401:
+                isLoggedIn = false
+                deleteTokensFromKeychain()
+                throw NetworkError.sessionExpired
+            default:
+                throw NetworkError.apiError(
+                    statusCode: response.statusCode,
+                    message: json.error?.message ?? "Unknown error."
+                )
+            }
         }
         
         guard let result = await json.data else {
@@ -84,5 +84,10 @@ actor TokenManager {
         try? Keychain.set(result.accessToken, Constants.accessToken)
         
         return result.accessToken
+    }
+    
+    private func deleteTokensFromKeychain() {
+        _ = Keychain.delete(Constants.accessToken)
+        _ = Keychain.delete(Constants.refreshToken)
     }
 }

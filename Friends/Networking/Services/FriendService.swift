@@ -20,8 +20,8 @@ final class FriendService {
         try await client.request(endpoint: FriendRequestEndpoint.list)
     }
     
-    func sendFriendRequest(receiverId: Int) async throws -> NewFriendRequestResponse {
-        try await client.request(endpoint: FriendRequestEndpoint.send(receiverId: receiverId))
+    func sendFriendRequest(receiverID: Int) async throws -> NewFriendRequestResponse {
+        try await client.request(endpoint: FriendRequestEndpoint.send(receiverID: receiverID))
     }
     
     func acceptFriendRequest(id: Int) async throws {
@@ -45,6 +45,4 @@ final class FriendService {
     func unfriend(id: Int) async throws {
         try await client.requestVoid(endpoint: FriendsEndpoint.unfriend(id: id))
     }
-    
-    
 }
