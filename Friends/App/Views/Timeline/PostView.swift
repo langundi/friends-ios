@@ -28,7 +28,8 @@ struct PostView: View {
             HStack(alignment: .top) {
                 if post.caption != "" {
                     Text(post.caption)
-                        .frame(maxWidth: .infinity, alignment: .center)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading)
                 }
                 
                 Spacer()
@@ -57,9 +58,9 @@ struct PostView: View {
 }
 
 #Preview("Post") {
-    PostView(post: PostResponse.singlePost)
+    PostView(post: PostResponse.postDummy)
 }
 
 #Preview("Captionless") {
-    PostView(post: PostResponse.noCaptionPost)
+    PostView(post: PostResponse.noCaptionPostDummy)
 }

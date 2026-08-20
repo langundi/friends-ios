@@ -19,57 +19,39 @@ struct TimelineScreen: View {
     }
     
     var body: some View {
-        Group {
-            if viewModel.isLoading {
-                LoadingOverlay()
-            } else {
-                TimelineStackView(posts: viewModel.timeline)
-                    .environment(viewModel)
-            }
-        }
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                Button {
-                    router.push(to: .notification)
-                } label: {
-                    Label("Notifications", systemImage: "bell")
-                        .labelStyle(.iconOnly)
-                }
-                
-                Button {
-                    router.push(to: .newPost)
-                } label: {
-                    Label("New Post", systemImage: "plus")
-                        .labelStyle(.iconOnly)
+        TimelineStackView(posts: viewModel.timeline)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button {
+                        router.push(to: .notification)
+                    } label: {
+                        Label("Notifications", systemImage: "bell")
+                            .labelStyle(.iconOnly)
+                    }
+                    
+                    Button {
+                        router.push(to: .newPost)
+                    } label: {
+                        Label("New Post", systemImage: "plus")
+                            .labelStyle(.iconOnly)
+                    }
                 }
             }
-        }
-        .overlay(alignment: .center) {
-            if viewModel.isLoading {
-                LoadingOverlay()
-            }
-        }
-        .task {
-            await viewModel.getTimeline()
-        }
-        .refreshable {
-            await viewModel.refreshTimeline()
-        }
-        .onChange(of: scenePhase) { _, newPhase in
-            if newPhase == .active {
-                Task {
-                    await viewModel.refreshIfStale()
-//                    print("last fetch: \(viewModel.lastFetchedAt)")
+            .overlay(alignment: .center) {
+                if viewModel.isLoading {
+                    LoadingOverlay()
                 }
             }
-        }
+            .task {
+                await viewModel.getTimeline()
+            }
+            .refreshable {
+                await viewModel.refreshTimeline()
+            }
+            .environment(viewModel)
     }
 }
-
-
-
-
 
 #Preview {
     NavigationStack {
@@ -85,5 +67,5 @@ struct TimelineScreen: View {
             .navigationTitle("Timeline")
             .navigationBarTitleDisplayMode(.inline)
     }
-    .withPreviewEnvironments()  
+    .withPreviewEnvironments()
 }

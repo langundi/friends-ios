@@ -29,33 +29,37 @@ final class ViewModelFactory {
     
     // MARK: - Stores
     
+    lazy var timelineStore: TimelineStore = {
+        TimelineStore(postService: postService)
+    }()
+    
     lazy var postStore: PostStore = {
-        PostStore(service: postService)
+        PostStore(postService: postService)
     }()
     
     lazy var userStore: UserStore = {
-        UserStore(service: userService)
+        UserStore(userService: userService)
+    }()
+    
+    lazy var friendStore: FriendStore = {
+        FriendStore(friendService: friendService)
     }()
     
     // MARK: - ViewModels
     
     lazy var timelineViewModel: TimelineViewModel = {
-        return TimelineViewModel(postService: postService)
+        return TimelineViewModel(timelineStore: timelineStore)
     }()
     
     lazy var profileViewModel: ProfileViewModel = {
-        return ProfileViewModel(authService: authService, friendService: friendService, userStore: userStore, postStore: postStore)
+        return ProfileViewModel(authService: authService, userStore: userStore, postStore: postStore, friendStore: friendStore)
     }()
     
     lazy var searchViewModel: SearchViewModel = {
         return SearchViewModel(userService: userService, friendService: friendService)
     }()
     
-    lazy var notificationViewModel: NotificationViewModel = {
-        return NotificationViewModel()
-    }()
-    
-    // MARK: - Auth Flow ViewModels
+    // MARK: - Auth ViewModels
     
     func makeAuthViewModel() -> AuthViewModel {
         return AuthViewModel(authService: authService)
@@ -72,7 +76,7 @@ final class ViewModelFactory {
     }
     
     func makeNewPostViewModel() -> NewPostViewModel {
-        return NewPostViewModel(postService: postService)
+        return NewPostViewModel(postStore: postStore, timelineStore: timelineStore)
     }
     
     func makeFriendRequestViewModel() -> FriendRequestViewModel {

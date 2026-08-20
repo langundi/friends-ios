@@ -12,37 +12,34 @@ import OSLog
 final class TimelineViewModel {
     
     var isLoading: Bool = false
-    var hasLoaded: Bool = false
-    var timeline: [PostResponse] = []
-    var lastFetchedAt: Date?
-    private let staleTreshold: TimeInterval = 10
     
-    private let postService: PostService
+    var timeline: [PostResponse] {
+        timelineStore.timeline
+    }
     
-    init(postService: PostService) {
-        self.postService = postService
+    private let timelineStore: TimelineStore
+    
+    init(timelineStore: TimelineStore) {
+        self.timelineStore = timelineStore
     }
     
     /// Fetch timeline.
     func getTimeline() async {
-        guard !hasLoaded else { return }
         isLoading = true
         defer { isLoading = false }
         
         do {
-            timeline = try await postService.getTimeline()
-            lastFetchedAt = Date()
-            hasLoaded = true
+            try await timelineStore.loadTimelineIfNeeded()
         } catch let networkError as NetworkError {
             switch networkError {
             case .noDataRecieved:
-                hasLoaded = true
                 Logger.network.warning("Timeline: \(networkError.message)")
             default:
                 AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
                 Logger.network.error("Error fetching timeline: \(networkError.message)")
             }
         } catch {
+            if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error fetching timeline: \(error)")
         }
@@ -50,18 +47,8 @@ final class TimelineViewModel {
     
     /// Re-fetch timeline.
     func refreshTimeline() async {
-        hasLoaded = false
+        timelineStore.invalidateLastFetch()
         await getTimeline()
-    }
-    
-    func refreshIfStale() async {
-        guard let lastFetchedAt else {
-            return
-        }
-        
-        if Date().timeIntervalSince(lastFetchedAt) > staleTreshold {
-            await refreshTimeline()
-        }
     }
 }
 
@@ -69,70 +56,28 @@ final class TimelineViewModel {
 
 extension TimelineViewModel {
     static var mockTimeline: TimelineViewModel {
-        let vm = TimelineViewModel(postService: PostService(client: APIClient.shared))
-        vm.timeline = [
-            PostResponse(
-                id: 1,
-                userID: 1,
-                caption: "Test 1",
-                imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                objectKey: "posts/1/image.jpeg",
-                createdAt: Date()
-            ),
-            PostResponse(
-                id: 2,
-                userID: 1,
-                caption: "",
-                imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                objectKey: "posts/1/image.jpeg",
-                createdAt: Date().addingTimeInterval(3600)
-            ),
-            PostResponse(
-                id: 3,
-                userID: 1,
-                caption: "Test 3",
-                imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                objectKey: "posts/1/image.jpeg",
-                createdAt: Date().addingTimeInterval(7200)
-            ),
-            PostResponse(
-                id: 4,
-                userID: 1,
-                caption: "Test 4",
-                imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                objectKey: "posts/1/image.jpeg",
-                createdAt: Date().addingTimeInterval(14400)
-            ),
-            PostResponse(
-                id: 5,
-                userID: 1,
-                caption: "Test 5",
-                imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                objectKey: "posts/1/image.jpeg",
-                createdAt: Date().addingTimeInterval(28800)
-            ),
-            PostResponse(
-                id: 6,
-                userID: 1,
-                caption: "Test 6",
-                imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                objectKey: "posts/1/image.jpeg",
-                createdAt: Date().addingTimeInterval(57600)
-            ),
-        ]
+        let service = PostService(client: APIClient.shared)
+        let store = TimelineStore(postService: service)
+        let vm = TimelineViewModel(timelineStore: store)
+        let timeline = PostResponse.timelineDummy
+        store.setTimeline(timeline)
         vm.isLoading = false
         return vm
     }
     
     static var mockEmpty: TimelineViewModel {
-        let vm = TimelineViewModel(postService: PostService(client: APIClient.shared))
-        vm.timeline = []
+        let service = PostService(client: APIClient.shared)
+        let store = TimelineStore(postService: service)
+        let vm = TimelineViewModel(timelineStore: store)
+        store.setTimeline([])
         vm.isLoading = false
         return vm
     }
     
     static var mockLoading: TimelineViewModel {
-        let vm = TimelineViewModel(postService: PostService(client: APIClient.shared))
+        let service = PostService(client: APIClient.shared)
+        let store = TimelineStore(postService: service)
+        let vm = TimelineViewModel(timelineStore: store)
         vm.isLoading = true
         return vm
     }

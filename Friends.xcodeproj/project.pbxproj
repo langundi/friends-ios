@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		810AEDF13037477F001773C7 /* Error+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AEDF03037477F001773C7 /* Error+Extensions.swift */; };
+		810AEDF330374E7F001773C7 /* FriendStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AEDF230374E7F001773C7 /* FriendStore.swift */; };
+		810AEDF530375A4F001773C7 /* TimelineStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AEDF430375A4F001773C7 /* TimelineStore.swift */; };
 		810EE0123019D9D9005FED56 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810EE0113019D9D9005FED56 /* AlertManager.swift */; };
 		810EE01D3019E6E9005FED56 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810EE01C3019E6E9005FED56 /* PrimaryButtonStyle.swift */; };
 		810EE0213019EB68005FED56 /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810EE0203019EB68005FED56 /* LoadingOverlay.swift */; };
@@ -76,6 +79,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		810AEDF03037477F001773C7 /* Error+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Extensions.swift"; sourceTree = "<group>"; };
+		810AEDF230374E7F001773C7 /* FriendStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendStore.swift; sourceTree = "<group>"; };
+		810AEDF430375A4F001773C7 /* TimelineStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineStore.swift; sourceTree = "<group>"; };
 		810EE0113019D9D9005FED56 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		810EE01C3019E6E9005FED56 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		810EE0203019EB68005FED56 /* LoadingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
@@ -423,6 +429,7 @@
 			children = (
 				818F25333018EF7100678EF5 /* View+Extensions.swift */,
 				81687401302F1BE4000D7DCA /* Logger+Extensions.swift */,
+				810AEDF03037477F001773C7 /* Error+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -442,6 +449,8 @@
 			children = (
 				81F0DCE3303719E0009074D0 /* PostStore.swift */,
 				81F0DCE5303728CA009074D0 /* ProfileStore.swift */,
+				810AEDF230374E7F001773C7 /* FriendStore.swift */,
+				810AEDF430375A4F001773C7 /* TimelineStore.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -538,6 +547,7 @@
 				815DCAA8301DA16F00AD470A /* TabRootView.swift in Sources */,
 				815DCAAF301DADAC00AD470A /* FriendListScreen.swift in Sources */,
 				81DA67A93032F7D10079EE35 /* SearchViewModel.swift in Sources */,
+				810AEDF530375A4F001773C7 /* TimelineStore.swift in Sources */,
 				816874683031A322000D7DCA /* PostView.swift in Sources */,
 				811E6055302B2D7900542203 /* PostRequests.swift in Sources */,
 				815DCAB1301DC3CE00AD470A /* FriendRequestScreen.swift in Sources */,
@@ -562,6 +572,7 @@
 				8168746A3031AEE1000D7DCA /* CommentButton.swift in Sources */,
 				810EE02C301A5539005FED56 /* PostResponses.swift in Sources */,
 				818F252A3018BB4B00678EF5 /* AuthEndpoint.swift in Sources */,
+				810AEDF13037477F001773C7 /* Error+Extensions.swift in Sources */,
 				810EE01D3019E6E9005FED56 /* PrimaryButtonStyle.swift in Sources */,
 				811E6057302B2E4A00542203 /* PostService.swift in Sources */,
 				810EE0213019EB68005FED56 /* LoadingOverlay.swift in Sources */,
@@ -570,6 +581,7 @@
 				811E6053302B293800542203 /* PostEndpoint.swift in Sources */,
 				818F25233018BACF00678EF5 /* SignUpScreen.swift in Sources */,
 				818F25313018E05B00678EF5 /* TokenManager.swift in Sources */,
+				810AEDF330374E7F001773C7 /* FriendStore.swift in Sources */,
 				815DCAAB301DA41E00AD470A /* ProfileScreen.swift in Sources */,
 				818F25253018BAED00678EF5 /* TimelineScreen.swift in Sources */,
 				818F251A3018B56E00678EF5 /* AuthRequests.swift in Sources */,

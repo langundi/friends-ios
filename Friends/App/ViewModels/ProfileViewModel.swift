@@ -13,7 +13,6 @@ final class ProfileViewModel {
     
     var isLoading: Bool = false
     
-    // ProfileScreen Properties
     var username: String {
         userStore.username
     }
@@ -22,72 +21,72 @@ final class ProfileViewModel {
         postStore.posts
     }
     
-    private var hasLoadedProfile: Bool = false
+    var friends: [FriendResponse] {
+        friendStore.friends
+    }
     
-    // FriendListScreen Properties
-    var friends: [FriendResponse] = []
-    private var hasLoadedFriends: Bool = false
-    
-    // Login State
     private var isLoggedIn: Bool {
         get { UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) }
         set { UserDefaults.standard.set(newValue, forKey: Constants.isUserLoggedIn) }
     }
     
     private let authService: AuthService
-    private let friendService: FriendService
     private let postStore: PostStore
     private let userStore: UserStore
+    private let friendStore: FriendStore
     
-    init(authService: AuthService, friendService: FriendService, userStore: UserStore, postStore: PostStore) {
+    init(authService: AuthService, userStore: UserStore, postStore: PostStore, friendStore: FriendStore) {
         self.authService = authService
-        self.friendService = friendService
         self.userStore = userStore
         self.postStore = postStore
+        self.friendStore = friendStore
         
         Task {
-            await loadProfileAndPosts()
+            await loadProfileData()
         }
     }
     
-    // MARK: - Profile and Posts
-    
-    /// Load user profile and posts.
-    func loadProfileAndPosts() async {
-        guard !hasLoadedProfile else { return }
+    /// Load user profile, posts, and friends.
+    func loadProfileData() async {
         isLoading = true
         defer { isLoading = false }
         
         async let profile: () = getMyProfile()
         async let posts: () = getMyPosts()
-        _ = await (profile, posts)
-        
-        hasLoadedProfile = true
+        async let friends: () = getFriendList()
+        _ = await (profile, posts, friends)
     }
     
-    /// Re-fetches profile and posts.
-    func refreshProfileAndPosts() async {
-        hasLoadedProfile = false
-        await loadProfileAndPosts()
+    /// Re-fetches profile, posts, and friends.
+    func refreshProfileData() async {
+        userStore.invalidateLastFetch()
+        postStore.invalidateLastFetch()
+        friendStore.invalidateLastFetch()
+        await loadProfileData()
     }
+    
+    // MARK: - User's Profile
     
     /// Fetch user profile.
     private func getMyProfile() async {
         do {
-            try await userStore.getMyProfile()
+            try await userStore.loadProfileIfNeeded()
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error fetching profile: \(networkError.message)")
         } catch {
+            if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error fetching profile: \(error)")
         }
     }
     
+    // MARK: - User's Posts
+    
     /// Fetch user posts.
     private func getMyPosts() async  {
         do {
-            try await postStore.getMyPosts()
+            try await postStore.loadPostIfNeeded()
         } catch let networkError as NetworkError {
             switch networkError {
             case .noDataRecieved:
@@ -97,6 +96,7 @@ final class ProfileViewModel {
                 Logger.network.error("Error fetching posts: \(networkError.message)")
             }
         } catch {
+            if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error fetching posts: \(error)")
         }
@@ -117,33 +117,32 @@ final class ProfileViewModel {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error deleting post: \(networkError.message)")
         } catch {
+            if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error deleting post: \(error)")
         }
     }
     
-    // MARK: - Friend List
+    // MARK: - User's Friend List
     
     /// Fetch friend list.
     func getFriendList() async {
-        guard !hasLoadedFriends else { return }
         isLoading = true
         defer { isLoading = false }
         
         do {
-            let result = try await friendService.getFriendList()
-            friends = result
-            hasLoadedFriends = true
+            try await friendStore.loadDataIfNeeded()
         } catch let networkError as NetworkError {
             switch networkError {
             case .noDataRecieved:
-                friends = []
+                friendStore.setFriends([])
                 Logger.network.warning("Friend list: \(networkError.message)")
             default:
                 AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
                 Logger.network.error("Error fetching friend list: \(networkError.message)")
             }
         } catch {
+            if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error fetching friend list: \(error)")
         }
@@ -151,7 +150,7 @@ final class ProfileViewModel {
     
     /// Re-fetches friend list.
     func refreshFriendList() async {
-        hasLoadedFriends = false
+        friendStore.invalidateLastFetch()
         await getFriendList()
     }
     
@@ -162,12 +161,12 @@ final class ProfileViewModel {
         defer { isLoading = false }
         
         do {
-            try await friendService.unfriend(id: id)
-            friends.removeAll { $0.id == id }
+            try await friendStore.unfriend(id: id)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error fetching friend list: \(networkError.message)")
         } catch {
+            if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error fetching friend list: \(error)")
         }
@@ -196,6 +195,7 @@ final class ProfileViewModel {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error signing out: \(networkError.message)")
         } catch {
+            if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error signing out: \(error)")
         }

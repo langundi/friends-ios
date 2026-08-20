@@ -20,16 +20,16 @@ final class PostService {
         try await client.request(endpoint: PostEndpoint.getTimeline)
     }
     
-    func newPost(request: NewPostRequest) async throws -> PostResponse {
-        try await client.request(endpoint: PostEndpoint.newPost(request: request))
-    }
-    
     func getPresignedUrl(request: UploadImageRequest) async throws -> UploadImageResponse {
         try await client.request(endpoint: PostEndpoint.getPresignedUrl(request: request))
     }
     
-    func uploadImageToBucket(uploadUrl: String, imageData: Data) async throws {
+    func uploadImage(uploadUrl: String, imageData: Data) async throws {
         try await client.uploadImage(presignedUrl: uploadUrl, imageData: imageData)
+    }
+    
+    func newPost(request: NewPostRequest) async throws -> PostResponse {
+        try await client.request(endpoint: PostEndpoint.newPost(request: request))
     }
     
     func getMyPosts() async throws -> [PostResponse] {

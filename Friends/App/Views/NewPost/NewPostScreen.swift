@@ -10,18 +10,11 @@ import SwiftUI
 struct NewPostScreen: View {
     @Environment(AppRouter.self) var router
     @State private var viewModel: NewPostViewModel
-    @State private var timelineViewModel: TimelineViewModel
     @State private var image: UIImage?
     @State private var caption: String = ""
     @State private var isShowingImagePicker: Bool = false
     @State private var pickerSource: PickerSource?
     @FocusState private var isTextFieldFocused
-    
-    init(factory: ViewModelFactory) {
-        _viewModel = State(initialValue: factory.makeNewPostViewModel())
-        
-        timelineViewModel = factory.timelineViewModel
-    }
     
     private var isImageTaken: Bool {
         image != nil
@@ -29,6 +22,10 @@ struct NewPostScreen: View {
     
     private var isCharacterLimit: Bool {
         caption.count == 60
+    }
+    
+    init(factory: ViewModelFactory) {
+        _viewModel = State(initialValue: factory.makeNewPostViewModel())
     }
     
     var body: some View {
@@ -100,7 +97,6 @@ struct NewPostScreen: View {
                 Button {
                     Task {
                         await viewModel.uploadNewPost(image: image!, caption: caption) {
-                            timelineViewModel.hasLoaded = false
                             router.pop()
                         }
                     }
@@ -123,13 +119,6 @@ struct NewPostScreen: View {
                 .ignoresSafeArea()
         }
         .animation(.easeInOut, value: isTextFieldFocused)
-    }
-    
-    func refreshAndPop() {
-        Task {
-            await timelineViewModel.refreshTimeline()
-            router.pop()
-        }
     }
 }
 

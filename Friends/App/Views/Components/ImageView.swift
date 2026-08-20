@@ -14,7 +14,7 @@ struct ImageView: View {
     
     var body: some View {
         KFImage(URL(string: imageURL))
-            .placeholder{ ProgressView() }
+            .placeholder{ LoadingOverlay() }
             .resizable()
             .onFailure { error in
                 Logger.kingfisher.error("KF Error: \(error)")

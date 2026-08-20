@@ -14,12 +14,12 @@ final class NewPostViewModel {
     
     var isLoading: Bool = false
     
-    private let postService: PostService
     private let postStore: PostStore
+    private let timelineStore: TimelineStore
     
-    init(postService: PostService) {
-        self.postService = postService
-        self.postStore = PostStore(service: postService)
+    init(postStore: PostStore, timelineStore: TimelineStore) {
+        self.postStore = postStore
+        self.timelineStore = timelineStore
     }
     
     /// Upload a new post.
@@ -40,23 +40,27 @@ final class NewPostViewModel {
             // Upload image to presigned URL
             let filename = UUID().uuidString
             let uploadImageRequest = UploadImageRequest(filename: filename, contentType: "image/jpeg")
-            let presignedResult = try await postService.getPresignedUrl(request: uploadImageRequest)
-            try await postService.uploadImageToBucket(uploadUrl: presignedResult.uploadURL, imageData: imageData)
+            let presignedResult = try await postStore.getPresignedURL(request: uploadImageRequest)
+            try await postStore.uploadImage(uploadURL: presignedResult.uploadURL, imageData: imageData)
             
             // Upload post
             let newPostRequest = NewPostRequest(caption: caption, imageUrl: presignedResult.publicURL, objectKey: presignedResult.objectKey)
-            let postResult = try await postService.newPost(request: newPostRequest)
+            let postResult = try await postStore.newPost(request: newPostRequest)
+            postStore.insert(postResult)
+            
+            // Refresh Timeline
+            try await timelineStore.refreshTimeline()
             
             // Delay to compensate for Kingfisher TLS error
             try? await Task.sleep(for: .seconds(2))
             
             // Insert new post to post store
-            postStore.insert(postResult)
             completion()
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error uploading post: \(networkError)")
         } catch {
+            if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error uploading post: \(error)")
         }

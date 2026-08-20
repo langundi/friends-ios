@@ -40,6 +40,7 @@ final class AuthViewModel {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error registering user: \(networkError.message)")
         } catch {
+            if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error registering user: \(error)")
         }
@@ -63,6 +64,7 @@ final class AuthViewModel {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error sign in user: \(networkError.message)")
         } catch {
+            if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error sign in user: \(error)")
         }

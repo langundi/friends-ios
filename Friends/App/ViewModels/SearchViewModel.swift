@@ -43,6 +43,7 @@ final class SearchViewModel {
             clearResult()
             Logger.network.error("Error searching username: \(networkError)")
         } catch {
+            if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             clearResult()
             Logger.network.error("Error searching username: \(error)")
@@ -63,6 +64,7 @@ final class SearchViewModel {
             clearResult()
             Logger.network.error("Error friendship status: \(networkError)")
         } catch {
+            if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             clearResult()
             Logger.network.error("Error friendship status: \(error)")
@@ -85,6 +87,7 @@ final class SearchViewModel {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error sending friend request: \(networkError)")
         } catch {
+            if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error sending friend request: \(error)")
         }

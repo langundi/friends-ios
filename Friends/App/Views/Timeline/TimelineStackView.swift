@@ -29,7 +29,6 @@ struct TimelineStackView: View {
                 } label: {
                     Label("Find Friends", systemImage: "magnifyingglass")
                 }
-
             }
         } else {
             ScrollView(.vertical) {
@@ -40,9 +39,14 @@ struct TimelineStackView: View {
                 }
                 .scrollTargetLayout()
             }
+            .ignoresSafeArea()
             .scrollTargetBehavior(.paging)
             .scrollIndicators(.hidden)
-            .ignoresSafeArea()
         }
     }
+}
+
+#Preview {
+    TimelineStackView(posts: PostResponse.timelineDummy)
+        .withPreviewEnvironments()
 }
