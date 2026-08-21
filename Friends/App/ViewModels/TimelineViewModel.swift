@@ -31,13 +31,8 @@ final class TimelineViewModel {
         do {
             try await timelineStore.loadTimelineIfNeeded()
         } catch let networkError as NetworkError {
-            switch networkError {
-            case .noDataRecieved:
-                Logger.network.warning("Timeline: \(networkError.message)")
-            default:
-                AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
-                Logger.network.error("Error fetching timeline: \(networkError.message)")
-            }
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error fetching timeline: \(networkError.message)")
         } catch {
             if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)

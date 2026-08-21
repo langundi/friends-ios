@@ -26,6 +26,15 @@ struct APIClient {
         }
     }
     
+    func requestOptional<T: Decodable>(endpoint: Endpoint) async throws -> T? {
+        do {
+            return try await executeOptional(endpoint: endpoint)
+        } catch NetworkError.apiError(let statusCode, _) where statusCode == 401 && endpoint.protected {
+            _ = try await tokenManager.refreshToken()
+            return try await executeOptional(endpoint: endpoint)
+        }
+    }
+    
     func requestVoid(endpoint: Endpoint) async throws {
         do {
             try await executeVoid(endpoint: endpoint)
@@ -49,8 +58,6 @@ struct APIClient {
         guard let response = response as? HTTPURLResponse else {
             throw NetworkError.unknown
         }
-        
-        print("Upload Status: \(response.statusCode)")
     }
     
     private func execute<T: Decodable>(endpoint: Endpoint) async throws -> T {
@@ -105,6 +112,60 @@ struct APIClient {
         }
         
         return result
+    }
+    
+    private func executeOptional<T: Decodable>(endpoint: Endpoint) async throws -> T? {
+        guard let url = URL(string: endpoint.fullURL) else {
+            throw NetworkError.invalidURL
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = endpoint.method.rawValue
+        request.allHTTPHeaderFields = endpoint.headers
+        
+        if endpoint.protected {
+            guard let token: String = try? Keychain.get(Constants.accessToken) else {
+                throw NetworkError.sessionExpired
+            }
+            
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
+        if let body = endpoint.body {
+            let encoder = JSONEncoder()
+            request.httpBody = try encoder.encode(body)
+        }
+    
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let response = response as? HTTPURLResponse else {
+            throw NetworkError.unknown
+        }
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let json: JSONResponse<T>
+        
+        do {
+            json = try decoder.decode(JSONResponse<T>.self, from: data)
+        } catch let error as DecodingError {
+            Logger.network.debug("Decoding Error: \(error)")
+            throw NetworkError.decodingError(error)
+        }
+        
+        guard (200..<300).contains(response.statusCode) else {
+            Logger.network.error("API Error: \(json.error)")
+            throw NetworkError.apiError(
+                statusCode: response.statusCode,
+                message: json.error?.message ?? "Unknown error."
+            )
+        }
+        
+        if let result = json.data {
+            return result
+        }
+        
+        return nil
     }
     
     private func executeVoid(endpoint: Endpoint) async throws {

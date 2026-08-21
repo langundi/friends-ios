@@ -88,13 +88,8 @@ final class ProfileViewModel {
         do {
             try await postStore.loadPostIfNeeded()
         } catch let networkError as NetworkError {
-            switch networkError {
-            case .noDataRecieved:
-                Logger.network.warning("Profile posts: \(networkError.message)")
-            default:
-                AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
-                Logger.network.error("Error fetching posts: \(networkError.message)")
-            }
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error fetching posts: \(networkError.message)")
         } catch {
             if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
@@ -133,14 +128,8 @@ final class ProfileViewModel {
         do {
             try await friendStore.loadDataIfNeeded()
         } catch let networkError as NetworkError {
-            switch networkError {
-            case .noDataRecieved:
-                friendStore.setFriends([])
-                Logger.network.warning("Friend list: \(networkError.message)")
-            default:
-                AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
-                Logger.network.error("Error fetching friend list: \(networkError.message)")
-            }
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error fetching friend list: \(networkError.message)")
         } catch {
             if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)

@@ -43,7 +43,7 @@ final class TimelineStore {
     
     /// Fetch timeline posts.
     func getTimeline() async throws {
-        timeline = try await service.getTimeline()
+        timeline = try await service.getTimeline() ?? []
         lastFetchAt = Date()
     }
     

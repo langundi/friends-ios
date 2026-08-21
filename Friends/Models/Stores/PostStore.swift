@@ -44,7 +44,7 @@ final class PostStore {
     
     /// Fetch user's posts.
     func getMyPosts() async throws {
-        posts = try await service.getMyPosts()
+        posts = try await service.getMyPosts() ?? []
         lastFetchAt = Date()
     }
     

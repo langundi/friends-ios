@@ -16,8 +16,8 @@ final class PostService {
         self.client = client
     }
     
-    func getTimeline() async throws -> [PostResponse] {
-        try await client.request(endpoint: PostEndpoint.getTimeline)
+    func getTimeline() async throws -> [PostResponse]? {
+        try await client.requestOptional(endpoint: PostEndpoint.getTimeline)
     }
     
     func getPresignedUrl(request: UploadImageRequest) async throws -> UploadImageResponse {
@@ -32,8 +32,8 @@ final class PostService {
         try await client.request(endpoint: PostEndpoint.newPost(request: request))
     }
     
-    func getMyPosts() async throws -> [PostResponse] {
-        try await client.request(endpoint: PostEndpoint.getMyPosts)
+    func getMyPosts() async throws -> [PostResponse]? {
+        try await client.requestOptional(endpoint: PostEndpoint.getMyPosts)
     }
     
     func deletePost(request: DeletePostRequest) async throws {

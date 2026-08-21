@@ -39,7 +39,7 @@ final class FriendStore {
     
     /// Fetch user's friends.
     func getFriendList() async throws {
-        friends = try await service.getFriendList()
+        friends = try await service.getFriendList() ?? []
         lastFetchAt = Date()
     }
     
