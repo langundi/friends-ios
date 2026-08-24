@@ -8,9 +8,11 @@
 import Foundation
 
 enum UserEndpoint: Endpoint {
-    case myProfile
-    case friendProfile(id: Int)
-    case search(username: String)
+    case getMyProfile
+    case getFriendProfile(id: Int)
+    case getMyPosts
+    case getFriendPosts(id: Int)
+    case searchUsername(username: String)
     
     var method: HTTPMethod {
         switch self {
@@ -21,11 +23,15 @@ enum UserEndpoint: Endpoint {
     
     var path: String {
         switch self {
-        case .myProfile:
+        case .getMyProfile:
             return "/user"
-        case .friendProfile(let id):
+        case .getFriendProfile(let id):
             return "/user/\(id)"
-        case .search(let username):
+        case .getMyPosts:
+            return "/user/post/me"
+        case .getFriendPosts(let id):
+            return"/user/post/\(id)"
+        case .searchUsername(let username):
             return "/user/search/\(username)"
         }
     }

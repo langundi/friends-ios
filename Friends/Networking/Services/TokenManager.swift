@@ -36,7 +36,7 @@ actor TokenManager {
             throw NetworkError.sessionExpired
         }
         
-        let endpoint = AuthEndpoint.refresh(token: RefreshRequest(refreshToken: token))
+        let endpoint = AuthEndpoint.refresh(request: RefreshRequest(refreshToken: token))
         
         guard let url = await URL(string: endpoint.fullURL) else {
             throw NetworkError.invalidURL

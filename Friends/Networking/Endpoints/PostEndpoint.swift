@@ -10,11 +10,11 @@ import Foundation
 enum PostEndpoint: Endpoint {
     case newPost(request: NewPostRequest)
     case getPresignedUrl(request: UploadImageRequest)
+    case likePost(id: Int)
+    case getPost(id: Int)
     case getTimeline
-    case getPost(Id: Int)
-    case getMyPosts
-    case getUsersPosts(userId: Int)
     case deletePost(request: DeletePostRequest)
+    case unlikePost(id: Int)
     
     var headers: [String : String]? {
         switch self {
@@ -25,11 +25,11 @@ enum PostEndpoint: Endpoint {
     
     var method: HTTPMethod {
         switch self {
-        case .newPost, .getPresignedUrl:
+        case .newPost, .getPresignedUrl, .likePost:
             return .post
-        case .getPost, .getTimeline, .getMyPosts, .getUsersPosts:
+        case .getPost, .getTimeline:
             return .get
-        case .deletePost:
+        case .deletePost, .unlikePost:
             return .delete
         }
     }
@@ -40,14 +40,14 @@ enum PostEndpoint: Endpoint {
             return "/post"
         case .getPost(let id):
             return "/post/\(id)"
+        case .getPresignedUrl:
+            return "/post/upload-image"
         case .getTimeline:
             return "/post/timeline"
-        case .getMyPosts:
-            return"/post/user/me"
-        case .getUsersPosts(let userId):
-            return "/post/user/\(userId)"
-        case .getPresignedUrl:
-            return "/post/upload"
+        case .likePost(let id):
+            return "/post/like/\(id)"
+        case .unlikePost(let id):
+            return "/post/unlike/\(id)"
         }
     }
     

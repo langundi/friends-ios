@@ -17,32 +17,32 @@ final class FriendService {
     // MARK: - Friend Request Endpoints
     
     func getFriendRequests() async throws -> [FriendRequestResponse] {
-        try await client.request(endpoint: FriendRequestEndpoint.list)
+        try await client.request(endpoint: FriendRequestEndpoint.getFriendRequests)
     }
     
     func sendFriendRequest(receiverID: Int) async throws -> NewFriendRequestResponse {
-        try await client.request(endpoint: FriendRequestEndpoint.send(receiverID: receiverID))
+        try await client.request(endpoint: FriendRequestEndpoint.sendFriendRequest(id: receiverID))
     }
     
     func acceptFriendRequest(id: Int) async throws {
-        try await client.requestVoid(endpoint: FriendRequestEndpoint.accept(id: id))
+        try await client.requestVoid(endpoint: FriendRequestEndpoint.acceptFriendRequest(id: id))
     }
     
     func declineFriendRequest(id: Int) async throws {
-        try await client.requestVoid(endpoint: FriendRequestEndpoint.decline(id: id))
+        try await client.requestVoid(endpoint: FriendRequestEndpoint.declineFriendRequest(id: id))
     }
     
     // MARK: - Friends Endpoints
     
-    func getFriendshipStatus(userID: Int) async throws -> FriendshipStatusResponse {
-        try await client.request(endpoint: FriendsEndpoint.status(userID: userID))
-    }
-    
     func getFriendList() async throws -> [FriendResponse]? {
-        try await client.requestOptional(endpoint: FriendsEndpoint.list)
+        try await client.requestOptional(endpoint: FriendEndpoint.getFriendList)
     }
     
-    func unfriend(id: Int) async throws {
-        try await client.requestVoid(endpoint: FriendsEndpoint.unfriend(id: id))
+    func getFriendshipStatus(searchedUserID: Int) async throws -> FriendshipStatusResponse {
+        try await client.request(endpoint: FriendEndpoint.getFriendshipStatus(id: searchedUserID))
+    }
+    
+    func unfriend(userID: Int) async throws {
+        try await client.requestVoid(endpoint: FriendEndpoint.unfriend(id: userID))
     }
 }

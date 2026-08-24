@@ -11,6 +11,7 @@ import Kingfisher
 import OSLog
 
 struct LikeButton: View {
+    var liked: Bool = false
     var onAction: () -> Void
     
     var body: some View {
@@ -18,11 +19,10 @@ struct LikeButton: View {
             Button {
                 onAction()
             } label: {
-                Image(systemName: "heart")
+                Image(systemName: liked ? "heart.fill" : "heart")
+                    .foregroundStyle(liked ? .red : .primary)
             }
             .buttonStyle(ToolbarButtonStyle())
-
-            Text("8")
         }
     }
 }

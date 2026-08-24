@@ -45,6 +45,37 @@ final class TimelineViewModel {
         timelineStore.invalidateLastFetch()
         await getTimeline()
     }
+    
+    
+    /// Like post.
+    /// - Parameter id: Post ID.
+    func likePost(id: Int) async {
+        do {
+            try await timelineStore.likePost(id: id)
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error fetching timeline: \(networkError.message)")
+        } catch {
+            if error.isCancellation { return }
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error fetching timeline: \(error)")
+        }
+    }
+    
+    /// Unlike post.
+    /// - Parameter id: Post ID.
+    func unlikePost(id: Int) async {
+        do {
+            try await timelineStore.unlikePost(id: id)
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error fetching timeline: \(networkError.message)")
+        } catch {
+            if error.isCancellation { return }
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error fetching timeline: \(error)")
+        }
+    }
 }
 
 // MARK: - Mock Timeline

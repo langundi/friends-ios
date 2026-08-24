@@ -8,33 +8,33 @@
 import Foundation
 
 enum FriendRequestEndpoint: Endpoint {
-    case list
-    case send(receiverID: Int)
-    case accept(id: Int)
-    case decline(id: Int)
+    case sendFriendRequest(id: Int)
+    case getFriendRequests
+    case acceptFriendRequest(id: Int)
+    case declineFriendRequest(id: Int)
     
     var method: HTTPMethod {
         switch self {
-        case .list:
-            return .get
-        case .send:
+        case .sendFriendRequest:
             return .post
-        case .accept:
+        case .getFriendRequests:
+            return .get
+        case .acceptFriendRequest:
             return .patch
-        case .decline:
+        case .declineFriendRequest:
             return .delete
         }
     }
     
     var path: String {
         switch self {
-        case .list:
-            return "/friend-request"
-        case .send(let receiverID):
-            return "/friend-request/\(receiverID)"
-        case .accept(let id):
+        case .sendFriendRequest(let id):
             return "/friend-request/\(id)"
-        case .decline(let id):
+        case .getFriendRequests:
+            return "/friend-request"
+        case .acceptFriendRequest(let id):
+            return "/friend-request/\(id)"
+        case .declineFriendRequest(let id):
             return "/friend-request/\(id)"
         }
     }

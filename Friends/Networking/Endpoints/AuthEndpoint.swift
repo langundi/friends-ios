@@ -8,10 +8,10 @@
 import Foundation
 
 enum AuthEndpoint: Endpoint {
-    case register(user: RegisterRequest)
-    case login(user: LoginRequest)
-    case refresh(token: RefreshRequest)
-    case logout(refresh: RefreshRequest)
+    case register(request: RegisterRequest)
+    case login(request: LoginRequest)
+    case refresh(request: RefreshRequest)
+    case logout(request: RefreshRequest)
     
     var method: HTTPMethod {
         switch self {
@@ -57,8 +57,8 @@ enum AuthEndpoint: Endpoint {
             return user
         case .refresh(let token):
             return token
-        case .logout(let refresh):
-            return refresh
+        case .logout(let token):
+            return token
         }
     }
     

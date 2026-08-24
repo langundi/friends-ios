@@ -34,7 +34,7 @@ final class AuthViewModel {
         
         do {
             let user = RegisterRequest(username: username, email: email, password: password)
-            let result = try await authService.registerUser(user: user)
+            let result = try await authService.registerUser(request: user)
             Logger.network.info("Registered new user: id: \(result.id), username: \(username)")
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
@@ -57,7 +57,7 @@ final class AuthViewModel {
         let user = LoginRequest(email: email, password: password)
         
         do {
-            let result = try await authService.loginUser(user: user)
+            let result = try await authService.loginUser(request: user)
             print(result)
             isLoggedIn = true
         } catch let networkError as NetworkError {

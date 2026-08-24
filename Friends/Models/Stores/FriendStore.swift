@@ -46,7 +46,7 @@ final class FriendStore {
     /// Remove a friend from user's friend list.
     /// - Parameter id: Friendship ID.
     func unfriend(id: Int) async throws {
-        try await service.unfriend(id: id)
+        try await service.unfriend(userID: id)
         friends.removeAll { $0.id == id }
     }
 }

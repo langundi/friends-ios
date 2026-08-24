@@ -12,8 +12,13 @@ import OSLog
 
 struct TimelineStackView: View {
     @Environment(AppRouter.self) var router
-    
+    var viewModel: TimelineViewModel
     var posts: [PostResponse]
+    
+    init(viewModel: TimelineViewModel, posts: [PostResponse]) {
+        self.viewModel = viewModel
+        self.posts = posts
+    }
     
     var body: some View {
         if posts.isEmpty {
@@ -34,7 +39,7 @@ struct TimelineStackView: View {
             ScrollView(.vertical) {
                 LazyVStack(alignment: .center, spacing: 0) {
                     ForEach(posts) { post in
-                        PostView(post: post)
+                        PostView(viewModel: viewModel, post: post)
                     }
                 }
                 .scrollTargetLayout()
@@ -47,6 +52,7 @@ struct TimelineStackView: View {
 }
 
 #Preview {
-    TimelineStackView(posts: PostResponse.timelineDummy)
+    let vm = TimelineViewModel(timelineStore: TimelineStore(postService: PostService(client: APIClient.shared)))
+    TimelineStackView(viewModel: vm, posts: PostResponse.timelineDummy)
         .withPreviewEnvironments()
 }

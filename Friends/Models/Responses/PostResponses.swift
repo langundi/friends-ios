@@ -14,14 +14,20 @@ struct PostResponse: Identifiable, Decodable {
     let caption: String
     let imageURL: String
     let objectKey: String
+    var likeCount: Int
+    var replyCount: Int
     let createdAt: Date
+    var likedByMe: Bool
     
     enum CodingKeys: String, CodingKey {
         case id, caption
         case userID = "user_id"
         case imageURL = "image_url"
         case objectKey = "object_key"
+        case likeCount = "like_count"
+        case replyCount = "reply_count"
         case createdAt = "created_at"
+        case likedByMe = "liked_by_me"
     }
 }
 
@@ -48,7 +54,10 @@ extension PostResponse {
         caption: "Lorem ipsum dolor sit amet, in anim eiusmod deserunt non eiusmod",
         imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         objectKey: "posts/1/mock-object-key.jpeg",
-        createdAt: Date()
+        likeCount: 5,
+        replyCount: 2,
+        createdAt: Date(),
+        likedByMe: false
     )
     
     static let noCaptionPostDummy = PostResponse(
@@ -57,7 +66,10 @@ extension PostResponse {
         caption: "",
         imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         objectKey: "posts/1/mock-object-key.jpeg",
-        createdAt: Date()
+        likeCount: 5,
+        replyCount: 2,
+        createdAt: Date(),
+        likedByMe: false
     )
     
     static let timelineDummy = [
@@ -67,7 +79,10 @@ extension PostResponse {
             caption: "Test 1",
             imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             objectKey: "posts/1/image.jpeg",
-            createdAt: Date()
+            likeCount: 5,
+            replyCount: 2,
+            createdAt: Date(),
+            likedByMe: true
         ),
         PostResponse(
             id: 2,
@@ -75,7 +90,10 @@ extension PostResponse {
             caption: "",
             imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             objectKey: "posts/1/image.jpeg",
-            createdAt: Date().addingTimeInterval(3600)
+            likeCount: 5,
+            replyCount: 2,
+            createdAt: Date().addingTimeInterval(3600),
+            likedByMe: false,
         ),
         PostResponse(
             id: 3,
@@ -83,7 +101,10 @@ extension PostResponse {
             caption: "Test 3",
             imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             objectKey: "posts/1/image.jpeg",
-            createdAt: Date().addingTimeInterval(7200)
+            likeCount: 5,
+            replyCount: 2,
+            createdAt: Date().addingTimeInterval(7200),
+            likedByMe: false
         ),
         PostResponse(
             id: 4,
@@ -91,7 +112,10 @@ extension PostResponse {
             caption: "Test 4",
             imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             objectKey: "posts/1/image.jpeg",
-            createdAt: Date().addingTimeInterval(14400)
+            likeCount: 5,
+            replyCount: 2,
+            createdAt: Date().addingTimeInterval(14400),
+            likedByMe: false
         ),
         PostResponse(
             id: 5,
@@ -99,7 +123,10 @@ extension PostResponse {
             caption: "Test 5",
             imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             objectKey: "posts/1/image.jpeg",
-            createdAt: Date().addingTimeInterval(28800)
+            likeCount: 5,
+            replyCount: 2,
+            createdAt: Date().addingTimeInterval(28800),
+            likedByMe: true
         ),
         PostResponse(
             id: 6,
@@ -107,7 +134,10 @@ extension PostResponse {
             caption: "Test 6",
             imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             objectKey: "posts/1/image.jpeg",
-            createdAt: Date().addingTimeInterval(57600)
+            likeCount: 5,
+            replyCount: 2,
+            createdAt: Date().addingTimeInterval(57600),
+            likedByMe: false
         ),
     ]
     

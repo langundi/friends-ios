@@ -10,33 +10,19 @@ import Foundation
 final class UserService {
     private let client: APIClient
     
-    /// Current user username.
-    private(set) var username: String = ""
-    
     init(client: APIClient) {
         self.client = client
     }
     
     func getMyProfile() async throws -> UserResponse {
-        let response: UserResponse
-        response = try await client.request(endpoint: UserEndpoint.myProfile)
-        username = response.username
-        return response
+        try await client.request(endpoint: UserEndpoint.getMyProfile)
     }
     
-    func getFriendProfile(id: Int) async throws -> UserResponse {
-        try await client.request(endpoint: UserEndpoint.friendProfile(id: id))
+    func getFriendProfile(userID: Int) async throws -> UserResponse {
+        try await client.request(endpoint: UserEndpoint.getFriendProfile(id: userID))
     }
     
     func searchUsername(username: String) async throws -> UsernameResponse {
-        try await client.request(endpoint: UserEndpoint.search(username: username))
-    }
-    
-    func checkSearchIsCurrentUsername(searchText: String) -> Bool {
-        if searchText == username {
-            return true
-        }
-        
-        return false
+        try await client.request(endpoint: UserEndpoint.searchUsername(username: username))
     }
 }

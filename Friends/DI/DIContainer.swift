@@ -56,7 +56,7 @@ final class ViewModelFactory {
     }()
     
     lazy var searchViewModel: SearchViewModel = {
-        return SearchViewModel(userService: userService, friendService: friendService)
+        return SearchViewModel(userStore: userStore, friendService: friendService)
     }()
     
     // MARK: - Auth ViewModels

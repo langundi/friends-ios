@@ -53,4 +53,11 @@ final class TimelineStore {
         try await getTimeline()
     }
     
+    func likePost(id: Int) async throws {
+        try await service.likePost(postID: id)
+    }
+    
+    func unlikePost(id: Int) async throws {
+        try await service.unlikePost(postID: id)
+    }
 }

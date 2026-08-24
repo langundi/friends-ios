@@ -175,7 +175,7 @@ final class ProfileViewModel {
             }
             
             let refresh = RefreshRequest(refreshToken: refreshToken)
-            try await authService.logoutUser(refresh: refresh)
+            try await authService.logoutUser(request: refresh)
             
             deleteTokensFromKeychain()
             

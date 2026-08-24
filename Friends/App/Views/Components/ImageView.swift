@@ -16,6 +16,7 @@ struct ImageView: View {
         KFImage(URL(string: imageURL))
             .placeholder{ LoadingOverlay() }
             .resizable()
+            .retry(maxCount: 3, interval: .seconds(2))
             .onFailure { error in
                 Logger.kingfisher.error("KF Error: \(error)")
             }

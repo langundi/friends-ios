@@ -21,8 +21,6 @@ struct CommentButton: View {
                 Image(systemName: "bubble.right")
             }
             .buttonStyle(ToolbarButtonStyle())
-
-            Text("2")
         }
     }
 }

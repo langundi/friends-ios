@@ -45,6 +45,10 @@ final class UserStore {
         lastFetchAt = Date()
     }
     
+    func searchUsername(username: String) async throws -> UsernameResponse {
+        try await service.searchUsername(username: username)
+    }
+    
     /// Prevents user from adding their self as a friend.
     /// - Parameter searchText: Search query.
     /// - Returns: Is current user's username or not.

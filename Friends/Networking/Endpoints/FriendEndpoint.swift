@@ -1,22 +1,22 @@
 //
-//  FriendsEndpoint.swift
-//  Friends
+//  FriendEndpoint.swift
+//  Friend
 //
 //  Created by Ziqa on 19/08/26.
 //
 
 import Foundation
 
-enum FriendsEndpoint: Endpoint {
-    case list
-    case status(userID: Int)
+enum FriendEndpoint: Endpoint {
+    case getFriendList
+    case getFriendshipStatus(id: Int)
     case unfriend(id: Int)
     
     var method: HTTPMethod {
         switch self {
-        case .list:
+        case .getFriendList:
             return .get
-        case .status:
+        case .getFriendshipStatus:
             return .get
         case .unfriend:
             return .delete
@@ -25,12 +25,12 @@ enum FriendsEndpoint: Endpoint {
     
     var path: String {
         switch self {
-        case .list:
-            return "/friends"
-        case .status(let userID):
-            return "/friends/\(userID)/status"
+        case .getFriendList:
+            return "/friend"
+        case .getFriendshipStatus(let id):
+            return "/friend/\(id)/status"
         case .unfriend(let id):
-            return"/friends/\(id)"
+            return"/friend/\(id)"
         }
     }
     

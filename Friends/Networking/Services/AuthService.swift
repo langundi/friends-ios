@@ -15,19 +15,19 @@ final class AuthService {
         self.client = client
     }
     
-    func registerUser(user: RegisterRequest) async throws -> RegisterResponse {
-        return try await client.request(endpoint: AuthEndpoint.register(user: user))
+    func registerUser(request: RegisterRequest) async throws -> RegisterResponse {
+        return try await client.request(endpoint: AuthEndpoint.register(request: request))
     }
     
-    func loginUser(user: LoginRequest) async throws -> LoginResponse {
+    func loginUser(request: LoginRequest) async throws -> LoginResponse {
         let response: LoginResponse
-        response = try await client.request(endpoint: AuthEndpoint.login(user: user))
+        response = try await client.request(endpoint: AuthEndpoint.login(request: request))
         try Keychain.set(response.accessToken, Constants.accessToken)
         try Keychain.set(response.refreshToken, Constants.refreshToken)
         return response
     }
     
-    func logoutUser(refresh: RefreshRequest) async throws {
-        try await client.requestVoid(endpoint: AuthEndpoint.logout(refresh: refresh))
+    func logoutUser(request: RefreshRequest) async throws {
+        try await client.requestVoid(endpoint: AuthEndpoint.logout(request: request))
     }
 }

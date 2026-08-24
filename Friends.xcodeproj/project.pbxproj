@@ -65,7 +65,7 @@
 		818F25343018EF7100678EF5 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818F25333018EF7100678EF5 /* View+Extensions.swift */; };
 		818FFF5C30345E8A00D55DE4 /* FriendshipStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818FFF5B30345E8A00D55DE4 /* FriendshipStatus.swift */; };
 		818FFF5E3034AA0000D55DE4 /* FriendRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818FFF5D3034AA0000D55DE4 /* FriendRequestView.swift */; };
-		819DFB7D30356F90007E94DE /* FriendsEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819DFB7C30356F90007E94DE /* FriendsEndpoint.swift */; };
+		819DFB7D30356F90007E94DE /* FriendEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819DFB7C30356F90007E94DE /* FriendEndpoint.swift */; };
 		819DFB7F303576C7007E94DE /* FriendRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819DFB7E303576C7007E94DE /* FriendRowView.swift */; };
 		81DA67A93032F7D10079EE35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67A83032F7D10079EE35 /* SearchViewModel.swift */; };
 		81DA67AB303332120079EE35 /* FriendRequestEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67AA303332120079EE35 /* FriendRequestEndpoint.swift */; };
@@ -75,7 +75,7 @@
 		81F0DCDD3036F706009074D0 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0DCDC3036F706009074D0 /* ImageView.swift */; };
 		81F0DCE130371096009074D0 /* LoadingViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0DCE030371096009074D0 /* LoadingViewState.swift */; };
 		81F0DCE4303719E0009074D0 /* PostStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0DCE3303719E0009074D0 /* PostStore.swift */; };
-		81F0DCE6303728CA009074D0 /* ProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0DCE5303728CA009074D0 /* ProfileStore.swift */; };
+		81F0DCE6303728CA009074D0 /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0DCE5303728CA009074D0 /* UserStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -138,7 +138,7 @@
 		818F25333018EF7100678EF5 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		818FFF5B30345E8A00D55DE4 /* FriendshipStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendshipStatus.swift; sourceTree = "<group>"; };
 		818FFF5D3034AA0000D55DE4 /* FriendRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestView.swift; sourceTree = "<group>"; };
-		819DFB7C30356F90007E94DE /* FriendsEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsEndpoint.swift; sourceTree = "<group>"; };
+		819DFB7C30356F90007E94DE /* FriendEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendEndpoint.swift; sourceTree = "<group>"; };
 		819DFB7E303576C7007E94DE /* FriendRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRowView.swift; sourceTree = "<group>"; };
 		81DA67A83032F7D10079EE35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		81DA67AA303332120079EE35 /* FriendRequestEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestEndpoint.swift; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 		81F0DCDC3036F706009074D0 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		81F0DCE030371096009074D0 /* LoadingViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewState.swift; sourceTree = "<group>"; };
 		81F0DCE3303719E0009074D0 /* PostStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStore.swift; sourceTree = "<group>"; };
-		81F0DCE5303728CA009074D0 /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
+		81F0DCE5303728CA009074D0 /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -419,7 +419,7 @@
 				811E6052302B293800542203 /* PostEndpoint.swift */,
 				811E6058302B364700542203 /* UserEndpoint.swift */,
 				81DA67AA303332120079EE35 /* FriendRequestEndpoint.swift */,
-				819DFB7C30356F90007E94DE /* FriendsEndpoint.swift */,
+				819DFB7C30356F90007E94DE /* FriendEndpoint.swift */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -448,7 +448,7 @@
 			isa = PBXGroup;
 			children = (
 				81F0DCE3303719E0009074D0 /* PostStore.swift */,
-				81F0DCE5303728CA009074D0 /* ProfileStore.swift */,
+				81F0DCE5303728CA009074D0 /* UserStore.swift */,
 				810AEDF230374E7F001773C7 /* FriendStore.swift */,
 				810AEDF430375A4F001773C7 /* TimelineStore.swift */,
 			);
@@ -532,7 +532,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8168746C3031AEED000D7DCA /* LikeButton.swift in Sources */,
-				81F0DCE6303728CA009074D0 /* ProfileStore.swift in Sources */,
+				81F0DCE6303728CA009074D0 /* UserStore.swift in Sources */,
 				811B9477302C13F500C3F545 /* NewPostScreen.swift in Sources */,
 				81F0DCDD3036F706009074D0 /* ImageView.swift in Sources */,
 				810EE0253019F587005FED56 /* ToolbarButtonStyle.swift in Sources */,
@@ -540,7 +540,7 @@
 				8168746E3031AF03000D7DCA /* TimelineStackView.swift in Sources */,
 				818F25093018B3F600678EF5 /* NetworkError.swift in Sources */,
 				818FFF5C30345E8A00D55DE4 /* FriendshipStatus.swift in Sources */,
-				819DFB7D30356F90007E94DE /* FriendsEndpoint.swift in Sources */,
+				819DFB7D30356F90007E94DE /* FriendEndpoint.swift in Sources */,
 				815DCAB3301DC54300AD470A /* NotificationViewModel.swift in Sources */,
 				818F25073018B3C300678EF5 /* TimelineViewModel.swift in Sources */,
 				81F0DCE4303719E0009074D0 /* PostStore.swift in Sources */,

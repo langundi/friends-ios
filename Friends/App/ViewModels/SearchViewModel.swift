@@ -15,18 +15,18 @@ final class SearchViewModel {
     var searchedUser: UsernameResponse?
     var status: FriendshipStatus?
     
-    let userService: UserService
+    let userStore: UserStore
     let friendService: FriendService
     
-    init(userService: UserService, friendService: FriendService) {
-        self.userService = userService
+    init(userStore: UserStore, friendService: FriendService) {
+        self.userStore = userStore
         self.friendService = friendService
     }
     
     /// Search a user by username.
     /// - Parameter username: A username.
     func searchUsername(searchText: String) async {
-        guard !userService.checkSearchIsCurrentUsername(searchText: searchText) else {
+        guard !userStore.checkSearchIsCurrentUsername(searchText: searchText) else {
             AlertManager.shared.showAlert(title: "Alert", message: "You can't add yourself.")
             clearResult()
             return
@@ -36,7 +36,7 @@ final class SearchViewModel {
         defer { isLoading = false }
         
         do {
-            let result = try await userService.searchUsername(username: searchText)
+            let result = try await userStore.searchUsername(username: searchText)
             searchedUser = result
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
@@ -57,7 +57,7 @@ final class SearchViewModel {
         defer { isLoading = false }
         
         do {
-            let result = try await friendService.getFriendshipStatus(userID: userID)
+            let result = try await friendService.getFriendshipStatus(searchedUserID: userID)
             status = result.friendshipStatus
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
