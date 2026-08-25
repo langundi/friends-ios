@@ -56,10 +56,10 @@ struct PostView: View {
         .containerRelativeFrame(.vertical, alignment: .center)
         .sheet(isPresented: $showComment) {
             VStack {
-                Text("Comment Sheet")
+                CommentSheetView()
             }
             .presentationDragIndicator(.visible)
-            .presentationDetents([.fraction(0.8)])
+            .presentationDetents([.large])
         }
     }
     

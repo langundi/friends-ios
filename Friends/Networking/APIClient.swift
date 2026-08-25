@@ -58,6 +58,8 @@ struct APIClient {
         guard let response = response as? HTTPURLResponse else {
             throw NetworkError.unknown
         }
+        
+        Logger.network.info("Upload image status: \(response.statusCode)")
     }
     
     private func execute<T: Decodable>(endpoint: Endpoint) async throws -> T {

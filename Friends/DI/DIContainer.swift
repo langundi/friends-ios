@@ -83,6 +83,10 @@ final class ViewModelFactory {
         return FriendRequestViewModel(friendService: friendService)
     }
     
+    func makeReplyViewModel() -> ReplyViewModel {
+        return ReplyViewModel()
+    }
+    
     // MARK: - Profile Tab ViewModels
     
     func makeProfileViewModel() -> ProfileViewModel {

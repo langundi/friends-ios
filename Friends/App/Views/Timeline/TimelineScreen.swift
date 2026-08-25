@@ -13,8 +13,10 @@ struct TimelineScreen: View {
     @Environment(AppRouter.self) var router
     @Environment(\.scenePhase) var scenePhase
     @State private var viewModel: TimelineViewModel
+    private var factory: ViewModelFactory
     
     init(factory: ViewModelFactory) {
+        self.factory = factory
         _viewModel = State(initialValue: factory.makeTimelineViewModel())
     }
     
