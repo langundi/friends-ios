@@ -16,6 +16,10 @@ final class PostService {
         self.client = client
     }
     
+    func getTimeline() async throws -> [PostResponse]? {
+        try await client.requestOptional(endpoint: PostEndpoint.getTimeline)
+    }
+    
     func newPost(request: NewPostRequest) async throws -> PostResponse {
         try await client.request(endpoint: PostEndpoint.newPost(request: request))
     }
@@ -37,6 +41,10 @@ final class PostService {
         try await client.request(endpoint: UserEndpoint.getFriendPosts(id: userID))
     }
     
+    func deletePost(request: DeletePostRequest) async throws {
+        try await client.requestVoid(endpoint: PostEndpoint.deletePost(request: request))
+    }
+    
     func likePost(postID: Int) async throws {
         try await client.requestVoid(endpoint: PostEndpoint.likePost(id: postID))
     }
@@ -45,11 +53,15 @@ final class PostService {
         try await client.requestVoid(endpoint: PostEndpoint.unlikePost(id: postID))
     }
     
-    func deletePost(request: DeletePostRequest) async throws {
-        try await client.requestVoid(endpoint: PostEndpoint.deletePost(request: request))
+    func getPostReplies(postID: Int) async throws -> [ReplyResponse]? {
+        try await client.requestOptional(endpoint: PostEndpoint.getReplies(id: postID))
     }
     
-    func getTimeline() async throws -> [PostResponse]? {
-        try await client.requestOptional(endpoint: PostEndpoint.getTimeline)
+    func replyPost(postID: Int, request: ReplyRequest) async throws {
+        try await client.requestVoid(endpoint: PostEndpoint.replyPost(id: postID, request: request))
+    }
+    
+    func deleteReply(replyID: Int) async throws {
+        try await client.requestVoid(endpoint: PostEndpoint.deleteReply(id: replyID))
     }
 }

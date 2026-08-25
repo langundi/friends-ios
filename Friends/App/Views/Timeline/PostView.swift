@@ -56,7 +56,7 @@ struct PostView: View {
         .containerRelativeFrame(.vertical, alignment: .center)
         .sheet(isPresented: $showComment) {
             VStack {
-                CommentSheetView()
+                RepliesSheetView(viewModel: viewModel, postID: post.id)
             }
             .presentationDragIndicator(.visible)
             .presentationDetents([.large])

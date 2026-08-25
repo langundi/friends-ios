@@ -15,6 +15,9 @@ enum PostEndpoint: Endpoint {
     case getTimeline
     case deletePost(request: DeletePostRequest)
     case unlikePost(id: Int)
+    case getReplies(id: Int)
+    case replyPost(id: Int, request: ReplyRequest)
+    case deleteReply(id: Int)
     
     var headers: [String : String]? {
         switch self {
@@ -25,11 +28,11 @@ enum PostEndpoint: Endpoint {
     
     var method: HTTPMethod {
         switch self {
-        case .newPost, .getPresignedUrl, .likePost:
+        case .newPost, .getPresignedUrl, .likePost, .replyPost:
             return .post
-        case .getPost, .getTimeline:
+        case .getPost, .getTimeline, .getReplies:
             return .get
-        case .deletePost, .unlikePost:
+        case .deletePost, .unlikePost, .deleteReply:
             return .delete
         }
     }
@@ -48,6 +51,12 @@ enum PostEndpoint: Endpoint {
             return "/post/like/\(id)"
         case .unlikePost(let id):
             return "/post/unlike/\(id)"
+        case .getReplies(let id):
+            return "/post/reply/\(id)"
+        case .replyPost(let id, _):
+            return "/post/reply/\(id)"
+        case .deleteReply(let id):
+            return "/post/reply/\(id)"
         }
     }
     
@@ -66,6 +75,8 @@ enum PostEndpoint: Endpoint {
             return file
         case .deletePost(let post):
             return post
+        case .replyPost(_, let reply):
+            return reply
         default:
             return nil
         }

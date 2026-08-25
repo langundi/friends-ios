@@ -12,9 +12,14 @@ import OSLog
 final class TimelineViewModel {
     
     var isLoading: Bool = false
+    var isSheetLoading: Bool = false
     
     var timeline: [PostResponse] {
         timelineStore.timeline
+    }
+    
+    var replies: [ReplyResponse] {
+        timelineStore.replies
     }
     
     private let timelineStore: TimelineStore
@@ -74,6 +79,64 @@ final class TimelineViewModel {
             if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error fetching timeline: \(error)")
+        }
+    }
+    
+    /// Get post replies
+    /// - Parameter id: PostID.
+    func getReplies(id: Int) async {
+        isSheetLoading = true
+        defer { isSheetLoading = false }
+        
+        do {
+            try await timelineStore.getPostReplies(id: id)
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error fetching replies: \(networkError.message)")
+        } catch {
+            if error.isCancellation { return }
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error fetching replies: \(error)")
+        }
+    }
+    
+    /// Reply to post.
+    /// - Parameters:
+    ///   - id: Post ID.
+    ///   - reply: Reply text.
+    func replyPost(id: Int, reply: String) async {
+        isSheetLoading = true
+        defer { isSheetLoading = false }
+        
+        do {
+            let request = ReplyRequest(reply: reply)
+            try await timelineStore.replyPost(id: id, request: request)
+            try await timelineStore.getPostReplies(id: id)
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error fetching replies: \(networkError.message)")
+        } catch {
+            if error.isCancellation { return }
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error fetching replies: \(error)")
+        }
+    }
+    
+    /// Delete reply from post.
+    /// - Parameter id: ReplyID.
+    func deleteReply(id: Int) async {
+        isSheetLoading = true
+        defer { isSheetLoading = false }
+        
+        do {
+            try await timelineStore.deleteReply(id: id)
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error fetching replies: \(networkError.message)")
+        } catch {
+            if error.isCancellation { return }
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error fetching replies: \(error)")
         }
     }
 }

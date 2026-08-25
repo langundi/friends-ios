@@ -12,6 +12,7 @@ import Foundation
 final class TimelineStore {
     
     private(set) var timeline: [PostResponse] = []
+    private(set) var replies: [ReplyResponse] = []
     private var lastFetchAt: Date?
     private let staleDuration: TimeInterval = 500
     
@@ -59,5 +60,17 @@ final class TimelineStore {
     
     func unlikePost(id: Int) async throws {
         try await service.unlikePost(postID: id)
+    }
+    
+    func getPostReplies(id: Int) async throws {
+        replies = try await service.getPostReplies(postID: id) ?? []
+    }
+    
+    func replyPost(id: Int, request: ReplyRequest) async throws {
+        try await service.replyPost(postID: id, request: request)
+    }
+    
+    func deleteReply(id: Int) async throws {
+        try await service.deleteReply(replyID: id)
     }
 }
