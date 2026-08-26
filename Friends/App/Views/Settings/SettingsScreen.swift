@@ -20,7 +20,7 @@ struct SettingsScreen: View {
         Form {
             Section {
                 Button {
-                    
+                    router.push(to: .editProfile)
                 } label: {
                     SettingRow(color: .blue, symbol: "person.fill", text: "Edit Profile")
                 }
@@ -82,6 +82,7 @@ struct SettingRow: View {
             
             Image(systemName: "chevron.right")
                 .fontWeight(.medium)
+                .foregroundStyle(.secondary)
         }
         .contentShape(.rect)
     }

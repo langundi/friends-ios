@@ -12,6 +12,7 @@ import Foundation
 final class UserStore {
     
     private(set) var username = ""
+    private(set) var email = ""
     private var lastFetchAt: Date?
     private let staleDuration: TimeInterval = 500
     
@@ -42,6 +43,7 @@ final class UserStore {
     func getMyProfile() async throws {
         let result = try await service.getMyProfile()
         username = result.username
+        email = result.email
         lastFetchAt = Date()
     }
     

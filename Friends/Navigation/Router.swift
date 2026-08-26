@@ -17,6 +17,7 @@ enum ScreenEnum: Hashable {
     case profile
     case friendList
     case settings
+    case editProfile
     case search
     
     @ViewBuilder
@@ -40,6 +41,8 @@ enum ScreenEnum: Hashable {
             FriendListScreen(factory: factory)
         case .settings:
             SettingsScreen(factory: factory)
+        case .editProfile:
+            EditProfileScreen(factory: factory)
         case .search:
             SearchFriendScreen(factory: factory)
         }

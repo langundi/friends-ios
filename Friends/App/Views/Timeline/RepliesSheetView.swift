@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct RepliesSheetView: View {
+    @State private var reply: String = ""
+    @FocusState private var isReplyFieldFocused: Bool
     var viewModel: TimelineViewModel
     var postID: Int
-    @State private var reply: String = ""
     
     init(viewModel: TimelineViewModel, postID: Int) {
         self.viewModel = viewModel
@@ -31,7 +32,7 @@ struct RepliesSheetView: View {
                                         .foregroundStyle(.gray.opacity(0.15))
                                         .frame(maxWidth: 45, maxHeight: 45)
                                     
-                                    VStack(alignment: .leading, spacing: 12) {
+                                    VStack(alignment: .leading) {
                                         HStack(alignment: .top) {
                                             Text("@\(reply.username)")
                                             
@@ -52,7 +53,6 @@ struct RepliesSheetView: View {
                                         Text(reply.reply)
                                             .multilineTextAlignment(.leading)
                                     }
-                                    .padding(.vertical, 4)
                                 }
                             }
                         }
@@ -70,6 +70,7 @@ struct RepliesSheetView: View {
                     Group {
                         if #available(iOS 26.0, *) {
                             TextField("Write a reply...", text: $reply)
+                                .focused($isReplyFieldFocused)
                                 .padding(.leading)
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 48)
@@ -91,13 +92,14 @@ struct RepliesSheetView: View {
                         Task {
                             await viewModel.replyPost(id: postID, reply: reply)
                             reply = ""
+                            isReplyFieldFocused = false
                         }
                     } label: {
                         Image(systemName: "paperplane.fill")
                     }
                     .buttonStyle(ToolbarButtonStyle())
                 }
-                .padding(.horizontal)
+                .padding()
             }
             .overlay(alignment: .center) {
                 if viewModel.isSheetLoading {
