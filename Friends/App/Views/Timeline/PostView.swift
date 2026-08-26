@@ -23,7 +23,7 @@ struct PostView: View {
                 Circle()
                     .frame(maxWidth: 40, maxHeight: 40)
                 
-                Text("@username")
+                Text("@\(post.username)")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             

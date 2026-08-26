@@ -14,12 +14,12 @@ struct ReplyResponse: Identifiable, Decodable {
     let reply: String
     let createdAt: Date
     let repliedByMe: Bool
+    let username: String
     
     enum CodingKeys: String, CodingKey {
-        case id
+        case id, reply, username
         case userID = "user_id"
         case postID = "post_id"
-        case reply
         case createdAt = "created_at"
         case repliedByMe = "replied_by_me"
     }

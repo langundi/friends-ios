@@ -18,9 +18,10 @@ struct PostResponse: Identifiable, Decodable {
     var replyCount: Int
     let createdAt: Date
     var likedByMe: Bool
+    let username: String
     
     enum CodingKeys: String, CodingKey {
-        case id, caption
+        case id, caption, username
         case userID = "user_id"
         case imageURL = "image_url"
         case objectKey = "object_key"
@@ -57,7 +58,8 @@ extension PostResponse {
         likeCount: 5,
         replyCount: 2,
         createdAt: Date(),
-        likedByMe: false
+        likedByMe: false,
+        username: "kolin"
     )
     
     static let noCaptionPostDummy = PostResponse(
@@ -69,7 +71,8 @@ extension PostResponse {
         likeCount: 5,
         replyCount: 2,
         createdAt: Date(),
-        likedByMe: false
+        likedByMe: false,
+        username: "kolin"
     )
     
     static let timelineDummy = [
@@ -82,7 +85,8 @@ extension PostResponse {
             likeCount: 5,
             replyCount: 2,
             createdAt: Date(),
-            likedByMe: true
+            likedByMe: true,
+            username: "kolin"
         ),
         PostResponse(
             id: 2,
@@ -94,6 +98,7 @@ extension PostResponse {
             replyCount: 2,
             createdAt: Date().addingTimeInterval(3600),
             likedByMe: false,
+            username: "kolin"
         ),
         PostResponse(
             id: 3,
@@ -104,7 +109,8 @@ extension PostResponse {
             likeCount: 5,
             replyCount: 2,
             createdAt: Date().addingTimeInterval(7200),
-            likedByMe: false
+            likedByMe: false,
+            username: "kolin"
         ),
         PostResponse(
             id: 4,
@@ -115,7 +121,8 @@ extension PostResponse {
             likeCount: 5,
             replyCount: 2,
             createdAt: Date().addingTimeInterval(14400),
-            likedByMe: false
+            likedByMe: false,
+            username: "kolin"
         ),
         PostResponse(
             id: 5,
@@ -126,7 +133,8 @@ extension PostResponse {
             likeCount: 5,
             replyCount: 2,
             createdAt: Date().addingTimeInterval(28800),
-            likedByMe: true
+            likedByMe: true,
+            username: "kolin"
         ),
         PostResponse(
             id: 6,
@@ -137,7 +145,8 @@ extension PostResponse {
             likeCount: 5,
             replyCount: 2,
             createdAt: Date().addingTimeInterval(57600),
-            likedByMe: false
+            likedByMe: false,
+            username: "kolin"
         ),
     ]
     

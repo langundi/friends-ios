@@ -33,7 +33,7 @@ struct RepliesSheetView: View {
                                     
                                     VStack(alignment: .leading, spacing: 12) {
                                         HStack(alignment: .top) {
-                                            Text("@username")
+                                            Text("@\(reply.username)")
                                             
                                             Spacer(minLength: 0)
                                             
