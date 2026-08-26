@@ -32,7 +32,7 @@ struct ProfileScreen: View {
                     .frame(maxWidth: 60, maxHeight: 60)
                 
                 VStack(alignment: .leading, spacing: 12) {
-                    Text(viewModel.username)
+                    Text("@\(viewModel.username)")
                         .font(.title3)
                         .fontWeight(.medium)
                     
@@ -55,11 +55,7 @@ struct ProfileScreen: View {
             .frame(maxWidth: .infinity)
             .padding()
             
-            LazyVGrid(
-                columns: columns,
-                alignment: .center,
-                spacing: 8
-            ) {
+            LazyVGrid(columns: columns, alignment: .center, spacing: 8) {
                 ForEach(viewModel.posts) { post in
                     ImageView(imageURL: post.imageURL)
                         .contextMenu {
@@ -71,7 +67,6 @@ struct ProfileScreen: View {
                             } label: {
                                 Label("Delete Post", systemImage: "trash")
                             }
-                            
                         }
                 }
             }
@@ -83,17 +78,9 @@ struct ProfileScreen: View {
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button {
-                    AlertManager.shared.showAlert(
-                        title: "Sign Out",
-                        message: "Are you sure you want to sign out?",
-                        primaryAction: .init(title: "Yes", action: {
-                            Task {
-                                await viewModel.signOutUser()
-                            }
-                        }), secondaryAction: .init(title: "Cancel"))
+                    router.push(to: .settings)
                 } label: {
-                    Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.forward")
-                        .labelStyle(.iconOnly)
+                    Image(systemName: "gearshape")
                 }
             }
         }
@@ -117,3 +104,22 @@ struct ProfileScreen: View {
     }
     .withPreviewEnvironments()
 }
+
+
+/*
+ 
+ Button {
+     AlertManager.shared.showAlert(
+         title: "Sign Out",
+         message: "Are you sure you want to sign out?",
+         primaryAction: .init(title: "Sign Out", action: {
+             Task {
+                 await viewModel.signOutUser()
+             }
+         }), secondaryAction: .init(title: "Cancel"))
+ } label: {
+     Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.forward")
+         .labelStyle(.iconOnly)
+ }
+ 
+ */

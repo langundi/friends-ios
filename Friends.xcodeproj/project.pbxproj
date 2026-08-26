@@ -71,6 +71,9 @@
 		818FFF5E3034AA0000D55DE4 /* FriendRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818FFF5D3034AA0000D55DE4 /* FriendRequestView.swift */; };
 		819DFB7D30356F90007E94DE /* FriendEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819DFB7C30356F90007E94DE /* FriendEndpoint.swift */; };
 		819DFB7F303576C7007E94DE /* FriendRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819DFB7E303576C7007E94DE /* FriendRowView.swift */; };
+		81C0AC4F303EA3B000A37E2D /* EditProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C0AC4E303EA3B000A37E2D /* EditProfileScreen.swift */; };
+		81C0AC51303EA46400A37E2D /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C0AC50303EA46400A37E2D /* SettingsScreen.swift */; };
+		81C0AC53303EAB8C00A37E2D /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81C0AC52303EAB8C00A37E2D /* SettingsViewModel.swift */; };
 		81DA67A93032F7D10079EE35 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67A83032F7D10079EE35 /* SearchViewModel.swift */; };
 		81DA67AB303332120079EE35 /* FriendRequestEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67AA303332120079EE35 /* FriendRequestEndpoint.swift */; };
 		81DA67AD303333010079EE35 /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67AC303333010079EE35 /* FriendService.swift */; };
@@ -148,6 +151,9 @@
 		818FFF5D3034AA0000D55DE4 /* FriendRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestView.swift; sourceTree = "<group>"; };
 		819DFB7C30356F90007E94DE /* FriendEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendEndpoint.swift; sourceTree = "<group>"; };
 		819DFB7E303576C7007E94DE /* FriendRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRowView.swift; sourceTree = "<group>"; };
+		81C0AC4E303EA3B000A37E2D /* EditProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileScreen.swift; sourceTree = "<group>"; };
+		81C0AC50303EA46400A37E2D /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
+		81C0AC52303EAB8C00A37E2D /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		81DA67A83032F7D10079EE35 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		81DA67AA303332120079EE35 /* FriendRequestEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestEndpoint.swift; sourceTree = "<group>"; };
 		81DA67AC303333010079EE35 /* FriendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendService.swift; sourceTree = "<group>"; };
@@ -342,6 +348,7 @@
 		818F25003018B21B00678EF5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				81C0AC4D303EA39B00A37E2D /* Settings */,
 				8168745C302F7A3F000D7DCA /* NewPost */,
 				8168745B302F7A30000D7DCA /* Notification */,
 				81687403302F279D000D7DCA /* Search */,
@@ -366,6 +373,7 @@
 				8168745D302F7A53000D7DCA /* NewPostViewModel.swift */,
 				81DA67A83032F7D10079EE35 /* SearchViewModel.swift */,
 				81458B75303D8B550089469F /* ReplyViewModel.swift */,
+				81C0AC52303EAB8C00A37E2D /* SettingsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -454,6 +462,15 @@
 				810EE0223019EC0D005FED56 /* Constants.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		81C0AC4D303EA39B00A37E2D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				81C0AC4E303EA3B000A37E2D /* EditProfileScreen.swift */,
+				81C0AC50303EA46400A37E2D /* SettingsScreen.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		81F0DCE2303719D4009074D0 /* Stores */ = {
@@ -556,6 +573,7 @@
 				819DFB7D30356F90007E94DE /* FriendEndpoint.swift in Sources */,
 				815DCAB3301DC54300AD470A /* NotificationViewModel.swift in Sources */,
 				818F25073018B3C300678EF5 /* TimelineViewModel.swift in Sources */,
+				81C0AC53303EAB8C00A37E2D /* SettingsViewModel.swift in Sources */,
 				81F0DCE4303719E0009074D0 /* PostStore.swift in Sources */,
 				815DCAA8301DA16F00AD470A /* TabRootView.swift in Sources */,
 				815DCAAF301DADAC00AD470A /* FriendListScreen.swift in Sources */,
@@ -584,6 +602,7 @@
 				818F24F93018B0BC00678EF5 /* Router.swift in Sources */,
 				811E605B302B372300542203 /* UserService.swift in Sources */,
 				818F25343018EF7100678EF5 /* View+Extensions.swift in Sources */,
+				81C0AC4F303EA3B000A37E2D /* EditProfileScreen.swift in Sources */,
 				815DCAAD301DA4A100AD470A /* ProfileViewModel.swift in Sources */,
 				8168746A3031AEE1000D7DCA /* CommentButton.swift in Sources */,
 				810EE02C301A5539005FED56 /* PostResponses.swift in Sources */,
@@ -595,6 +614,7 @@
 				811E6059302B364700542203 /* UserEndpoint.swift in Sources */,
 				81DA67AB303332120079EE35 /* FriendRequestEndpoint.swift in Sources */,
 				811E6053302B293800542203 /* PostEndpoint.swift in Sources */,
+				81C0AC51303EA46400A37E2D /* SettingsScreen.swift in Sources */,
 				818F25233018BACF00678EF5 /* SignUpScreen.swift in Sources */,
 				818F25313018E05B00678EF5 /* TokenManager.swift in Sources */,
 				810AEDF330374E7F001773C7 /* FriendStore.swift in Sources */,

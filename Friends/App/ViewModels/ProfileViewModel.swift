@@ -25,11 +25,6 @@ final class ProfileViewModel {
         friendStore.friends
     }
     
-    private var isLoggedIn: Bool {
-        get { UserDefaults.standard.bool(forKey: Constants.isUserLoggedIn) }
-        set { UserDefaults.standard.set(newValue, forKey: Constants.isUserLoggedIn) }
-    }
-    
     private let authService: AuthService
     private let postStore: PostStore
     private let userStore: UserStore
@@ -159,39 +154,5 @@ final class ProfileViewModel {
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error fetching friend list: \(error)")
         }
-    }
-    
-    // MARK: - Settings
-    
-    /// Sign out user and delete access and refresh tokens from keychain.
-    func signOutUser() async {
-        isLoading = true
-        defer { isLoading = false }
-        
-        do {
-            guard let refreshToken: String = try? Keychain.get(Constants.refreshToken) else {
-                isLoggedIn = false
-                throw NetworkError.sessionExpired
-            }
-            
-            let refresh = RefreshRequest(refreshToken: refreshToken)
-            try await authService.logoutUser(request: refresh)
-            
-            deleteTokensFromKeychain()
-            
-            isLoggedIn = false
-        } catch let networkError as NetworkError {
-            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
-            Logger.network.error("Error signing out: \(networkError.message)")
-        } catch {
-            if error.isCancellation { return }
-            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
-            Logger.network.error("Error signing out: \(error)")
-        }
-    }
-    
-    private func deleteTokensFromKeychain() {
-        _ = Keychain.delete(Constants.accessToken)
-        _ = Keychain.delete(Constants.refreshToken)
     }
 }

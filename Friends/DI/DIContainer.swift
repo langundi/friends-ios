@@ -93,6 +93,10 @@ final class ViewModelFactory {
         profileViewModel
     }
     
+    func makeSettingsViewModel() -> SettingsViewModel {
+        return SettingsViewModel(authService: authService)
+    }
+    
     // MARK: - Search Tab ViewModels
     
     func makeSearchViewModel() -> SearchViewModel {
