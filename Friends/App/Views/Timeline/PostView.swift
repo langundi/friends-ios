@@ -9,12 +9,14 @@ import SwiftUI
 
 struct PostView: View {
     var viewModel: TimelineViewModel
-    @State var post: PostResponse
+    var post: PostResponse
+    @State private var isPostLiked: Bool
     @State private var showComment: Bool = false
     
     init(viewModel: TimelineViewModel, post: PostResponse) {
         self.viewModel = viewModel
         self.post = post
+        _isPostLiked = State(initialValue: post.likedByMe)
     }
     
     var body: some View {
@@ -52,7 +54,8 @@ struct PostView: View {
                 .layoutPriority(0)
             }
         }
-        .padding()
+        .padding(.horizontal)
+        .padding(.bottom, 80)
         .containerRelativeFrame(.vertical, alignment: .center)
         .sheet(isPresented: $showComment) {
             VStack {
@@ -61,6 +64,10 @@ struct PostView: View {
             .presentationDragIndicator(.visible)
             .presentationDetents([.large])
         }
+        .onChange(of: post.likedByMe) { oldValue, newValue in
+            print("old = \(oldValue)")
+            print("new = \(newValue)")
+        }
     }
     
     private func likeUnlikePost() {
@@ -68,16 +75,14 @@ struct PostView: View {
             Task {
                 await viewModel.unlikePost(id: post.id)
                 withAnimation(.snappy) {
-                    post.likedByMe = false
-                    post.likeCount -= 1
+                    isPostLiked = false
                 }
             }
         } else {
             Task {
                 await viewModel.likePost(id: post.id)
                 withAnimation(.snappy) {
-                    post.likedByMe = true
-                    post.likeCount += 1
+                    isPostLiked = true
                 }
             }
         }

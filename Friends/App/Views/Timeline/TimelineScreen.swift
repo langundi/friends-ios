@@ -48,9 +48,6 @@ struct TimelineScreen: View {
             .task {
                 await viewModel.getTimeline()
             }
-            .refreshable {
-                await viewModel.refreshTimeline()
-            }
             .environment(viewModel)
     }
 }

@@ -25,4 +25,8 @@ final class UserService {
     func searchUsername(username: String) async throws -> UsernameResponse {
         try await client.request(endpoint: UserEndpoint.searchUsername(username: username))
     }
+    
+    func updateUsername(request: UpdateUsernameRequest) async throws {
+        try await client.requestVoid(endpoint: UserEndpoint.updateUsername(request: request))
+    }
 }

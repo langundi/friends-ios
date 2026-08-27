@@ -13,9 +13,12 @@ enum UserEndpoint: Endpoint {
     case getMyPosts
     case getFriendPosts(id: Int)
     case searchUsername(username: String)
+    case updateUsername(request: UpdateUsernameRequest)
     
     var method: HTTPMethod {
         switch self {
+        case .updateUsername:
+            return .post
         default:
             return .get
         }
@@ -33,6 +36,8 @@ enum UserEndpoint: Endpoint {
             return"/user/post/\(id)"
         case .searchUsername(let username):
             return "/user/search/\(username)"
+        case .updateUsername:
+            return"/user/update/username"
         }
     }
     
@@ -45,6 +50,8 @@ enum UserEndpoint: Endpoint {
     
     var body: (any Encodable)? {
         switch self {
+        case .updateUsername(let username):
+            return username
         default:
             return nil
         }

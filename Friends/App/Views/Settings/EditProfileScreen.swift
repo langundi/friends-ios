@@ -39,7 +39,7 @@ struct EditProfileScreen: View {
         .navigationTitle("Edit Profile")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $isEditingUsername) {
-            EditUsernameSheet(value: viewModel.username)
+            EditUsernameSheet(viewModel: viewModel, oldUsername: viewModel.username)
         }
         .sheet(isPresented: $isEditingEmail) {
             EditEmailSheet(value: viewModel.email)
@@ -62,11 +62,6 @@ struct ProfileRowView: View {
         }
         .contentShape(.rect)
     }
-}
-
-enum ProfileField: String {
-    case username = "Username"
-    case email = "Email"
 }
 
 #Preview {

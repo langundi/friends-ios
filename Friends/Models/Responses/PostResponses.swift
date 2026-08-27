@@ -18,7 +18,7 @@ struct PostResponse: Identifiable, Decodable {
     var replyCount: Int
     let createdAt: Date
     var likedByMe: Bool
-    let username: String
+    var username: String
     
     enum CodingKeys: String, CodingKey {
         case id, caption, username

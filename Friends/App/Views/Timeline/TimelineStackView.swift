@@ -21,33 +21,39 @@ struct TimelineStackView: View {
     }
     
     var body: some View {
-        if posts.isEmpty {
-            ContentUnavailableView {
-                Image(systemName: "person.2.fill")
-                    .font(.largeTitle)
-                    .foregroundStyle(.gray)
-            } description: {
-                Text("Let's add some friends!")
-            } actions: {
-                Button {
-                    router.push(to: .search)
-                } label: {
-                    Label("Find Friends", systemImage: "magnifyingglass")
-                }
-            }
-        } else {
-            ScrollView(.vertical) {
-                LazyVStack(alignment: .center, spacing: 0) {
-                    ForEach(posts) { post in
-                        PostView(viewModel: viewModel, post: post)
+        Group {
+            if posts.isEmpty {
+                ContentUnavailableView {
+                    Image(systemName: "person.2.fill")
+                        .font(.largeTitle)
+                        .foregroundStyle(.gray)
+                } description: {
+                    Text("Let's add some friends!")
+                } actions: {
+                    Button {
+                        router.push(to: .search)
+                    } label: {
+                        Label("Find Friends", systemImage: "magnifyingglass")
                     }
                 }
-                .scrollTargetLayout()
+            } else {
+                ScrollView(.vertical) {
+                    LazyVStack(alignment: .center, spacing: 0) {
+                        ForEach(posts) { post in
+                            PostView(viewModel: viewModel, post: post)
+                        }
+                    }
+                    .scrollTargetLayout()
+                }
+                .ignoresSafeArea(edges: [.horizontal, .bottom])
+                .scrollTargetBehavior(.paging)
+                .scrollIndicators(.hidden)
+                .refreshable {
+                    await viewModel.refreshTimeline()
+                }
             }
-            .ignoresSafeArea()
-            .scrollTargetBehavior(.paging)
-            .scrollIndicators(.hidden)
         }
+        
     }
 }
 

@@ -9,18 +9,35 @@ import SwiftUI
 
 struct EditUsernameSheet: View {
     @Environment(\.dismiss) var dismiss
-    @State var value: String
+    let viewModel: EditProfileViewModel
+    let oldUsername: String
+    @State private var newUsername: String = ""
+    
+    var isOldUsername: Bool {
+        newUsername == viewModel.username
+    }
+    
+    init(viewModel: EditProfileViewModel, oldUsername: String) {
+        self.viewModel = viewModel
+        self.oldUsername = oldUsername
+    }
     
     var body: some View {
         NavigationStack {
             Form {
-                TextField("Username", text: $value)
+                TextField(oldUsername, text: $newUsername)
                     .autocorrectionDisabled()
                     .textCase(.lowercase)
                     .textContentType(.username)
+                    .textInputAutocapitalization(.never)
             }
             .navigationTitle("Username")
             .navigationBarTitleDisplayMode(.inline)
+            .overlay(alignment: .center) {
+                if viewModel.isLoading {
+                    LoadingOverlay()
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
@@ -32,12 +49,18 @@ struct EditUsernameSheet: View {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        Task {
+                            await viewModel.updateUsername(username: newUsername) {
+                                dismiss()
+                            }
+                        }
                     } label: {
                         Image(systemName: "checkmark")
                             .foregroundStyle(.white)
                     }
                     .buttonStyle(.borderedProminent)
+                    .disabled(isOldUsername)
+                    .disabled(newUsername.isEmpty)
                 }
             }
         }
@@ -46,6 +69,6 @@ struct EditUsernameSheet: View {
 
 #Preview {
     NavigationStack {
-        EditUsernameSheet(value: "dorami")
+        EditUsernameSheet(viewModel: EditProfileViewModel.mockVM, oldUsername: "dorami")
     }
 }

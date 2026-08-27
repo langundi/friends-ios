@@ -57,11 +57,19 @@ final class TimelineStore {
     /// - Parameter id: PostID.
     func likePost(id: Int) async throws {
         try await service.likePost(postID: id)
+        if let index = timeline.firstIndex(where: { $0.id == id }) {
+            timeline[index].likeCount += 1
+            timeline[index].likedByMe = true
+        }
     }
     
     /// Unlike a post.
     /// - Parameter id: PostID.
     func unlikePost(id: Int) async throws {
         try await service.unlikePost(postID: id)
+        if let index = timeline.firstIndex(where: { $0.id == id }) {
+            timeline[index].likeCount -= 1
+            timeline[index].likedByMe = false
+        }
     }
 }
