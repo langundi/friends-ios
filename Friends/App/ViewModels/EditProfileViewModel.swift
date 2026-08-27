@@ -58,6 +58,38 @@ final class EditProfileViewModel {
         }
     }
     
+    /// Update current user's email.
+    /// - Parameters:
+    ///   - email: New email address.
+    ///   - completion: Completion handler.
+    func updateEmail(email: String, completion: @escaping () -> Void) async {
+        guard email != self.email else {
+            AlertManager.shared.showAlert(title: "An error occured", message: "New email must be different from old email.")
+            return
+        }
+        
+        guard EmailValidator.isValid(email) else {
+            AlertManager.shared.showAlert(title: "An error occured", message: "Please enter a valid email format.")
+            return
+        }
+        
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            let request = UpdateEmailRequest(email: email)
+            try await userStore.updateEmail(request: request)
+            completion()
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error updating email: \(networkError)")
+        } catch {
+            if error.isCancellation { return }
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error updating email: \(error)")
+        }
+    }
+    
 }
 
 extension EditProfileViewModel {

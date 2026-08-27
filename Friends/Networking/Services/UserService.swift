@@ -29,4 +29,8 @@ final class UserService {
     func updateUsername(request: UpdateUsernameRequest) async throws {
         try await client.requestVoid(endpoint: UserEndpoint.updateUsername(request: request))
     }
+    
+    func updateEmail(request: UpdateEmailRequest) async throws {
+        try await client.requestVoid(endpoint: UserEndpoint.updateEmail(request: request))
+    }
 }

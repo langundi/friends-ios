@@ -62,10 +62,18 @@ final class UserStore {
         return false
     }
     
-    /// Update username.
+    /// Update user's username.
     /// - Parameter request: UpdateUsernameRequest
     func updateUsername(request: UpdateUsernameRequest) async throws {
         try await userService.updateUsername(request: request)
         username = request.username
     }
+    
+    /// Update user's email.
+    /// - Parameter request: UpdateEmailRequest
+    func updateEmail(request: UpdateEmailRequest) async throws {
+        try await userService.updateEmail(request: request)
+        email = request.email
+    }
+
 }

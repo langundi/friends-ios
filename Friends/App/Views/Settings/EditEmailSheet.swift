@@ -9,15 +9,23 @@ import SwiftUI
 
 struct EditEmailSheet: View {
     @Environment(\.dismiss) var dismiss
-    @State var value: String
+    let viewModel: EditProfileViewModel
+    let oldEmail: String
+    @State var newEmail: String = ""
+    
+    init(viewModel: EditProfileViewModel, oldEmail: String) {
+        self.viewModel = viewModel
+        self.oldEmail = oldEmail
+    }
     
     var body: some View {
         NavigationStack {
             Form {
-                TextField("Email", text: $value)
+                TextField(oldEmail, text: $newEmail)
                     .autocorrectionDisabled()
-                    .textCase(.lowercase)
-                    .textContentType(.username)
+                    .keyboardType(.emailAddress)
+                    .textContentType(.emailAddress)
+                    .textInputAutocapitalization(.never)
             }
             .navigationTitle("Email")
             .navigationBarTitleDisplayMode(.inline)
@@ -32,7 +40,11 @@ struct EditEmailSheet: View {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        Task {
+                            await viewModel.updateEmail(email: newEmail) {
+                                dismiss()
+                            }
+                        }
                     } label: {
                         Image(systemName: "checkmark")
                             .foregroundStyle(.white)
@@ -45,5 +57,5 @@ struct EditEmailSheet: View {
 }
 
 #Preview {
-    EditEmailSheet(value: "dorami@mail.com")
+    EditEmailSheet(viewModel: EditProfileViewModel.mockVM, oldEmail: "dorami@mail.com")
 }

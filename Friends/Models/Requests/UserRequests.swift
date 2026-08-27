@@ -10,3 +10,7 @@ import Foundation
 struct UpdateUsernameRequest: Encodable {
     let username: String
 }
+
+struct UpdateEmailRequest: Encodable {
+    let email: String
+}

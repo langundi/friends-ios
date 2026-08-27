@@ -42,7 +42,7 @@ struct EditProfileScreen: View {
             EditUsernameSheet(viewModel: viewModel, oldUsername: viewModel.username)
         }
         .sheet(isPresented: $isEditingEmail) {
-            EditEmailSheet(value: viewModel.email)
+            EditEmailSheet(viewModel: viewModel, oldEmail: viewModel.email)
         }
     }
 }
