@@ -32,7 +32,12 @@ final class EditProfileViewModel {
     /// - Parameter completion: Completion handler.
     func updateUsername(username: String, completion: @escaping () -> Void) async {
         guard username != self.username else {
-            AlertManager.shared.showAlert(title: "Alert", message: "Your new username cannot be your old.")
+            AlertManager.shared.showAlert(title: "An error occured", message: "New username must be different from old username.")
+            return
+        }
+        
+        guard UsernameValidator.isValid(username) else {
+            AlertManager.shared.showAlert(title: "An error occured", message: "Please enter a valid username format.")
             return
         }
         
@@ -52,6 +57,7 @@ final class EditProfileViewModel {
             Logger.network.error("Error updating username: \(error)")
         }
     }
+    
 }
 
 extension EditProfileViewModel {

@@ -19,11 +19,15 @@ struct SignUpScreen: View {
         Form {
             Section {
                 TextField("Username", text: $username)
+                    .textContentType(.username)
+                    .textCase(.lowercase)
                 
                 TextField("Email", text: $email)
                     .keyboardType(.emailAddress)
+                    .textContentType(.emailAddress)
                 
                 TextField("Password", text: $password)
+                    .textContentType(.password)
             }
             .autocorrectionDisabled()
             .textInputAutocapitalization(.never)
@@ -31,11 +35,15 @@ struct SignUpScreen: View {
             Section {
                 Button {
                     Task {
-                        await viewmodel.registerUser(
-                            username: username,
-                            email: email,
-                            password: password
-                        )
+                        await viewmodel.registerUser(username: username, email: email, password: password) {
+                            AlertManager.shared.showAlert(
+                                title: "Success",
+                                message: "Registration succesful! You can sign in to your account.",
+                                action: .init(title: "OK", action: {
+                                    router.pop()
+                                })
+                            )
+                        }
                     }
                 } label: {
                     Text("Sign Up")

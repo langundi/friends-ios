@@ -28,7 +28,17 @@ final class AuthViewModel {
     ///   - username: User's username.
     ///   - email: User's email.
     ///   - password: User's password.
-    func registerUser(username: String, email: String, password: String) async {
+    func registerUser(username: String, email: String, password: String, completion: @escaping () -> Void) async {
+        guard UsernameValidator.isValid(username) else {
+            AlertManager.shared.showAlert(title: "An error occured", message: "Please enter a valid username format.")
+            return
+        }
+        
+        guard EmailValidator.isValid(email) else {
+            AlertManager.shared.showAlert(title: "An error occured", message: "Please enter a valid email format.")
+            return
+        }
+        
         isLoading = true
         defer { isLoading = false }
         
@@ -36,6 +46,7 @@ final class AuthViewModel {
             let user = RegisterRequest(username: username, email: email, password: password)
             let result = try await authService.registerUser(request: user)
             Logger.network.info("Registered new user: id: \(result.id), username: \(username)")
+            completion()
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error registering user: \(networkError.message)")

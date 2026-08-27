@@ -13,10 +13,6 @@ struct EditUsernameSheet: View {
     let oldUsername: String
     @State private var newUsername: String = ""
     
-    var isOldUsername: Bool {
-        newUsername == viewModel.username
-    }
-    
     init(viewModel: EditProfileViewModel, oldUsername: String) {
         self.viewModel = viewModel
         self.oldUsername = oldUsername
@@ -25,11 +21,17 @@ struct EditUsernameSheet: View {
     var body: some View {
         NavigationStack {
             Form {
-                TextField(oldUsername, text: $newUsername)
-                    .autocorrectionDisabled()
-                    .textCase(.lowercase)
-                    .textContentType(.username)
-                    .textInputAutocapitalization(.never)
+                Section {
+                    TextField(oldUsername, text: $newUsername)
+                        .autocorrectionDisabled()
+                        .textCase(.lowercase)
+                        .textContentType(.username)
+                        .textInputAutocapitalization(.never)
+                } footer: {
+                    VStack {
+                        Text("Username can contain \".\" or \"_\" and must be lowercased.")
+                    }
+                }
             }
             .navigationTitle("Username")
             .navigationBarTitleDisplayMode(.inline)
@@ -59,7 +61,6 @@ struct EditUsernameSheet: View {
                             .foregroundStyle(.white)
                     }
                     .buttonStyle(.borderedProminent)
-                    .disabled(isOldUsername)
                     .disabled(newUsername.isEmpty)
                 }
             }
