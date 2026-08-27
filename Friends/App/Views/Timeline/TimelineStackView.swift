@@ -52,7 +52,6 @@ struct TimelineStackView: View {
 }
 
 #Preview {
-    let vm = TimelineViewModel(timelineStore: TimelineStore(postService: PostService(client: APIClient.shared)))
-    TimelineStackView(viewModel: vm, posts: PostResponse.timelineDummy)
+    TimelineStackView(viewModel: TimelineViewModel.mockTimeline, posts: PostResponse.timelineDummy)
         .withPreviewEnvironments()
 }

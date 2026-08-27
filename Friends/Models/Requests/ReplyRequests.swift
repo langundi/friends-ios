@@ -9,4 +9,5 @@ import Foundation
 
 struct ReplyRequest: Encodable {
     let reply: String
+    let username: String
 }

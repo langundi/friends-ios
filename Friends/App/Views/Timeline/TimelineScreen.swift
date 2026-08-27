@@ -63,10 +63,8 @@ struct TimelineScreen: View {
 }
 
 #Preview("With Posts") {
-    let mock = TimelineViewModel.mockTimeline.timeline
-    let vm = TimelineViewModel(timelineStore: TimelineStore(postService: PostService(client: APIClient.shared)))
     NavigationStack {
-        TimelineStackView(viewModel: vm, posts: mock)
+        TimelineStackView(viewModel: TimelineViewModel.mockTimeline, posts: PostResponse.timelineDummy)
             .navigationTitle("Timeline")
             .navigationBarTitleDisplayMode(.inline)
     }

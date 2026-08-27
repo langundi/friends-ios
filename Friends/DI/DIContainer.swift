@@ -45,10 +45,14 @@ final class ViewModelFactory {
         FriendStore(friendService: friendService)
     }()
     
+    lazy var replyStore: ReplyStore = {
+        ReplyStore(postService: postService)
+    }()
+    
     // MARK: - ViewModels
     
     lazy var timelineViewModel: TimelineViewModel = {
-        return TimelineViewModel(timelineStore: timelineStore)
+        return TimelineViewModel(timelineStore: timelineStore, replyStore: replyStore, userStore: userStore)
     }()
     
     lazy var profileViewModel: ProfileViewModel = {

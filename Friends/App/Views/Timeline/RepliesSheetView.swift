@@ -114,5 +114,5 @@ struct RepliesSheetView: View {
 }
 
 #Preview {
-    RepliesSheetView(viewModel: TimelineViewModel(timelineStore: TimelineStore(postService: PostService(client: APIClient.shared))), postID: 1)
+    RepliesSheetView(viewModel: TimelineViewModel.mockTimeline, postID: 1)
 }

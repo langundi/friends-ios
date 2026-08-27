@@ -85,11 +85,9 @@ struct PostView: View {
 }
 
 #Preview("Post") {
-    let vm = TimelineViewModel(timelineStore: TimelineStore(postService: PostService(client: APIClient.shared)))
-    PostView(viewModel: vm, post: PostResponse.postDummy)
+    PostView(viewModel: TimelineViewModel.mockTimeline, post: PostResponse.postDummy)
 }
 
 #Preview("Captionless") {
-    let vm = TimelineViewModel(timelineStore: TimelineStore(postService: PostService(client: APIClient.shared)))
-    PostView(viewModel: vm, post: PostResponse.noCaptionPostDummy)
+    PostView(viewModel: TimelineViewModel.mockTimeline, post: PostResponse.noCaptionPostDummy)
 }
