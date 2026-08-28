@@ -47,6 +47,6 @@ struct FriendListScreen: View {
 #Preview {
     NavigationStack {
         FriendListScreen(factory: ViewModelFactory())
-            .withPreviewEnvironments()
+            .appPreviewEnvironments()
     }
 }

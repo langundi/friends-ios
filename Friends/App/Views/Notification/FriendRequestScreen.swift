@@ -52,5 +52,5 @@ struct FriendRequestScreen: View {
     NavigationStack {
         FriendRequestScreen(factory: ViewModelFactory())
     }
-    .withPreviewEnvironments()
+    .appPreviewEnvironments()
 }

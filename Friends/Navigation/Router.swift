@@ -24,9 +24,9 @@ enum ScreenEnum: Hashable {
     func build(factory: ViewModelFactory) -> some View {
         switch self {
         case .signIn:
-            SignInScreen()
+            SignInScreen(factory: factory)
         case .signUp:
-            SignUpScreen()
+            SignUpScreen(factory: factory)
         case .timeline:
             TimelineScreen(factory: factory)
         case .newPost:

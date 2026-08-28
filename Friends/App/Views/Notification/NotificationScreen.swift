@@ -61,5 +61,5 @@ struct NotificationScreen: View {
     NavigationStack {
         NotificationScreen(factory: ViewModelFactory())
     }
-    .withPreviewEnvironments()
+    .appPreviewEnvironments()
 }

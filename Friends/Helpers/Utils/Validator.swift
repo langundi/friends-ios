@@ -22,3 +22,24 @@ struct EmailValidator {
         email.wholeMatch(of: validEmail) != nil
     }
 }
+
+struct PasswordRule {    
+    let description: String
+    let regex: Regex<Substring>
+}
+
+enum PasswordValidator {
+    static let rules: [PasswordRule] = [
+        PasswordRule(description: "At least 8 charactets", regex: /.{8,}/),
+        PasswordRule(description: "One special character (!@#$%^&*)", regex: /[!@#$%^&*]/),
+        PasswordRule(description: "One digit", regex: /\d/),
+    ]
+    
+    static func unmetRules(for password: String) -> [PasswordRule] {
+        rules.filter { password.firstMatch(of: $0.regex) == nil }
+    }
+    
+    static func isStrong(_ password: String) -> Bool {
+        unmetRules(for: password).isEmpty
+    }
+}

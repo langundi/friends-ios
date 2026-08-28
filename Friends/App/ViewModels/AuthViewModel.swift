@@ -17,6 +17,36 @@ final class AuthViewModel {
         set { UserDefaults.standard.set(newValue, forKey: Constants.isUserLoggedIn) }
     }
     
+    // Sign Up
+    var email = ""
+    var username = ""
+    var password = ""
+    var confirmPassword = ""
+    
+    var isUsernameValid: Bool {
+        username.isEmpty || UsernameValidator.isValid(username)
+    }
+    
+    var isEmailValid: Bool {
+        email.isEmpty || EmailValidator.isValid(email)
+    }
+    
+    var unmetPasswordRules: [PasswordRule] {
+        PasswordValidator.unmetRules(for: password)
+    }
+    
+    var passwordsMatch: Bool {
+        confirmPassword.isEmpty || password == confirmPassword
+    }
+    
+    var canSubmit: Bool {
+        isUsernameValid
+        && isEmailValid
+        && unmetPasswordRules.isEmpty
+        && !confirmPassword.isEmpty
+        && password == confirmPassword
+    }
+    
     private let authService: AuthService
     
     init(authService: AuthService) {
@@ -28,14 +58,9 @@ final class AuthViewModel {
     ///   - username: User's username.
     ///   - email: User's email.
     ///   - password: User's password.
-    func registerUser(username: String, email: String, password: String, completion: @escaping () -> Void) async {
-        guard UsernameValidator.isValid(username) else {
-            AlertManager.shared.showAlert(title: "An error occured", message: "Please enter a valid username format.")
-            return
-        }
-        
-        guard EmailValidator.isValid(email) else {
-            AlertManager.shared.showAlert(title: "An error occured", message: "Please enter a valid email format.")
+    func registerUser(completion: @escaping () -> Void) async {
+        guard canSubmit else {
+            AlertManager.shared.showAlert(title: "An error occured", message: "Please enter enter your credentials properly.")
             return
         }
         
@@ -45,7 +70,7 @@ final class AuthViewModel {
         do {
             let user = RegisterRequest(username: username, email: email, password: password)
             let result = try await authService.registerUser(request: user)
-            Logger.network.info("Registered new user: id: \(result.id), username: \(username)")
+            Logger.network.info("Registered new user: id: \(result.id), username: \(result.username)")
             completion()
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
@@ -62,6 +87,11 @@ final class AuthViewModel {
     ///   - email: User's email.
     ///   - password: User's password.
     func loginUser(email: String, password: String) async {
+        guard EmailValidator.isValid(email) else {
+            AlertManager.shared.showAlert(title: "An error occured", message: "Please enter a valid email format.")
+            return
+        }
+        
         isLoading = true
         defer { isLoading = false }
         
@@ -79,5 +109,12 @@ final class AuthViewModel {
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error sign in user: \(error)")
         }
+    }
+    
+    func clearField() {
+        username = ""
+        email = ""
+        password = ""
+        confirmPassword = ""
     }
 }

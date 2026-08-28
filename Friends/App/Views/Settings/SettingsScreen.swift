@@ -92,5 +92,5 @@ struct SettingRow: View {
     NavigationStack {
         SettingsScreen(factory: ViewModelFactory())
     }
-    .withPreviewEnvironments()
+    .appPreviewEnvironments()
 }

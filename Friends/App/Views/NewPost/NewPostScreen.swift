@@ -141,5 +141,5 @@ private enum PickerSource: Identifiable {
     NavigationStack {
         NewPostScreen(factory: ViewModelFactory())
     }
-    .withPreviewEnvironments()
+    .appPreviewEnvironments()
 }

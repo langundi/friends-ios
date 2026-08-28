@@ -9,10 +9,13 @@ import SwiftUI
 
 struct SignInScreen: View {
     @Environment(AuthRouter.self) var router
-    @Environment(AuthViewModel.self) var viewModel
-    
+    @State private var viewModel: AuthViewModel
     @State private var email: String = ""
     @State private var password: String = ""
+    
+    init(factory: ViewModelFactory) {
+        _viewModel = State(initialValue: factory.makeAuthViewModel())
+    }
     
     var body: some View {
         Form {
@@ -74,6 +77,7 @@ struct SignInScreen: View {
 }
 
 #Preview {
-    ContentView()
-        .withPreviewEnvironments()
+    SignInScreen(factory: ViewModelFactory())
+        .authPreviewEnvironments()
+        
 }

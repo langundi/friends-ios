@@ -56,7 +56,7 @@ struct TimelineScreen: View {
     NavigationStack {
         TimelineScreen(factory: ViewModelFactory())
     }
-    .withPreviewEnvironments()
+    .appPreviewEnvironments()
 }
 
 #Preview("With Posts") {
@@ -65,5 +65,5 @@ struct TimelineScreen: View {
             .navigationTitle("Timeline")
             .navigationBarTitleDisplayMode(.inline)
     }
-    .withPreviewEnvironments()
+    .appPreviewEnvironments()
 }

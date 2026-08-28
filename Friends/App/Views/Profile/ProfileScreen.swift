@@ -102,24 +102,5 @@ struct ProfileScreen: View {
     NavigationStack {
         ProfileScreen(factory: ViewModelFactory())
     }
-    .withPreviewEnvironments()
+    .appPreviewEnvironments()
 }
-
-
-/*
- 
- Button {
-     AlertManager.shared.showAlert(
-         title: "Sign Out",
-         message: "Are you sure you want to sign out?",
-         primaryAction: .init(title: "Sign Out", action: {
-             Task {
-                 await viewModel.signOutUser()
-             }
-         }), secondaryAction: .init(title: "Cancel"))
- } label: {
-     Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.forward")
-         .labelStyle(.iconOnly)
- }
- 
- */

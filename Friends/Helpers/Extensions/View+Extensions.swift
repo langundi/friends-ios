@@ -16,9 +16,17 @@ extension View {
     }
     
     // MARK: - Previews
+    @ViewBuilder
+    func authPreviewEnvironments() -> some View {
+        let alert = AlertManager.shared
+        let router = AuthRouter()
+        
+        self.environment(router)
+            .environment(alert)
+    }
     
     @ViewBuilder
-    func withPreviewEnvironments() -> some View {
+    func appPreviewEnvironments() -> some View {
         let alert = AlertManager.shared
         let router = AppRouter()
         

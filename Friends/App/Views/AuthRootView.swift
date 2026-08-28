@@ -9,13 +9,11 @@ import SwiftUI
 
 struct AuthRootView: View {
     @Environment(AuthRouter.self) var router
-    @State private var authViewModel: AuthViewModel
     
     private let factory: ViewModelFactory
     
     init(factory: ViewModelFactory) {
         self.factory = factory
-        self.authViewModel = factory.makeAuthViewModel()
     }
     
     var body: some View {
@@ -27,11 +25,10 @@ struct AuthRootView: View {
                     screen.build(factory: factory)
                 }
         }
-        .environment(authViewModel)
     }
 }
 
 #Preview {
     AuthRootView(factory: ViewModelFactory())
-        .withPreviewEnvironments()
+        .appPreviewEnvironments()
 }

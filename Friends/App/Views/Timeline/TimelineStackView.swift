@@ -59,5 +59,5 @@ struct TimelineStackView: View {
 
 #Preview {
     TimelineStackView(viewModel: TimelineViewModel.mockTimeline, posts: PostResponse.timelineDummy)
-        .withPreviewEnvironments()
+        .appPreviewEnvironments()
 }

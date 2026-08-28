@@ -60,5 +60,5 @@ struct TabRootView: View {
 
 #Preview {
     TabRootView(factory: ViewModelFactory())
-        .withPreviewEnvironments()
+        .appPreviewEnvironments()
 }

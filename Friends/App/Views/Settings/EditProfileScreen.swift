@@ -68,5 +68,5 @@ struct ProfileRowView: View {
     NavigationStack {
         EditProfileScreen(factory: ViewModelFactory())
     }
-    .withPreviewEnvironments()
+    .appPreviewEnvironments()
 }

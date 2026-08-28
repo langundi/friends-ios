@@ -9,25 +9,62 @@ import SwiftUI
 
 struct SignUpScreen: View {
     @Environment(AuthRouter.self) var router
-    @Environment(AuthViewModel.self) var viewmodel
+    @State private var viewModel: AuthViewModel
     
-    @State private var username: String = ""
-    @State private var email: String = ""
-    @State private var password: String = ""
+    init(factory: ViewModelFactory) {
+        _viewModel = State(initialValue: factory.makeAuthViewModel())
+    }
     
     var body: some View {
         Form {
-            Section {
-                TextField("Username", text: $username)
-                    .textContentType(.username)
-                    .textCase(.lowercase)
+            Group {
+                Section {
+                    TextField("username", text: $viewModel.username)
+                        .textContentType(.username)
+                } header: {
+                    Text("Username")
+                } footer: {
+                    if !viewModel.isUsernameValid {
+                        Text("3-20 chars, lowecase letters/digits")
+                            .foregroundStyle(.red)
+                    }
+                }
                 
-                TextField("Email", text: $email)
-                    .keyboardType(.emailAddress)
-                    .textContentType(.emailAddress)
+                Section {
+                    TextField("", text: $viewModel.email, prompt: Text(verbatim: "you@example.com"))
+                        .keyboardType(.emailAddress)
+                        .textContentType(.emailAddress)
+                } header: {
+                    Text("Email")
+                } footer: {
+                    if !viewModel.isEmailValid {
+                        Text("Please enter a valid email address format")
+                            .foregroundStyle(.red)
+                    }
+                }
                 
-                TextField("Password", text: $password)
-                    .textContentType(.password)
+                Section {
+                    TextField("Password", text: $viewModel.password)
+                        .textContentType(.password)
+                    
+                    TextField("Re-type password", text: $viewModel.confirmPassword)
+                        .textContentType(.password)
+                } header: {
+                    Text("Password")
+                } footer: {
+                    VStack(alignment: .leading) {
+                        if !viewModel.unmetPasswordRules.isEmpty {
+                            Text("Password must contain:")
+                            
+                            ForEach(viewModel.unmetPasswordRules, id: \.description) { rule in
+                                Text("- \(rule.description)")
+                            }
+                        } else if !viewModel.passwordsMatch {
+                            Text("Password don't match")
+                                .foregroundStyle(.red)
+                        }
+                    }
+                }
             }
             .autocorrectionDisabled()
             .textInputAutocapitalization(.never)
@@ -35,11 +72,12 @@ struct SignUpScreen: View {
             Section {
                 Button {
                     Task {
-                        await viewmodel.registerUser(username: username, email: email, password: password) {
+                        await viewModel.registerUser() {
                             AlertManager.shared.showAlert(
                                 title: "Success",
                                 message: "Registration succesful! You can sign in to your account.",
                                 action: .init(title: "OK", action: {
+                                    viewModel.clearField()
                                     router.pop()
                                 })
                             )
@@ -49,6 +87,7 @@ struct SignUpScreen: View {
                     Text("Sign Up")
                 }
                 .buttonStyle(PrimaryButtonStyle())
+                .disabled(!viewModel.canSubmit)
                 .removeRowInset()
             }
             
@@ -64,7 +103,7 @@ struct SignUpScreen: View {
         }
         .navigationTitle("Create Account")
         .overlay(alignment: .center) {
-            if viewmodel.isLoading {
+            if viewModel.isLoading {
                 LoadingOverlay()
             }
         }
@@ -72,6 +111,6 @@ struct SignUpScreen: View {
 }
 
 #Preview {
-    SignUpScreen()
-        .withPreviewEnvironments()
+    SignUpScreen(factory: ViewModelFactory())
+        .authPreviewEnvironments()
 }

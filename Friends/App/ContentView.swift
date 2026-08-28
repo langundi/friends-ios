@@ -53,5 +53,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .withPreviewEnvironments()
+        .appPreviewEnvironments()
 }

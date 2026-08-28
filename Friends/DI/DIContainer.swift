@@ -51,6 +51,10 @@ final class ViewModelFactory {
     
     // MARK: - ViewModels
     
+    lazy var authViewModel: AuthViewModel = {
+        return AuthViewModel(authService: authService)
+    }()
+    
     lazy var timelineViewModel: TimelineViewModel = {
         return TimelineViewModel(timelineStore: timelineStore, replyStore: replyStore, userStore: userStore)
     }()
@@ -66,7 +70,7 @@ final class ViewModelFactory {
     // MARK: - Auth ViewModels
     
     func makeAuthViewModel() -> AuthViewModel {
-        return AuthViewModel(authService: authService)
+        authViewModel
     }
     
     // MARK: - Timeline Tab ViewModels
