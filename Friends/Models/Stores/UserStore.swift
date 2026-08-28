@@ -62,18 +62,22 @@ final class UserStore {
         return false
     }
     
-    /// Update user's username.
+    /// Change user's username.
     /// - Parameter request: UpdateUsernameRequest
-    func updateUsername(request: UpdateUsernameRequest) async throws {
-        try await userService.updateUsername(request: request)
+    func changeUsername(request: ChangeUsernameRequest) async throws {
+        try await userService.changeUsername(request: request)
         username = request.username
     }
     
-    /// Update user's email.
+    /// Change user's email.
     /// - Parameter request: UpdateEmailRequest
-    func updateEmail(request: UpdateEmailRequest) async throws {
-        try await userService.updateEmail(request: request)
+    func changeEmail(request: ChangeEmailRequest) async throws {
+        try await userService.changeEmail(request: request)
         email = request.email
+    }
+    
+    func changePassword(request: ChangePasswordRequest) async throws {
+        try await userService.changePassword(request: request)
     }
 
 }

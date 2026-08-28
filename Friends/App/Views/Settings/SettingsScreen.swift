@@ -27,7 +27,7 @@ struct SettingsScreen: View {
                 .buttonStyle(.plain)
                 
                 Button {
-                    
+                    router.push(to: .changePassword)
                 } label: {
                     SettingRow(color: .blue, symbol: "key.fill", text: "Change Password")
                 }
@@ -43,7 +43,6 @@ struct SettingsScreen: View {
             
             Section {
                 Button {
-                    print("haha")
                     AlertManager.shared.showAlert(
                         title: "Sign Out",
                         message: "Are you sure you want to sign out?",

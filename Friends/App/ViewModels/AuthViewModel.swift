@@ -60,7 +60,7 @@ final class AuthViewModel {
     ///   - password: User's password.
     func registerUser(completion: @escaping () -> Void) async {
         guard canSubmit else {
-            AlertManager.shared.showAlert(title: "An error occured", message: "Please enter enter your credentials properly.")
+            AlertManager.shared.showAlert(title: "An error occured", message: "Please enter your credentials properly.")
             return
         }
         

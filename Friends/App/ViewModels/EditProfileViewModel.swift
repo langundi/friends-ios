@@ -27,10 +27,10 @@ final class EditProfileViewModel {
         self.userStore = userStore
     }
     
-    /// Update current user's username.
+    /// Change current user's username.
     /// - Parameter username: New username.
     /// - Parameter completion: Completion handler.
-    func updateUsername(username: String, completion: @escaping () -> Void) async {
+    func changeUsername(username: String, completion: @escaping () -> Void) async {
         guard username != self.username else {
             AlertManager.shared.showAlert(title: "An error occured", message: "New username must be different from old username.")
             return
@@ -45,8 +45,8 @@ final class EditProfileViewModel {
         defer { isLoading = false }
         
         do {
-            let request = UpdateUsernameRequest(username: username)
-            try await userStore.updateUsername(request: request)
+            let request = ChangeUsernameRequest(username: username)
+            try await userStore.changeUsername(request: request)
             completion()
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
@@ -58,11 +58,11 @@ final class EditProfileViewModel {
         }
     }
     
-    /// Update current user's email.
+    /// Change current user's email.
     /// - Parameters:
     ///   - email: New email address.
     ///   - completion: Completion handler.
-    func updateEmail(email: String, completion: @escaping () -> Void) async {
+    func changeEmail(email: String, completion: @escaping () -> Void) async {
         guard email != self.email else {
             AlertManager.shared.showAlert(title: "An error occured", message: "New email must be different from old email.")
             return
@@ -77,8 +77,8 @@ final class EditProfileViewModel {
         defer { isLoading = false }
         
         do {
-            let request = UpdateEmailRequest(email: email)
-            try await userStore.updateEmail(request: request)
+            let request = ChangeEmailRequest(email: email)
+            try await userStore.changeEmail(request: request)
             completion()
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)

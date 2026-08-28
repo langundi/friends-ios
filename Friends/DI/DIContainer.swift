@@ -110,7 +110,7 @@ final class ViewModelFactory {
     }
     
     func makeChangePasswordViewModel() -> ChangePasswordViewModel {
-        return ChangePasswordViewModel(userService: userService)
+        return ChangePasswordViewModel(userStore: userStore)
     }
     
     // MARK: - Search Tab ViewModels

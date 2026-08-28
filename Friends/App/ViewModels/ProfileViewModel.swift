@@ -79,7 +79,7 @@ final class ProfileViewModel {
     // MARK: - User's Posts
     
     /// Fetch user posts.
-    private func getMyPosts() async  {
+    func getMyPosts() async  {
         do {
             try await postStore.loadPostIfNeeded()
         } catch let networkError as NetworkError {

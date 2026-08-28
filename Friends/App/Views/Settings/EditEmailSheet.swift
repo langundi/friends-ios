@@ -41,7 +41,7 @@ struct EditEmailSheet: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         Task {
-                            await viewModel.updateEmail(email: newEmail) {
+                            await viewModel.changeEmail(email: newEmail) {
                                 dismiss()
                             }
                         }

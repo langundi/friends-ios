@@ -7,10 +7,22 @@
 
 import Foundation
 
-struct UpdateUsernameRequest: Encodable {
+struct ChangeUsernameRequest: Encodable {
     let username: String
 }
 
-struct UpdateEmailRequest: Encodable {
+struct ChangeEmailRequest: Encodable {
     let email: String
+}
+
+struct ChangePasswordRequest: Encodable {
+    let email: String
+    let currentPassword: String
+    let newPassword: String
+    
+    enum CodingKeys: String, CodingKey {
+        case email
+        case currentPassword = "current_password"
+        case newPassword = "new_password"
+    }
 }

@@ -13,15 +13,28 @@ enum UserEndpoint: Endpoint {
     case getMyPosts
     case getFriendPosts(id: Int)
     case searchUsername(username: String)
-    case updateUsername(request: UpdateUsernameRequest)
-    case updateEmail(request: UpdateEmailRequest)
+    case changeUsername(request: ChangeUsernameRequest)
+    case changeEmail(request: ChangeEmailRequest)
+    case changePassword(request: ChangePasswordRequest)
     
     var method: HTTPMethod {
         switch self {
-        case .updateUsername, .updateEmail:
-            return .post
-        default:
+        case .getMyProfile:
             return .get
+        case .getFriendProfile:
+            return .get
+        case .getMyPosts:
+            return .get
+        case .getFriendPosts:
+            return .get
+        case .searchUsername:
+            return .get
+        case .changeUsername:
+            return .patch
+        case .changeEmail:
+            return .patch
+        case .changePassword:
+            return .patch
         }
     }
     
@@ -37,10 +50,12 @@ enum UserEndpoint: Endpoint {
             return"/user/post/\(id)"
         case .searchUsername(let username):
             return "/user/search/\(username)"
-        case .updateUsername:
-            return"/user/update/username"
-        case .updateEmail:
-            return"/user/update/email"
+        case .changeUsername:
+            return "/user/change/username"
+        case .changeEmail:
+            return "/user/change/email"
+        case .changePassword:
+            return "/user/change/password"
         }
     }
     
@@ -53,10 +68,12 @@ enum UserEndpoint: Endpoint {
     
     var body: (any Encodable)? {
         switch self {
-        case .updateUsername(let username):
+        case .changeUsername(let username):
             return username
-        case .updateEmail(let email):
+        case .changeEmail(let email):
             return email
+        case .changePassword(let password):
+            return password
         default:
             return nil
         }

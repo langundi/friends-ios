@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ChangePasswordScreen: View {
+    @Environment(AppRouter.self) var router
     @State private var viewModel: ChangePasswordViewModel
     
     init(factory: ViewModelFactory) {
@@ -56,7 +57,17 @@ struct ChangePasswordScreen: View {
             
             Section {
                 Button {
-                    
+                    Task {
+                        await viewModel.changePassword {
+                            AlertManager.shared.showAlert(
+                                title: "Success",
+                                message: "Password changed.",
+                                action: .init(title: "OK", action: {
+                                    router.pop()
+                                })
+                            )
+                        }
+                    }
                 } label: {
                     Text("Change Password")
                         .fontWeight(.medium)

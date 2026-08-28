@@ -52,7 +52,7 @@ struct EditUsernameSheet: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         Task {
-                            await viewModel.updateUsername(username: newUsername) {
+                            await viewModel.changeUsername(username: newUsername) {
                                 dismiss()
                             }
                         }

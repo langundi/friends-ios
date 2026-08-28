@@ -30,7 +30,7 @@ enum FriendEndpoint: Endpoint {
         case .getFriendshipStatus(let id):
             return "/friend/\(id)/status"
         case .unfriend(let id):
-            return"/friend/\(id)"
+            return "/friend/\(id)"
         }
     }
     

@@ -26,11 +26,15 @@ final class UserService {
         try await client.request(endpoint: UserEndpoint.searchUsername(username: username))
     }
     
-    func updateUsername(request: UpdateUsernameRequest) async throws {
-        try await client.requestVoid(endpoint: UserEndpoint.updateUsername(request: request))
+    func changeUsername(request: ChangeUsernameRequest) async throws {
+        try await client.requestVoid(endpoint: UserEndpoint.changeUsername(request: request))
     }
     
-    func updateEmail(request: UpdateEmailRequest) async throws {
-        try await client.requestVoid(endpoint: UserEndpoint.updateEmail(request: request))
+    func changeEmail(request: ChangeEmailRequest) async throws {
+        try await client.requestVoid(endpoint: UserEndpoint.changeEmail(request: request))
+    }
+    
+    func changePassword(request: ChangePasswordRequest) async throws {
+        try await client.requestVoid(endpoint: UserEndpoint.changePassword(request: request))
     }
 }
