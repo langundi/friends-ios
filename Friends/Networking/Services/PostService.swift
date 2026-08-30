@@ -64,4 +64,8 @@ final class PostService {
     func deleteReply(replyID: Int) async throws {
         try await client.requestVoid(endpoint: PostEndpoint.deleteReply(id: replyID))
     }
+    
+    func deleteAllImage(request: DeleteAllImageRequest) async throws {
+        try await client.requestVoid(endpoint: PostEndpoint.deleteAllImage(request: request))
+    }
 }

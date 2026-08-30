@@ -114,7 +114,7 @@ final class ViewModelFactory {
     }
     
     func makeDeleteAccountViewModel() -> DeleteAccountViewModel {
-        return DeleteAccountViewModel(userStore: userStore)
+        return DeleteAccountViewModel(userStore: userStore, postStore: postStore)
     }
     
     // MARK: - Search Tab ViewModels

@@ -23,18 +23,30 @@ final class DeleteAccountViewModel {
     }
     
     private let userStore: UserStore
+    private let postStore: PostStore
     
-    init(userStore: UserStore) {
+    init(userStore: UserStore, postStore: PostStore) {
         self.userStore = userStore
+        self.postStore = postStore
     }
     
-    /// Delete user's account.
+    /// Delete user's account and images from object storage.
     func deleteAccount() async {
         isLoading = true
         defer { isLoading = false }
         
+        var objectKeys = [String]()
+        let posts = postStore.posts
+        for post in posts {
+            objectKeys.append(post.objectKey)
+        }
+        
         do {
             try await userStore.deleteAccount()
+            
+            let request = DeleteAllImageRequest(objectKeys: objectKeys)
+            try await postStore.deleteAllImage(request: request)
+            
             deleteTokensFromKeychain()
             isLoggedIn = false
         } catch let networkError as NetworkError {

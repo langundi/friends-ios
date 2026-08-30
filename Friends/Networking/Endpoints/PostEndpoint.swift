@@ -18,6 +18,7 @@ enum PostEndpoint: Endpoint {
     case getReplies(id: Int)
     case replyPost(id: Int, request: ReplyRequest)
     case deleteReply(id: Int)
+    case deleteAllImage(request: DeleteAllImageRequest)
     
     var headers: [String : String]? {
         switch self {
@@ -32,7 +33,7 @@ enum PostEndpoint: Endpoint {
             return .post
         case .getPost, .getTimeline, .getReplies:
             return .get
-        case .deletePost, .unlikePost, .deleteReply:
+        case .deletePost, .unlikePost, .deleteReply, .deleteAllImage:
             return .delete
         }
     }
@@ -57,6 +58,8 @@ enum PostEndpoint: Endpoint {
             return "/post/reply/\(id)"
         case .deleteReply(let id):
             return "/post/reply/\(id)"
+        case .deleteAllImage:
+            return "/post/image/all"
         }
     }
     
@@ -77,6 +80,8 @@ enum PostEndpoint: Endpoint {
             return post
         case .replyPost(_, let reply):
             return reply
+        case .deleteAllImage(let images):
+            return images
         default:
             return nil
         }

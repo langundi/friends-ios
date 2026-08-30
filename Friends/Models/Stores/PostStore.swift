@@ -66,4 +66,10 @@ final class PostStore {
     func newPost(request: NewPostRequest) async throws -> PostResponse {
         try await service.newPost(request: request)
     }
+    
+    /// Delete all images from object storage, used for user account deletion.
+    /// - Parameter request: DeleteAllImageRequest
+    func deleteAllImage(request: DeleteAllImageRequest) async throws {
+        try await service.deleteAllImage(request: request)
+    }
 }
