@@ -37,4 +37,8 @@ final class UserService {
     func changePassword(request: ChangePasswordRequest) async throws {
         try await client.requestVoid(endpoint: UserEndpoint.changePassword(request: request))
     }
+    
+    func deleteAccount() async throws {
+        try await client.requestVoid(endpoint: UserEndpoint.deleteAccount)
+    }
 }

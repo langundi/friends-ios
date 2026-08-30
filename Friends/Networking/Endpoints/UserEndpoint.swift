@@ -16,6 +16,7 @@ enum UserEndpoint: Endpoint {
     case changeUsername(request: ChangeUsernameRequest)
     case changeEmail(request: ChangeEmailRequest)
     case changePassword(request: ChangePasswordRequest)
+    case deleteAccount
     
     var method: HTTPMethod {
         switch self {
@@ -35,6 +36,8 @@ enum UserEndpoint: Endpoint {
             return .patch
         case .changePassword:
             return .patch
+        case .deleteAccount:
+            return .delete
         }
     }
     
@@ -56,6 +59,8 @@ enum UserEndpoint: Endpoint {
             return "/user/change/email"
         case .changePassword:
             return "/user/change/password"
+        case .deleteAccount:
+            return "/user/delete"
         }
     }
     

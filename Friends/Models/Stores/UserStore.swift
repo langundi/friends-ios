@@ -76,8 +76,16 @@ final class UserStore {
         email = request.email
     }
     
+    /// Change user's password.
+    /// - Parameter request: ChangePasswordRequest
     func changePassword(request: ChangePasswordRequest) async throws {
         try await userService.changePassword(request: request)
     }
-
+    
+    /// Delete user's account.
+    func deleteAccount() async throws {
+        try await userService.deleteAccount()
+        username = ""
+        email = ""
+    }
 }

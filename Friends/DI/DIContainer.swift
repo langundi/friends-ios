@@ -113,6 +113,10 @@ final class ViewModelFactory {
         return ChangePasswordViewModel(userStore: userStore)
     }
     
+    func makeDeleteAccountViewModel() -> DeleteAccountViewModel {
+        return DeleteAccountViewModel(userStore: userStore)
+    }
+    
     // MARK: - Search Tab ViewModels
     
     func makeSearchViewModel() -> SearchViewModel {

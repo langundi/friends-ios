@@ -23,18 +23,23 @@ struct TimelineStackView: View {
     var body: some View {
         Group {
             if posts.isEmpty {
-                ContentUnavailableView {
-                    Image(systemName: "person.2.fill")
-                        .font(.largeTitle)
-                        .foregroundStyle(.gray)
-                } description: {
-                    Text("Let's add some friends!")
-                } actions: {
-                    Button {
-                        router.push(to: .search)
-                    } label: {
-                        Label("Find Friends", systemImage: "magnifyingglass")
+                ScrollView {
+                    ContentUnavailableView {
+                        Image(systemName: "person.2.fill")
+                            .font(.largeTitle)
+                            .foregroundStyle(.gray)
+                    } description: {
+                        Text("Let's add some friends!")
+                    } actions: {
+                        Button {
+                            router.push(to: .search)
+                        } label: {
+                            Label("Find Friends", systemImage: "magnifyingglass")
+                        }
                     }
+                }
+                .refreshable {
+                    await viewModel.refreshTimeline()
                 }
             } else {
                 ScrollView(.vertical) {

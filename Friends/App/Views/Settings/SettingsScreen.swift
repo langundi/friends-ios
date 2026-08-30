@@ -34,7 +34,7 @@ struct SettingsScreen: View {
                 .buttonStyle(.plain)
                 
                 Button {
-                    
+                    router.push(to: .deleteAccount)
                 } label: {
                     SettingRow(color: .red, symbol: "trash.fill", text: "Delete Account")
                 }
@@ -55,6 +55,16 @@ struct SettingsScreen: View {
                     SettingRow(color: .orange, symbol: "rectangle.portrait.and.arrow.forward", text: "Sign Out")
                 }
                 .buttonStyle(.plain)
+                
+                #if DEBUG
+                Button {
+                    viewModel.deleteTokensFromKeychain()
+                    isLoggedIn = false
+                } label: {
+                    SettingRow(color: .orange, symbol: "rectangle.portrait.and.arrow.forward", text: "Force Sign Out")
+                }
+                .buttonStyle(.plain)
+                #endif
             }
         }
         .navigationTitle("Settings")
