@@ -14,6 +14,8 @@ final class UserStore {
     private(set) var username = ""
     private(set) var email = ""
     private(set) var profilePicture: String?
+    private(set) var objectKey: String?
+    
     private var lastFetchAt: Date?
     private let staleDuration: TimeInterval = 500
     
@@ -43,11 +45,15 @@ final class UserStore {
     /// Fetch user's profile.
     func getMyProfile() async throws {
         let result = try await userService.getMyProfile()
-        
         username = result.username
         email = result.email
+        
         if let profilePicture = result.profilePicture {
             self.profilePicture = profilePicture
+        }
+        
+        if let objectKey = result.objectKey {
+            self.objectKey = objectKey
         }
         
         lastFetchAt = Date()

@@ -13,6 +13,10 @@ final class EditProfileViewModel {
     
     var isLoading: Bool = false
     
+    var profilePicture: String? {
+        userStore.profilePicture
+    }
+    
     var username: String {
         userStore.username
     }

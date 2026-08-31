@@ -21,33 +21,40 @@ struct ProfilePictureView: View {
             return .system(size: 42)
         case .medium:
             return .system(size: 50)
+        case .large:
+            return .system(size: 68)
+        case .xlarge:
+            return .system(size: 84)
         }
     }
     
     var body: some View {
-        if let imageURL = imageURL {
-            KFImage(URL(string: imageURL))
-                .placeholder{ LoadingOverlay() }
-                .resizable()
-                .retry(maxCount: 3, interval: .seconds(2))
-                .onFailure { error in
-                    Logger.kingfisher.error("KF Error: \(error)")
-                }
-                .frame(maxWidth: size.rawValue, maxHeight: size.rawValue)
-                .aspectRatio(1.0, contentMode: .fit)
-                .clipShape(.circle)
-        } else {
-            Image(systemName: "person.fill")
-                .offset(y: 8)
-                .font(fontSize)
-                .foregroundStyle(.gray)
-                .frame(maxWidth: size.rawValue, maxHeight: size.rawValue)
-                .background(.bar)
-                .clipShape(.circle)
+        Group {
+            if let imageURL = imageURL {
+                KFImage(URL(string: imageURL))
+                    .placeholder{ LoadingOverlay() }
+                    .resizable()
+                    .retry(maxCount: 3, interval: .seconds(2))
+                    .onFailure { error in
+                        Logger.kingfisher.error("KF Error: \(error)")
+                    }
+                    .frame(maxWidth: size.rawValue, maxHeight: size.rawValue)
+                    .aspectRatio(1.0, contentMode: .fit)
+                    .clipShape(.circle)
+            } else {
+                Image(systemName: "person.fill")
+                    .offset(y: 8)
+                    .font(fontSize)
+                    .foregroundStyle(.gray)
+                    .frame(maxWidth: size.rawValue, maxHeight: size.rawValue)
+                    .background(.bar)
+                    .clipShape(.circle)
+            }
         }
+        .contentShape(.circle)
     }
 }
 
 #Preview {
-    ProfilePictureView(size: .xsmall)
+    ProfilePictureView(size: .xlarge)
 }

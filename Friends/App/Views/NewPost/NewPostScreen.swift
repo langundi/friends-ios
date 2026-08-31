@@ -122,21 +122,6 @@ struct NewPostScreen: View {
     }
 }
 
-/// A delegate enum for UIImagePickerController source type to fix SwiftUI picker bug.
-private enum PickerSource: Identifiable {
-    case camera
-    case library
-    
-    var id: Self { self }
-    
-    var sourceType: UIImagePickerController.SourceType {
-        switch self {
-        case .camera: .camera
-        case .library: .photoLibrary
-        }
-    }
-}
-
 #Preview {
     NavigationStack {
         NewPostScreen(factory: ViewModelFactory())
