@@ -23,11 +23,10 @@ struct EditProfileScreen: View {
                 Button {
                     isEditingProfilePicture.toggle()
                 } label: {
-                    ProfilePictureView(imageURL: nil, size: .xlarge)
+                    ProfilePictureView(imageURL: viewModel.profilePicture, size: .xlarge)
                         .overlay(alignment: .topTrailing) {
                             Image(systemName: "pencil")
                                 .font(.title)
-                                .foregroundStyle(.gray)
                                 .offset(x: 5, y: -5)
                         }
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -73,7 +72,7 @@ struct EditProfileScreen: View {
         .navigationTitle("Edit Profile")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $isEditingProfilePicture) {
-            EditProfilePictureSheet(viewModel: viewModel)
+            SetProfilePictureSheet(viewModel: viewModel)
         }
         .sheet(isPresented: $isEditingUsername) {
             EditUsernameSheet(viewModel: viewModel, oldUsername: viewModel.username)

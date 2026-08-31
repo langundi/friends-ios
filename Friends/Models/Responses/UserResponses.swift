@@ -25,3 +25,13 @@ struct UsernameResponse: Identifiable, Decodable {
     let id: Int
     let username: String
 }
+
+struct SetProfilePictureResponse: Decodable {
+    let profilePicture: String
+    let objectKey: String
+    
+    enum CodingKeys: String, CodingKey {
+        case profilePicture = "profile_picture"
+        case objectKey = "object_key"
+    }
+}

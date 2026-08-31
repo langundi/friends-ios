@@ -25,6 +25,14 @@ final class UserStore {
         self.userService = userService
     }
     
+    func setProfilePicture(_ imageURL: String) {
+        self.profilePicture = imageURL
+    }
+    
+    func setObjectKey(_ objectKey: String) {
+        self.objectKey = objectKey
+    }
+    
     func setUsername(_ username: String) {
         self.username = username
     }
@@ -74,6 +82,28 @@ final class UserStore {
         return false
     }
     
+    /// Get presigned URL for profile picture upload.
+    /// - Parameter request: UploadImageRequest.
+    /// - Returns: UploadImageResponse
+    func getPresignedURL(request: UploadImageRequest) async throws -> UploadImageResponse {
+        try await userService.getPresignedURL(request: request)
+    }
+    
+    /// Upload profile picture to bucket.
+    /// - Parameters:
+    ///   - uploadURL: Image public URL.
+    ///   - imageData: Profile picture.
+    func uploadImage(uploadURL: String, imageData: Data) async throws {
+        try await userService.uploadImage(uploadUrl: uploadURL, imageData: imageData)
+    }
+    
+    /// Set profile picture.
+    /// - Parameter request: SetProfilePictureRequest.
+    /// - Returns: SetProfilePictureResponse.
+    func setProfilePicture(request: SetProfilePictureRequest) async throws -> SetProfilePictureResponse {
+        try await userService.setProfilePicture(request: request)
+    }
+    
     /// Change user's username.
     /// - Parameter request: UpdateUsernameRequest
     func changeUsername(request: ChangeUsernameRequest) async throws {
@@ -99,5 +129,7 @@ final class UserStore {
         try await userService.deleteAccount()
         username = ""
         email = ""
+        profilePicture = nil
+        objectKey = nil
     }
 }

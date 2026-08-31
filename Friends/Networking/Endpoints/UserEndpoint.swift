@@ -8,11 +8,13 @@
 import Foundation
 
 enum UserEndpoint: Endpoint {
+    case profileImageURL(request: UploadImageRequest)
     case getMyProfile
     case getFriendProfile(id: Int)
     case getMyPosts
     case getFriendPosts(id: Int)
     case searchUsername(username: String)
+    case setProfilePicture(request: SetProfilePictureRequest)
     case changeUsername(request: ChangeUsernameRequest)
     case changeEmail(request: ChangeEmailRequest)
     case changePassword(request: ChangePasswordRequest)
@@ -20,6 +22,8 @@ enum UserEndpoint: Endpoint {
     
     var method: HTTPMethod {
         switch self {
+        case .profileImageURL:
+            return .post
         case .getMyProfile:
             return .get
         case .getFriendProfile:
@@ -30,6 +34,8 @@ enum UserEndpoint: Endpoint {
             return .get
         case .searchUsername:
             return .get
+        case .setProfilePicture:
+            return .patch
         case .changeUsername:
             return .patch
         case .changeEmail:
@@ -43,6 +49,8 @@ enum UserEndpoint: Endpoint {
     
     var path: String {
         switch self {
+        case .profileImageURL:
+            return "/user/upload-image"
         case .getMyProfile:
             return "/user"
         case .getFriendProfile(let id):
@@ -53,6 +61,8 @@ enum UserEndpoint: Endpoint {
             return"/user/post/\(id)"
         case .searchUsername(let username):
             return "/user/search/\(username)"
+        case .setProfilePicture:
+            return "/user/profile-picture"
         case .changeUsername:
             return "/user/change/username"
         case .changeEmail:
@@ -73,6 +83,10 @@ enum UserEndpoint: Endpoint {
     
     var body: (any Encodable)? {
         switch self {
+        case .profileImageURL(let image):
+            return image
+        case .setProfilePicture(let image):
+            return image
         case .changeUsername(let username):
             return username
         case .changeEmail(let email):

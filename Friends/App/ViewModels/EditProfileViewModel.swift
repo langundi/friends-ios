@@ -7,6 +7,7 @@
 
 import Foundation
 import OSLog
+import UIKit
 
 @Observable
 final class EditProfileViewModel {
@@ -29,6 +30,45 @@ final class EditProfileViewModel {
     
     init(userStore: UserStore) {
         self.userStore = userStore
+    }
+    
+    /// Set new profile picture.
+    /// - Parameters:
+    ///   - image: Profile picture.
+    ///   - completion: Completion handler.
+    func setProfilePicture(image: UIImage, completion: @escaping () -> Void) async {
+        isLoading = true
+        defer { isLoading = false }
+        
+        guard let imageData = compressImageAndConvertToJPEG(image: image) else {
+            Logger.system.error("Error: Failed to compress image.")
+            return
+        }
+        
+        do {
+            // Upload image to presigned URL
+            let filename = UUID().uuidString
+            let uploadImageRequest = UploadImageRequest(filename: filename, contentType: "image/jpeg")
+            let presignedResult = try await userStore.getPresignedURL(request: uploadImageRequest)
+            try await userStore.uploadImage(uploadURL: presignedResult.uploadURL, imageData: imageData)
+            
+            // Set profile picture
+            let request = SetProfilePictureRequest(imageURL: presignedResult.publicURL, objectKey: presignedResult.objectKey)
+            let result = try await userStore.setProfilePicture(request: request)
+            userStore.setProfilePicture(result.profilePicture)
+            userStore.setObjectKey(result.objectKey)
+            
+            try? await Task.sleep(for: .seconds(2))
+            
+            completion()
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error profile picture setup: \(networkError)")
+        } catch {
+            if error.isCancellation { return }
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error profile picture setup: \(error)")
+        }
     }
     
     /// Change current user's username.

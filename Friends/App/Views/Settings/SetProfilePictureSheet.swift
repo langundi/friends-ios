@@ -59,8 +59,8 @@ struct SetProfilePictureSheet: View {
                         Image(systemName: "checkmark")
                             .foregroundStyle(.white)
                     }
-                    .buttonStyle(.borderedProminent)
                     .disabled(!isImageTaken)
+                    .buttonStyle(.borderedProminent)
                 }
             }
             .overlay(alignment: .bottomTrailing) {

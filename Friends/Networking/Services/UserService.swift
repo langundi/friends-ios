@@ -26,6 +26,19 @@ final class UserService {
         try await client.request(endpoint: UserEndpoint.searchUsername(username: username))
     }
     
+    func getPresignedURL(request: UploadImageRequest) async throws -> UploadImageResponse {
+        try await client.request(endpoint: UserEndpoint.profileImageURL(request: request))
+    }
+    
+    /// Upload image to bucket using presigned URL.
+    func uploadImage(uploadUrl: String, imageData: Data) async throws {
+        try await client.uploadImage(presignedUrl: uploadUrl, imageData: imageData)
+    }
+    
+    func setProfilePicture(request: SetProfilePictureRequest) async throws -> SetProfilePictureResponse {
+        try await client.request(endpoint: UserEndpoint.setProfilePicture(request: request))
+    }
+    
     func changeUsername(request: ChangeUsernameRequest) async throws {
         try await client.requestVoid(endpoint: UserEndpoint.changeUsername(request: request))
     }

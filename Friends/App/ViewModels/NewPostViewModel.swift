@@ -65,8 +65,4 @@ final class NewPostViewModel {
             Logger.network.error("Error uploading post: \(error)")
         }
     }
-    
-    private func compressImageAndConvertToJPEG(image: UIImage) -> Data? {
-        return image.jpegData(compressionQuality: 0.7)
-    }
 }

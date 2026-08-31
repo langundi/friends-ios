@@ -7,6 +7,16 @@
 
 import Foundation
 
+struct SetProfilePictureRequest: Encodable {
+    let imageURL: String
+    let objectKey: String
+    
+    enum CodingKeys: String, CodingKey {
+        case imageURL = "image_url"
+        case objectKey = "object_key"
+    }
+}
+
 struct ChangeUsernameRequest: Encodable {
     let username: String
 }

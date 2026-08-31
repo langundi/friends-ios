@@ -24,7 +24,7 @@ final class PostService {
         try await client.request(endpoint: PostEndpoint.newPost(request: request))
     }
     
-    func getPresignedUrl(request: UploadImageRequest) async throws -> UploadImageResponse {
+    func getPresignedURL(request: UploadImageRequest) async throws -> UploadImageResponse {
         try await client.request(endpoint: PostEndpoint.getPresignedUrl(request: request))
     }
     

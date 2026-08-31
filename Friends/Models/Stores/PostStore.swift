@@ -56,7 +56,7 @@ final class PostStore {
     }
     
     func getPresignedURL(request: UploadImageRequest) async throws -> UploadImageResponse {
-        try await service.getPresignedUrl(request: request)
+        try await service.getPresignedURL(request: request)
     }
     
     func uploadImage(uploadURL: String, imageData: Data) async throws {
