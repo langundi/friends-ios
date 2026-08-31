@@ -9,17 +9,15 @@ import SwiftUI
 
 struct FriendRowView: View {
     var username: String
+    var imageURL: String?
     var onUnfriendAction: () -> Void
     var onBlockAction: () -> Void
     
     var body: some View {
         HStack(spacing: 24) {
-            Circle()
-                .foregroundStyle(.gray.opacity(0.15))
-                .frame(maxWidth: 50, maxHeight: 50)
+            ProfilePictureView(imageURL: imageURL, size: .small)
             
             Text("@\(username)")
-                .font(.headline)
                 .padding(.vertical)
             
             Spacer(minLength: 0)

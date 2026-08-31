@@ -10,13 +10,12 @@ import SwiftUI
 struct FriendRequestView: View {
     var id: Int
     var username: String
+    let imageURL: String?
     var viewModel: FriendRequestViewModel
     
     var body: some View {
         HStack(spacing: 24) {
-            Circle()
-                .foregroundStyle(.gray.opacity(0.15))
-                .frame(maxWidth: 50, maxHeight: 50)
+            ProfilePictureView(imageURL: imageURL, size: .small)
             
             Text("@\(username)")
             

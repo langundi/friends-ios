@@ -22,8 +22,7 @@ struct PostView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 12) {
             HStack(spacing: 12) {
-                Circle()
-                    .frame(maxWidth: 40, maxHeight: 40)
+                ProfilePictureView(imageURL: post.profilePicture, size: .xsmall)
                 
                 Text("@\(post.username)")
             }

@@ -16,8 +16,14 @@ struct ProfileScreen: View {
     @State private var timelineViewModel: TimelineViewModel
     
     private var columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 3)
-    private var postCount: Int { viewModel.posts.count }
-    private var friendCount: Int { viewModel.friends.count }
+    
+    private var postCount: Int {
+        viewModel.posts.count
+    }
+    
+    private var friendCount: Int {
+        viewModel.friends.count
+    }
     
     init(factory: ViewModelFactory) {
         _viewModel = State(initialValue: factory.makeProfileViewModel())

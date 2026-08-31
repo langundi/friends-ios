@@ -19,6 +19,7 @@ struct PostResponse: Identifiable, Decodable {
     let createdAt: Date
     var likedByMe: Bool
     var username: String
+    let profilePicture: String?
     
     enum CodingKeys: String, CodingKey {
         case id, caption, username
@@ -29,6 +30,7 @@ struct PostResponse: Identifiable, Decodable {
         case replyCount = "reply_count"
         case createdAt = "created_at"
         case likedByMe = "liked_by_me"
+        case profilePicture = "profile_picture"
     }
 }
 
@@ -59,7 +61,8 @@ extension PostResponse {
         replyCount: 2,
         createdAt: Date(),
         likedByMe: false,
-        username: "kolin"
+        username: "kolin",
+        profilePicture: nil
     )
     
     static let noCaptionPostDummy = PostResponse(
@@ -72,7 +75,8 @@ extension PostResponse {
         replyCount: 2,
         createdAt: Date(),
         likedByMe: false,
-        username: "kolin"
+        username: "kolin",
+        profilePicture: nil
     )
     
     static let timelineDummy = [
@@ -86,7 +90,8 @@ extension PostResponse {
             replyCount: 2,
             createdAt: Date(),
             likedByMe: true,
-            username: "kolin"
+            username: "kolin",
+            profilePicture: nil
         ),
         PostResponse(
             id: 2,
@@ -98,7 +103,8 @@ extension PostResponse {
             replyCount: 2,
             createdAt: Date().addingTimeInterval(3600),
             likedByMe: false,
-            username: "kolin"
+            username: "kolin",
+            profilePicture: nil
         ),
         PostResponse(
             id: 3,
@@ -110,7 +116,8 @@ extension PostResponse {
             replyCount: 2,
             createdAt: Date().addingTimeInterval(7200),
             likedByMe: false,
-            username: "kolin"
+            username: "kolin",
+            profilePicture: nil
         ),
         PostResponse(
             id: 4,
@@ -122,31 +129,8 @@ extension PostResponse {
             replyCount: 2,
             createdAt: Date().addingTimeInterval(14400),
             likedByMe: false,
-            username: "kolin"
-        ),
-        PostResponse(
-            id: 5,
-            userID: 1,
-            caption: "Test 5",
-            imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            objectKey: "posts/1/image.jpeg",
-            likeCount: 5,
-            replyCount: 2,
-            createdAt: Date().addingTimeInterval(28800),
-            likedByMe: true,
-            username: "kolin"
-        ),
-        PostResponse(
-            id: 6,
-            userID: 1,
-            caption: "Test 6",
-            imageURL: "https://images.unsplash.com/photo-1784558473693-6b396480e729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            objectKey: "posts/1/image.jpeg",
-            likeCount: 5,
-            replyCount: 2,
-            createdAt: Date().addingTimeInterval(57600),
-            likedByMe: false,
-            username: "kolin"
+            username: "kolin",
+            profilePicture: nil
         ),
     ]
     

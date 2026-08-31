@@ -30,6 +30,7 @@ struct FriendRequestResponse: Identifiable, Decodable {
     let status: String
     let createdAt: Date
     let senderUsername: String
+    let profilePicture: String?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -38,6 +39,7 @@ struct FriendRequestResponse: Identifiable, Decodable {
         case status
         case createdAt = "created_at"
         case senderUsername = "sender_username"
+        case profilePicture = "profile_picture"
     }
 }
 
@@ -53,10 +55,12 @@ struct FriendResponse: Identifiable, Decodable {
     let id: Int
     let userID: Int
     let username: String
+    let profilePicture: String?
     
     enum CodingKeys: String, CodingKey {
         case id
         case userID = "user_id"
         case username
+        case profilePicture = "profile_picture"
     }
 }
