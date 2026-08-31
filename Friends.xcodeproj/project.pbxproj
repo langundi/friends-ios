@@ -89,6 +89,8 @@
 		81DA67AD303333010079EE35 /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67AC303333010079EE35 /* FriendService.swift */; };
 		81DA67AF3033337C0079EE35 /* FriendResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67AE3033337C0079EE35 /* FriendResponses.swift */; };
 		81DA67B130333C340079EE35 /* FriendRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67B030333C340079EE35 /* FriendRequests.swift */; };
+		81EC286030454C6B009EA9C9 /* ProfilePictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EC285F30454C6B009EA9C9 /* ProfilePictureView.swift */; };
+		81EC286230454CA6009EA9C9 /* ProfilePictureSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EC286130454CA6009EA9C9 /* ProfilePictureSize.swift */; };
 		81F0DCDD3036F706009074D0 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0DCDC3036F706009074D0 /* ImageView.swift */; };
 		81F0DCE130371096009074D0 /* LoadingViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0DCE030371096009074D0 /* LoadingViewState.swift */; };
 		81F0DCE4303719E0009074D0 /* PostStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F0DCE3303719E0009074D0 /* PostStore.swift */; };
@@ -179,6 +181,8 @@
 		81DA67AC303333010079EE35 /* FriendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendService.swift; sourceTree = "<group>"; };
 		81DA67AE3033337C0079EE35 /* FriendResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendResponses.swift; sourceTree = "<group>"; };
 		81DA67B030333C340079EE35 /* FriendRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequests.swift; sourceTree = "<group>"; };
+		81EC285F30454C6B009EA9C9 /* ProfilePictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureView.swift; sourceTree = "<group>"; };
+		81EC286130454CA6009EA9C9 /* ProfilePictureSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureSize.swift; sourceTree = "<group>"; };
 		81F0DCDC3036F706009074D0 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
 		81F0DCE030371096009074D0 /* LoadingViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewState.swift; sourceTree = "<group>"; };
 		81F0DCE3303719E0009074D0 /* PostStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStore.swift; sourceTree = "<group>"; };
@@ -222,6 +226,7 @@
 				816874693031AEE1000D7DCA /* CommentButton.swift */,
 				810EE0203019EB68005FED56 /* LoadingOverlay.swift */,
 				81F0DCDC3036F706009074D0 /* ImageView.swift */,
+				81EC285F30454C6B009EA9C9 /* ProfilePictureView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -451,6 +456,7 @@
 			children = (
 				818FFF5B30345E8A00D55DE4 /* FriendshipStatus.swift */,
 				81F0DCE030371096009074D0 /* LoadingViewState.swift */,
+				81EC286130454CA6009EA9C9 /* ProfilePictureSize.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -614,6 +620,7 @@
 				81DA67A93032F7D10079EE35 /* SearchViewModel.swift in Sources */,
 				810AEDF530375A4F001773C7 /* TimelineStore.swift in Sources */,
 				816874683031A322000D7DCA /* PostView.swift in Sources */,
+				81EC286030454C6B009EA9C9 /* ProfilePictureView.swift in Sources */,
 				8137EDD130403A0100F3F9E7 /* Validator.swift in Sources */,
 				811E6055302B2D7900542203 /* PostRequests.swift in Sources */,
 				815DCAB1301DC3CE00AD470A /* FriendRequestScreen.swift in Sources */,
@@ -622,6 +629,7 @@
 				810EE0123019D9D9005FED56 /* AlertManager.swift in Sources */,
 				8161816D301F4A8D00A2DDA0 /* FriendRequestViewModel.swift in Sources */,
 				81458B74303D81210089469F /* RepliesSheetView.swift in Sources */,
+				81EC286230454CA6009EA9C9 /* ProfilePictureSize.swift in Sources */,
 				810EE0233019EC0D005FED56 /* Constants.swift in Sources */,
 				81C0AC57303EDACD00A37E2D /* EditUsernameSheet.swift in Sources */,
 				811E6063302B7E2B00542203 /* ImagePicker.swift in Sources */,

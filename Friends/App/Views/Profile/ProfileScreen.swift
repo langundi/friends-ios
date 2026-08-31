@@ -28,8 +28,7 @@ struct ProfileScreen: View {
     var body: some View {
         ScrollView {
             HStack(spacing: 24) {
-                Circle()
-                    .frame(maxWidth: 60, maxHeight: 60)
+                ProfilePictureView(imageURL: viewModel.profilePicture, size: .medium)
                 
                 VStack(alignment: .leading, spacing: 12) {
                     Text("@\(viewModel.username)")

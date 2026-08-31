@@ -17,6 +17,10 @@ final class ProfileViewModel {
         userStore.username
     }
     
+    var profilePicture: String? {
+        userStore.profilePicture
+    }
+    
     var posts: [PostResponse] {
         postStore.posts
     }
