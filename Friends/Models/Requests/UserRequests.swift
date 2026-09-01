@@ -36,3 +36,11 @@ struct ChangePasswordRequest: Encodable {
         case newPassword = "new_password"
     }
 }
+
+struct DeleteProfilePictureRequest: Encodable {
+    let objectKey: String
+    
+    enum CodingKeys: String, CodingKey {
+        case objectKey = "object_key"
+    }
+}

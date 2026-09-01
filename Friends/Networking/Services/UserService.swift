@@ -39,6 +39,14 @@ final class UserService {
         try await client.request(endpoint: UserEndpoint.setProfilePicture(request: request))
     }
     
+    func deleteProfilePicture(request: DeleteProfilePictureRequest) async throws {
+        try await client.requestVoid(endpoint: UserEndpoint.deleteProfilePicture(request: request))
+    }
+    
+    func removeProfilePicture(request: DeleteProfilePictureRequest) async throws {
+        try await client.requestVoid(endpoint: UserEndpoint.removeProfilePicture(request: request))
+    }
+    
     func changeUsername(request: ChangeUsernameRequest) async throws {
         try await client.requestVoid(endpoint: UserEndpoint.changeUsername(request: request))
     }

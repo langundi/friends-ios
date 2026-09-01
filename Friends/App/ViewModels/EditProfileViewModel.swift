@@ -52,6 +52,12 @@ final class EditProfileViewModel {
             let presignedResult = try await userStore.getPresignedURL(request: uploadImageRequest)
             try await userStore.uploadImage(uploadURL: presignedResult.uploadURL, imageData: imageData)
             
+            // Remove old profile picture from object storage
+            if let objectKey = userStore.objectKey {
+                let removeRequest = DeleteProfilePictureRequest(objectKey: objectKey)
+                try await userStore.removeProfilePicture(request: removeRequest)
+            }
+            
             // Set profile picture
             let request = SetProfilePictureRequest(imageURL: presignedResult.publicURL, objectKey: presignedResult.objectKey)
             let result = try await userStore.setProfilePicture(request: request)
@@ -61,6 +67,29 @@ final class EditProfileViewModel {
             try? await Task.sleep(for: .seconds(2))
             
             completion()
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error profile picture setup: \(networkError)")
+        } catch {
+            if error.isCancellation { return }
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error profile picture setup: \(error)")
+        }
+    }
+    
+    /// Delete profile picture.
+    func deleteProfilePicture() async {
+        guard let objectKey = userStore.objectKey else {
+            print("test")
+            return
+        }
+        
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            let request = DeleteProfilePictureRequest(objectKey: objectKey)
+            try await userStore.deleteProfilePicture(request: request)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error profile picture setup: \(networkError)")

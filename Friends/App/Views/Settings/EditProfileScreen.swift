@@ -41,13 +41,23 @@ struct EditProfileScreen: View {
             if let _ = viewModel.profilePicture {
                 Section {
                     Button {
-                        
+                        AlertManager.shared.showAlert(
+                            title: "Remove Profile Picture",
+                            message: "Are you sure you want to remove your profile picture?",
+                            primaryAction: .init(title: "Yes", action: {
+                                Task {
+                                    await viewModel.deleteProfilePicture()
+                                }
+                            }), secondaryAction: .init(title: "Cancel")
+                        )
                     } label: {
                         Text("Remove Profile Picture")
                             .foregroundStyle(.red)
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
-                    .removeRowInset()
+                    .buttonStyle(.plain)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 }
             }
             
@@ -71,6 +81,11 @@ struct EditProfileScreen: View {
         }
         .navigationTitle("Edit Profile")
         .navigationBarTitleDisplayMode(.inline)
+        .overlay(alignment: .center) {
+            if viewModel.isLoading {
+                LoadingOverlay()
+            }
+        }
         .sheet(isPresented: $isEditingProfilePicture) {
             SetProfilePictureSheet(viewModel: viewModel)
         }

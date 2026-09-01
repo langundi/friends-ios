@@ -104,6 +104,20 @@ final class UserStore {
         try await userService.setProfilePicture(request: request)
     }
     
+    /// Delete profile picture
+    /// - Parameter request: DeleteProfilePictureRequest.
+    func deleteProfilePicture(request: DeleteProfilePictureRequest) async throws {
+        try await userService.deleteProfilePicture(request: request)
+        profilePicture = nil
+        objectKey = nil
+    }
+    
+    /// Remove profile picture, used for setting up new profile picture.
+    /// - Parameter request: RemoveProfilePictureRequest.
+    func removeProfilePicture(request: DeleteProfilePictureRequest) async throws {
+        try await userService.removeProfilePicture(request: request)
+    }
+    
     /// Change user's username.
     /// - Parameter request: UpdateUsernameRequest
     func changeUsername(request: ChangeUsernameRequest) async throws {

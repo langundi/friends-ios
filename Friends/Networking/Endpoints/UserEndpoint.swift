@@ -19,6 +19,8 @@ enum UserEndpoint: Endpoint {
     case changeEmail(request: ChangeEmailRequest)
     case changePassword(request: ChangePasswordRequest)
     case deleteAccount
+    case deleteProfilePicture(request: DeleteProfilePictureRequest)
+    case removeProfilePicture(request: DeleteProfilePictureRequest)
     
     var method: HTTPMethod {
         switch self {
@@ -43,6 +45,10 @@ enum UserEndpoint: Endpoint {
         case .changePassword:
             return .patch
         case .deleteAccount:
+            return .delete
+        case .deleteProfilePicture:
+            return .delete
+        case .removeProfilePicture:
             return .delete
         }
     }
@@ -71,6 +77,10 @@ enum UserEndpoint: Endpoint {
             return "/user/change/password"
         case .deleteAccount:
             return "/user/delete"
+        case .deleteProfilePicture:
+            return "/user/profile-picture"
+        case .removeProfilePicture:
+            return "/user/profile-picture/remove"
         }
     }
     
@@ -93,6 +103,10 @@ enum UserEndpoint: Endpoint {
             return email
         case .changePassword(let password):
             return password
+        case .deleteProfilePicture(let image):
+            return image
+        case .removeProfilePicture(let image):
+            return image
         default:
             return nil
         }
