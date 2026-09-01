@@ -54,6 +54,7 @@
 		8168746A3031AEE1000D7DCA /* CommentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816874693031AEE1000D7DCA /* CommentButton.swift */; };
 		8168746C3031AEED000D7DCA /* LikeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8168746B3031AEED000D7DCA /* LikeButton.swift */; };
 		8168746E3031AF03000D7DCA /* TimelineStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8168746D3031AF03000D7DCA /* TimelineStackView.swift */; };
+		816B5AB93046C16300FE70BB /* ProfilePostsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B5AB83046C16300FE70BB /* ProfilePostsScreen.swift */; };
 		818F24F83018B0BC00678EF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 818F24F43018B0BC00678EF5 /* Assets.xcassets */; };
 		818F24F93018B0BC00678EF5 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818F24F13018B0BC00678EF5 /* Router.swift */; };
 		818F24FA3018B0BC00678EF5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818F24F53018B0BC00678EF5 /* ContentView.swift */; };
@@ -147,6 +148,7 @@
 		816874693031AEE1000D7DCA /* CommentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentButton.swift; sourceTree = "<group>"; };
 		8168746B3031AEED000D7DCA /* LikeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeButton.swift; sourceTree = "<group>"; };
 		8168746D3031AF03000D7DCA /* TimelineStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineStackView.swift; sourceTree = "<group>"; };
+		816B5AB83046C16300FE70BB /* ProfilePostsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePostsScreen.swift; sourceTree = "<group>"; };
 		818F24C73018AFB500678EF5 /* Friends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Friends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		818F24F13018B0BC00678EF5 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		818F24F43018B0BC00678EF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				815DCAAA301DA41E00AD470A /* ProfileScreen.swift */,
 				815DCAAE301DADAC00AD470A /* FriendListScreen.swift */,
 				819DFB7E303576C7007E94DE /* FriendRowView.swift */,
+				816B5AB83046C16300FE70BB /* ProfilePostsScreen.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -658,6 +661,7 @@
 				810AEDF13037477F001773C7 /* Error+Extensions.swift in Sources */,
 				810EE01D3019E6E9005FED56 /* PrimaryButtonStyle.swift in Sources */,
 				811E6057302B2E4A00542203 /* PostService.swift in Sources */,
+				816B5AB93046C16300FE70BB /* ProfilePostsScreen.swift in Sources */,
 				810EE0213019EB68005FED56 /* LoadingOverlay.swift in Sources */,
 				811E6059302B364700542203 /* UserEndpoint.swift in Sources */,
 				81DA67AB303332120079EE35 /* FriendRequestEndpoint.swift in Sources */,

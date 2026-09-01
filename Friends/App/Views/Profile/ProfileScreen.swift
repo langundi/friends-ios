@@ -12,6 +12,7 @@ import OSLog
 struct ProfileScreen: View {
     @AppStorage(Constants.isUserLoggedIn) var isLoggedIn: Bool = true
     @Environment(AppRouter.self) var router
+    @Namespace private var namespace
     @State private var viewModel: ProfileViewModel
     @State private var timelineViewModel: TimelineViewModel
     
@@ -63,6 +64,10 @@ struct ProfileScreen: View {
             LazyVGrid(columns: columns, alignment: .center, spacing: 8) {
                 ForEach(viewModel.posts) { post in
                     ImageView(imageURL: post.imageURL)
+                        .matchedTransitionSource(id: post.id, in: namespace)
+                        .onTapGesture {
+                            router.push(to: .profilePosts(selectedID: post.id, namespace: namespace))
+                        }
                         .contextMenu {
                             Button(role: .destructive) {
                                 Task {
