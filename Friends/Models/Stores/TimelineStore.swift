@@ -47,6 +47,16 @@ final class TimelineStore {
         lastFetchAt = Date()
     }
     
+    /// Fetch more timeline posts.
+    /// - Parameter request: MoreTimelineRequest.
+    func getMoreTimeline(request: MoreTimelineRequest) async throws -> Int? {
+        guard let result = try await service.getMoreTimeline(request: request) else {
+            return nil
+        }
+        timeline.append(contentsOf: result)
+        return result.first?.id
+    }
+    
     /// Refresh timeline, used specifically for new post.
     func refreshTimeline() async throws {
         lastFetchAt = nil

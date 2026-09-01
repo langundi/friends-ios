@@ -8,7 +8,7 @@
 import Foundation
 
 /// The response payload for post creation.
-struct PostResponse: Identifiable, Decodable {
+struct PostResponse: Identifiable, Decodable, Hashable {
     let id: Int
     let userID: Int
     let caption: String

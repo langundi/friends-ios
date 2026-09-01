@@ -13,6 +13,7 @@ enum PostEndpoint: Endpoint {
     case likePost(id: Int)
     case getPost(id: Int)
     case getTimeline
+    case getMoreTimeline(request: MoreTimelineRequest)
     case deletePost(request: DeletePostRequest)
     case unlikePost(id: Int)
     case getReplies(id: Int)
@@ -29,7 +30,7 @@ enum PostEndpoint: Endpoint {
     
     var method: HTTPMethod {
         switch self {
-        case .newPost, .getPresignedUrl, .likePost, .replyPost:
+        case .newPost, .getPresignedUrl, .likePost, .replyPost, .getMoreTimeline:
             return .post
         case .getPost, .getTimeline, .getReplies:
             return .get
@@ -48,6 +49,8 @@ enum PostEndpoint: Endpoint {
             return "/post/upload-image"
         case .getTimeline:
             return "/post/timeline"
+        case .getMoreTimeline:
+            return "/post/timeline/more"
         case .likePost(let id):
             return "/post/like/\(id)"
         case .unlikePost(let id):
@@ -76,6 +79,8 @@ enum PostEndpoint: Endpoint {
             return post
         case .getPresignedUrl(let file):
             return file
+        case .getMoreTimeline(let createdAt):
+            return createdAt
         case .deletePost(let post):
             return post
         case .replyPost(_, let reply):

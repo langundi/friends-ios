@@ -48,6 +48,9 @@ final class NewPostViewModel {
             let postResult = try await postStore.newPost(request: newPostRequest)
             postStore.insert(postResult)
             
+            // MARK: - TODO:
+            // Just add the post to timeline instead of refresh?
+            
             // Refresh Timeline
             try await timelineStore.refreshTimeline()
             

@@ -105,6 +105,9 @@ final class ProfileViewModel {
         defer { isLoading = false }
         
         do {
+            // MARK: - TODO:
+            // After post deletion, should remove post from timeline if it's there.
+            
             let request = DeletePostRequest(id: id, objectKey: objectKey)
             try await postStore.deletePost(request: request)
         } catch let networkError as NetworkError {

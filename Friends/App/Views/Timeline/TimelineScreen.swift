@@ -21,7 +21,7 @@ struct TimelineScreen: View {
     }
     
     var body: some View {
-        TimelineStackView(viewModel: viewModel, posts: viewModel.timeline)
+        TimelineStackView(viewModel: viewModel)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
@@ -61,7 +61,7 @@ struct TimelineScreen: View {
 
 #Preview("With Posts") {
     NavigationStack {
-        TimelineStackView(viewModel: TimelineViewModel.mockTimeline, posts: PostResponse.timelineDummy)
+        TimelineStackView(viewModel: TimelineViewModel.mockTimeline)
             .navigationTitle("Timeline")
             .navigationBarTitleDisplayMode(.inline)
     }

@@ -135,6 +135,7 @@ struct APIClient {
         
         if let body = endpoint.body {
             let encoder = JSONEncoder()
+            encoder.dateEncodingStrategy = .iso8601
             request.httpBody = try encoder.encode(body)
         }
     

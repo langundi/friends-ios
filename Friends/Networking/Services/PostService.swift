@@ -20,6 +20,10 @@ final class PostService {
         try await client.requestOptional(endpoint: PostEndpoint.getTimeline)
     }
     
+    func getMoreTimeline(request: MoreTimelineRequest) async throws -> [PostResponse]? {
+        try await client.requestOptional(endpoint: PostEndpoint.getMoreTimeline(request: request))
+    }
+    
     func newPost(request: NewPostRequest) async throws -> PostResponse {
         try await client.request(endpoint: PostEndpoint.newPost(request: request))
     }

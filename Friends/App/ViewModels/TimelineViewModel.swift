@@ -49,6 +49,26 @@ final class TimelineViewModel {
         }
     }
     
+    /// Fetch more timeline posts.
+    /// - Parameter lastCreatedAt: The last post's `createdAt` property.
+    func getMoreTimeline(lastCreatedAt: Date, completion: @escaping (Int) -> Void) async {
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            let request = MoreTimelineRequest(createdAt: lastCreatedAt)
+            let nextID = try await timelineStore.getMoreTimeline(request: request) ?? -1 // -1 = reached the end
+            completion(nextID)
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error fetching timeline: \(networkError.message)")
+        } catch {
+            if error.isCancellation { return }
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error fetching timeline: \(error)")
+        }
+    }
+    
     /// Re-fetch timeline.
     func refreshTimeline() async {
         timelineStore.invalidateLastFetch()

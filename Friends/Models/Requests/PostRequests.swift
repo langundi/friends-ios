@@ -38,10 +38,19 @@ struct DeletePostRequest: Encodable {
         case objectKey = "object_key"
     }
 }
+
 struct DeleteAllImageRequest: Encodable {
     let objectKeys: [String]
     
     enum CodingKeys: String, CodingKey {
         case objectKeys = "object_keys"
+    }
+}
+
+struct MoreTimelineRequest: Encodable {
+    let createdAt: Date
+    
+    enum CodingKeys: String, CodingKey {
+        case createdAt = "created_at"
     }
 }
