@@ -99,7 +99,6 @@ final class AuthViewModel {
         
         do {
             let result = try await authService.loginUser(request: user)
-            print(result)
             isLoggedIn = true
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)

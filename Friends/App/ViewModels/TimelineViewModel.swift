@@ -23,11 +23,13 @@ final class TimelineViewModel {
     }
     
     private let timelineStore: TimelineStore
+    private let postStore: PostStore
     private let replyStore: ReplyStore
     private let userStore: UserStore
     
-    init(timelineStore: TimelineStore, replyStore: ReplyStore, userStore: UserStore) {
+    init(timelineStore: TimelineStore, postStore: PostStore, replyStore: ReplyStore, userStore: UserStore) {
         self.timelineStore = timelineStore
+        self.postStore = postStore
         self.replyStore = replyStore
         self.userStore = userStore
     }
@@ -81,6 +83,8 @@ final class TimelineViewModel {
     func likePost(id: Int) async {
         do {
             try await timelineStore.likePost(id: id)
+            // Change like state for posts that are both in timeline and profile
+            try await postStore.likePost(id: id)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error fetching timeline: \(networkError.message)")
@@ -96,6 +100,8 @@ final class TimelineViewModel {
     func unlikePost(id: Int) async {
         do {
             try await timelineStore.unlikePost(id: id)
+            // Change state for posts that are both in timeline and profile
+            try await postStore.unlikePost(id: id)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error fetching timeline: \(networkError.message)")
@@ -173,10 +179,11 @@ extension TimelineViewModel {
         let userService = UserService(client: APIClient.shared)
         
         let timelineStore = TimelineStore(postService: postService)
+        let postStore = PostStore(postService: postService)
         let replyStore = ReplyStore(postService: postService)
         let userStore = UserStore(userService: userService)
         
-        let vm = TimelineViewModel(timelineStore: timelineStore, replyStore: replyStore, userStore: userStore)
+        let vm = TimelineViewModel(timelineStore: timelineStore, postStore: postStore, replyStore: replyStore, userStore: userStore)
         
         let timeline = PostResponse.timelineDummy
         timelineStore.setTimeline(timeline)
@@ -189,10 +196,11 @@ extension TimelineViewModel {
         let userService = UserService(client: APIClient.shared)
         
         let timelineStore = TimelineStore(postService: postService)
+        let postStore = PostStore(postService: postService)
         let replyStore = ReplyStore(postService: postService)
         let userStore = UserStore(userService: userService)
         
-        let vm = TimelineViewModel(timelineStore: timelineStore, replyStore: replyStore, userStore: userStore)
+        let vm = TimelineViewModel(timelineStore: timelineStore, postStore: postStore, replyStore: replyStore, userStore: userStore)
         
         timelineStore.setTimeline([])
         vm.isLoading = false
@@ -204,10 +212,11 @@ extension TimelineViewModel {
         let userService = UserService(client: APIClient.shared)
         
         let timelineStore = TimelineStore(postService: postService)
+        let postStore = PostStore(postService: postService)
         let replyStore = ReplyStore(postService: postService)
         let userStore = UserStore(userService: userService)
         
-        let vm = TimelineViewModel(timelineStore: timelineStore, replyStore: replyStore, userStore: userStore)
+        let vm = TimelineViewModel(timelineStore: timelineStore, postStore: postStore, replyStore: replyStore, userStore: userStore)
         
         vm.isLoading = true
         return vm

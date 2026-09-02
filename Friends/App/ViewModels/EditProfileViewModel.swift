@@ -78,7 +78,6 @@ final class EditProfileViewModel {
     /// Delete profile picture.
     func deleteProfilePicture() async {
         guard let objectKey = userStore.objectKey else {
-            print("test")
             return
         }
         

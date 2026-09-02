@@ -63,10 +63,6 @@ struct PostView: View {
             .presentationDragIndicator(.visible)
             .presentationDetents([.large])
         }
-        .onChange(of: post.likedByMe) { oldValue, newValue in
-            print("old = \(oldValue)")
-            print("new = \(newValue)")
-        }
     }
     
     private func likeUnlikePost() {

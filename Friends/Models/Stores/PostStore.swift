@@ -15,10 +15,10 @@ final class PostStore {
     private var lastFetchAt: Date?
     private let staleDuration: TimeInterval = 500
     
-    private let service: PostService
+    private let postService: PostService
     
     init(postService: PostService) {
-        self.service = postService
+        self.postService = postService
     }
     
     func setPosts(_ posts: [PostResponse]) {
@@ -44,32 +44,50 @@ final class PostStore {
     
     /// Fetch user's posts.
     func getMyPosts() async throws {
-        posts = try await service.getMyPosts() ?? []
+        posts = try await postService.getMyPosts() ?? []
         lastFetchAt = Date()
     }
     
     /// Delete user's posts
     /// - Parameter request: Payload.
     func deletePost(request: DeletePostRequest) async throws {
-        try await service.deletePost(request: request)
+        try await postService.deletePost(request: request)
         posts.removeAll { $0.id == request.id }
     }
     
     func getPresignedURL(request: UploadImageRequest) async throws -> UploadImageResponse {
-        try await service.getPresignedURL(request: request)
+        try await postService.getPresignedURL(request: request)
     }
     
     func uploadImage(uploadURL: String, imageData: Data) async throws {
-        try await service.uploadImage(uploadUrl: uploadURL, imageData: imageData)
+        try await postService.uploadImage(uploadUrl: uploadURL, imageData: imageData)
     }
     
     func newPost(request: NewPostRequest) async throws -> PostResponse {
-        try await service.newPost(request: request)
+        try await postService.newPost(request: request)
     }
     
     /// Delete all images from object storage, used for user account deletion.
     /// - Parameter request: DeleteAllImageRequest
     func deleteAllImage(request: DeleteAllImageRequest) async throws {
-        try await service.deleteAllImage(request: request)
+        try await postService.deleteAllImage(request: request)
+    }
+    
+    /// Like a post.
+    /// - Parameter id: PostID.
+    func likePost(id: Int) async throws {
+        if let index = posts.firstIndex(where: { $0.id == id }) {
+            posts[index].likeCount += 1
+            posts[index].likedByMe = true
+        }
+    }
+    
+    /// Unlike a post.
+    /// - Parameter id: PostID.
+    func unlikePost(id: Int) async throws {
+        if let index = posts.firstIndex(where: { $0.id == id }) {
+            posts[index].likeCount -= 1
+            posts[index].likedByMe = false
+        }
     }
 }

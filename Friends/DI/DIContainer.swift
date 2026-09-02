@@ -56,7 +56,7 @@ final class ViewModelFactory {
     }()
     
     lazy var timelineViewModel: TimelineViewModel = {
-        return TimelineViewModel(timelineStore: timelineStore, replyStore: replyStore, userStore: userStore)
+        return TimelineViewModel(timelineStore: timelineStore, postStore: postStore, replyStore: replyStore, userStore: userStore)
     }()
     
     lazy var profileViewModel: ProfileViewModel = {

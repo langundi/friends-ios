@@ -15,10 +15,10 @@ final class TimelineStore {
     private var lastFetchAt: Date?
     private let staleDuration: TimeInterval = 500
     
-    private let service: PostService
+    private let postService: PostService
     
     init(postService: PostService) {
-        self.service = postService
+        self.postService = postService
     }
     
     func setTimeline(_ timeline: [PostResponse]) {
@@ -50,14 +50,14 @@ final class TimelineStore {
     
     /// Fetch timeline posts.
     func getTimeline() async throws {
-        timeline = try await service.getTimeline() ?? []
+        timeline = try await postService.getTimeline() ?? []
         lastFetchAt = Date()
     }
     
     /// Fetch more timeline posts.
     /// - Parameter request: MoreTimelineRequest.
     func getMoreTimeline(request: MoreTimelineRequest) async throws -> Int? {
-        guard let result = try await service.getMoreTimeline(request: request) else {
+        guard let result = try await postService.getMoreTimeline(request: request) else {
             return nil
         }
         timeline.append(contentsOf: result)
@@ -73,7 +73,7 @@ final class TimelineStore {
     /// Like a post.
     /// - Parameter id: PostID.
     func likePost(id: Int) async throws {
-        try await service.likePost(postID: id)
+        try await postService.likePost(postID: id)
         if let index = timeline.firstIndex(where: { $0.id == id }) {
             timeline[index].likeCount += 1
             timeline[index].likedByMe = true
@@ -83,7 +83,7 @@ final class TimelineStore {
     /// Unlike a post.
     /// - Parameter id: PostID.
     func unlikePost(id: Int) async throws {
-        try await service.unlikePost(postID: id)
+        try await postService.unlikePost(postID: id)
         if let index = timeline.firstIndex(where: { $0.id == id }) {
             timeline[index].likeCount -= 1
             timeline[index].likedByMe = false
