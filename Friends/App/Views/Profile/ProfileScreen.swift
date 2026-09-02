@@ -100,7 +100,7 @@ struct ProfileScreen: View {
             }
         }
         .task {
-            await viewModel.loadProfileData()
+            await viewModel.loadPostsAndFriendsData()
         }
         .refreshable {
             await viewModel.refreshProfileData()

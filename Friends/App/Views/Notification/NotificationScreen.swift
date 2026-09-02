@@ -20,12 +20,10 @@ struct NotificationScreen: View {
             List {
                 ForEach(0..<10) { i in
                     HStack(spacing: 16) {
-                        Circle()
-                            .frame(maxWidth: 50, maxHeight: 50)
+                        ProfilePictureView(imageURL: nil, size: .small)
                         
                         VStack(alignment: .leading) {
                             Text("@manny")
-                                .font(.headline)
                             
                             HStack {
                                 Text("Liked your post")
@@ -34,7 +32,7 @@ struct NotificationScreen: View {
                                     .foregroundStyle(.secondary)
                             }
                         }
-                            .padding(.vertical)
+                        .padding(.vertical)
                     }
                     .listRowSeparator(.hidden)
                 }

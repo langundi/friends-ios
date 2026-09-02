@@ -41,19 +41,18 @@ final class ProfileViewModel {
         self.timelineStore = timelineStore
         
         Task {
-            await loadProfileData()
+            await getMyProfile()
         }
     }
     
-    /// Load user profile, posts, and friends.
-    func loadProfileData() async {
+    /// Load user's posts and friends.
+    func loadPostsAndFriendsData() async {
         isLoading = true
         defer { isLoading = false }
         
-        async let profile: () = getMyProfile()
         async let posts: () = getMyPosts()
         async let friends: () = getFriendList()
-        _ = await (profile, posts, friends)
+        _ = await (posts, friends)
     }
     
     /// Re-fetches profile, posts, and friends.
@@ -61,13 +60,19 @@ final class ProfileViewModel {
         userStore.invalidateLastFetch()
         postStore.invalidateLastFetch()
         friendStore.invalidateLastFetch()
-        await loadProfileData()
+        
+        async let profile: () = getMyPosts()
+        async let postsAndFriends: () = loadPostsAndFriendsData()
+        _ = await (profile, postsAndFriends)
     }
     
     // MARK: - User's Profile
     
     /// Fetch user profile.
     private func getMyProfile() async {
+        isLoading = true
+        defer { isLoading = false }
+        
         do {
             try await userStore.loadProfileIfNeeded()
         } catch let networkError as NetworkError {
