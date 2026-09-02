@@ -16,10 +16,12 @@ final class NewPostViewModel {
     
     private let postStore: PostStore
     private let timelineStore: TimelineStore
+    private let userStore: UserStore
     
-    init(postStore: PostStore, timelineStore: TimelineStore) {
+    init(postStore: PostStore, timelineStore: TimelineStore, userStore: UserStore) {
         self.postStore = postStore
         self.timelineStore = timelineStore
+        self.userStore = userStore
     }
     
     /// Upload a new post.
@@ -45,19 +47,14 @@ final class NewPostViewModel {
             
             // Upload post
             let newPostRequest = NewPostRequest(caption: caption, imageUrl: presignedResult.publicURL, objectKey: presignedResult.objectKey)
-            let postResult = try await postStore.newPost(request: newPostRequest)
+            var postResult = try await postStore.newPost(request: newPostRequest)
+            postResult.username = userStore.username
+            postResult.profilePicture = userStore.profilePicture
+            
+            // Insert to post and timeline store
             postStore.insert(postResult)
-            
-            // MARK: - TODO:
-            // Just add the post to timeline instead of refresh?
-            
-            // Refresh Timeline
-            try await timelineStore.refreshTimeline()
-            
-            // Delay to compensate for Kingfisher TLS error
-            try? await Task.sleep(for: .seconds(2))
-            
-            // Insert new post to post store
+            timelineStore.insert(postResult)
+
             completion()
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)

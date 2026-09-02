@@ -64,8 +64,6 @@ final class EditProfileViewModel {
             userStore.setProfilePicture(result.profilePicture)
             userStore.setObjectKey(result.objectKey)
             
-            try? await Task.sleep(for: .seconds(2))
-            
             completion()
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)

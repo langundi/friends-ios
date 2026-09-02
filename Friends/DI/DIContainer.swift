@@ -60,7 +60,7 @@ final class ViewModelFactory {
     }()
     
     lazy var profileViewModel: ProfileViewModel = {
-        return ProfileViewModel(authService: authService, userStore: userStore, postStore: postStore, friendStore: friendStore)
+        return ProfileViewModel(userStore: userStore, postStore: postStore, friendStore: friendStore, timelineStore: timelineStore)
     }()
     
     lazy var searchViewModel: SearchViewModel = {
@@ -84,7 +84,7 @@ final class ViewModelFactory {
     }
     
     func makeNewPostViewModel() -> NewPostViewModel {
-        return NewPostViewModel(postStore: postStore, timelineStore: timelineStore)
+        return NewPostViewModel(postStore: postStore, timelineStore: timelineStore, userStore: userStore)
     }
     
     func makeFriendRequestViewModel() -> FriendRequestViewModel {

@@ -29,6 +29,13 @@ final class TimelineStore {
         timeline.insert(post, at: 0)
     }
     
+    func delete(_ id: Int) {
+        guard let postID = timeline.firstIndex(where: { $0.id == id }) else {
+            return
+        }
+        timeline.removeAll { $0.id == postID }
+    }
+    
     func invalidateLastFetch() {
         lastFetchAt = nil
     }

@@ -19,7 +19,7 @@ struct PostResponse: Identifiable, Decodable, Hashable {
     let createdAt: Date
     var likedByMe: Bool
     var username: String
-    let profilePicture: String?
+    var profilePicture: String?
     
     enum CodingKeys: String, CodingKey {
         case id, caption, username

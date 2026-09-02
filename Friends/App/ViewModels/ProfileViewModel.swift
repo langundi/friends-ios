@@ -29,16 +29,16 @@ final class ProfileViewModel {
         friendStore.friends
     }
     
-    private let authService: AuthService
     private let postStore: PostStore
     private let userStore: UserStore
     private let friendStore: FriendStore
+    private let timelineStore: TimelineStore
     
-    init(authService: AuthService, userStore: UserStore, postStore: PostStore, friendStore: FriendStore) {
-        self.authService = authService
+    init(userStore: UserStore, postStore: PostStore, friendStore: FriendStore, timelineStore: TimelineStore) {
         self.userStore = userStore
         self.postStore = postStore
         self.friendStore = friendStore
+        self.timelineStore = timelineStore
         
         Task {
             await loadProfileData()
@@ -110,6 +110,7 @@ final class ProfileViewModel {
             
             let request = DeletePostRequest(id: id, objectKey: objectKey)
             try await postStore.deletePost(request: request)
+            timelineStore.delete(request.id)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error deleting post: \(networkError.message)")
