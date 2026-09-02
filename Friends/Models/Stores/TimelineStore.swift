@@ -30,10 +30,10 @@ final class TimelineStore {
     }
     
     func delete(_ id: Int) {
-        guard let postID = timeline.firstIndex(where: { $0.id == id }) else {
+        guard let post = timeline.first(where: { $0.id == id }) else {
             return
         }
-        timeline.removeAll { $0.id == postID }
+        timeline.removeAll { $0.id == post.id }
     }
     
     func invalidateLastFetch() {
@@ -44,7 +44,6 @@ final class TimelineStore {
         if let lastFetchAt, Date().timeIntervalSince(lastFetchAt) < staleDuration {
             return
         }
-        
         try await getTimeline()
     }
     

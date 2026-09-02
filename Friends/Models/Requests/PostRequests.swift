@@ -30,11 +30,9 @@ struct UploadImageRequest: Encodable {
 }
 
 struct DeletePostRequest: Encodable {
-    let id: Int
     let objectKey: String
     
     enum CodingKeys: String, CodingKey {
-        case id
         case objectKey = "object_key"
     }
 }

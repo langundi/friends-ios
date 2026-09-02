@@ -50,9 +50,9 @@ final class PostStore {
     
     /// Delete user's posts
     /// - Parameter request: Payload.
-    func deletePost(request: DeletePostRequest) async throws {
-        try await postService.deletePost(request: request)
-        posts.removeAll { $0.id == request.id }
+    func deletePost(postID: Int, request: DeletePostRequest) async throws {
+        try await postService.deletePost(postID: postID, request: request)
+        posts.removeAll { $0.id == postID }
     }
     
     func getPresignedURL(request: UploadImageRequest) async throws -> UploadImageResponse {

@@ -72,7 +72,6 @@ struct ProfileScreen: View {
                             Button(role: .destructive) {
                                 Task {
                                     await viewModel.deletePost(id: post.id, objectKey: post.objectKey)
-                                    await timelineViewModel.refreshTimeline()
                                 }
                             } label: {
                                 Label("Delete Post", systemImage: "trash")

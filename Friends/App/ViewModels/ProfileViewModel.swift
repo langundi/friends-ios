@@ -61,7 +61,7 @@ final class ProfileViewModel {
         postStore.invalidateLastFetch()
         friendStore.invalidateLastFetch()
         
-        async let profile: () = getMyPosts()
+        async let profile: () = getMyProfile()
         async let postsAndFriends: () = loadPostsAndFriendsData()
         _ = await (profile, postsAndFriends)
     }
@@ -110,12 +110,9 @@ final class ProfileViewModel {
         defer { isLoading = false }
         
         do {
-            // MARK: - TODO:
-            // After post deletion, should remove post from timeline if it's there.
-            
-            let request = DeletePostRequest(id: id, objectKey: objectKey)
-            try await postStore.deletePost(request: request)
-            timelineStore.delete(request.id)
+            let request = DeletePostRequest(objectKey: objectKey)
+            try await postStore.deletePost(postID: id, request: request)
+            timelineStore.delete(id)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error deleting post: \(networkError.message)")

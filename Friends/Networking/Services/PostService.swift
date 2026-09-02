@@ -29,7 +29,7 @@ final class PostService {
     }
     
     func getPresignedURL(request: UploadImageRequest) async throws -> UploadImageResponse {
-        try await client.request(endpoint: PostEndpoint.getPresignedUrl(request: request))
+        try await client.request(endpoint: PostEndpoint.uploadImage(request: request))
     }
     
     /// Upload image to bucket using presigned URL.
@@ -45,8 +45,8 @@ final class PostService {
         try await client.request(endpoint: UserEndpoint.getFriendPosts(id: userID))
     }
     
-    func deletePost(request: DeletePostRequest) async throws {
-        try await client.requestVoid(endpoint: PostEndpoint.deletePost(request: request))
+    func deletePost(postID: Int, request: DeletePostRequest) async throws {
+        try await client.requestVoid(endpoint: PostEndpoint.deletePost(id: postID, request: request))
     }
     
     func likePost(postID: Int) async throws {
@@ -58,7 +58,7 @@ final class PostService {
     }
     
     func getPostReplies(postID: Int) async throws -> [ReplyResponse]? {
-        try await client.requestOptional(endpoint: PostEndpoint.getReplies(id: postID))
+        try await client.requestOptional(endpoint: PostEndpoint.getPostReplies(id: postID))
     }
     
     func replyPost(postID: Int, request: ReplyRequest) async throws -> ReplyResponse {

@@ -9,17 +9,17 @@ import Foundation
 
 enum PostEndpoint: Endpoint {
     case newPost(request: NewPostRequest)
-    case getPresignedUrl(request: UploadImageRequest)
-    case likePost(id: Int)
-    case getPost(id: Int)
+    case uploadImage(request: UploadImageRequest)
+    case deletePost(id: Int, request: DeletePostRequest)
+    case deleteAllImage(request: DeleteAllImageRequest)
     case getTimeline
     case getMoreTimeline(request: MoreTimelineRequest)
-    case deletePost(request: DeletePostRequest)
-    case unlikePost(id: Int)
-    case getReplies(id: Int)
+    case getPost(id: Int)
+    case getPostReplies(id: Int)
+    case likePost(id: Int)
     case replyPost(id: Int, request: ReplyRequest)
+    case unlikePost(id: Int)
     case deleteReply(id: Int)
-    case deleteAllImage(request: DeleteAllImageRequest)
     
     var headers: [String : String]? {
         switch self {
@@ -30,39 +30,67 @@ enum PostEndpoint: Endpoint {
     
     var method: HTTPMethod {
         switch self {
-        case .newPost, .getPresignedUrl, .likePost, .replyPost, .getMoreTimeline:
+        case .newPost:
             return .post
-        case .getPost, .getTimeline, .getReplies:
+        case .uploadImage:
+            return .post
+            
+        case .deletePost:
+            return .delete
+        case .deleteAllImage:
+            return .delete
+            
+        case .getTimeline:
             return .get
-        case .deletePost, .unlikePost, .deleteReply, .deleteAllImage:
+        case .getMoreTimeline:
+            return .post
+            
+        case .getPost:
+            return .get
+        case .getPostReplies:
+            return .get
+            
+        case .likePost:
+            return .post
+        case .replyPost:
+            return .post
+            
+        case .unlikePost:
+            return .delete
+        case .deleteReply:
             return .delete
         }
     }
     
     var path: String {
         switch self {
-        case .newPost, .deletePost:
+        case .newPost:
             return "/post"
-        case .getPost(let id):
-            return "/post/\(id)"
-        case .getPresignedUrl:
+        case .uploadImage:
             return "/post/upload-image"
+            
+        case .deleteAllImage:
+            return "/post/image/all"
+            
         case .getTimeline:
             return "/post/timeline"
         case .getMoreTimeline:
             return "/post/timeline/more"
+            
+        case .getPost(let id):
+            return "/post/\(id)"
+        case .getPostReplies(let id):
+            return "/post/\(id)/replies"
         case .likePost(let id):
-            return "/post/like/\(id)"
-        case .unlikePost(let id):
-            return "/post/unlike/\(id)"
-        case .getReplies(let id):
-            return "/post/reply/\(id)"
+            return "/post/\(id)/like"
+        case .deletePost(let id, _):
+            return "/post/\(id)"
         case .replyPost(let id, _):
-            return "/post/reply/\(id)"
+            return "/post/\(id)/reply"
+        case .unlikePost(let id):
+            return "/post/\(id)/unlike"
         case .deleteReply(let id):
-            return "/post/reply/\(id)"
-        case .deleteAllImage:
-            return "/post/image/all"
+            return "/post/\(id)/reply"
         }
     }
     
@@ -77,11 +105,11 @@ enum PostEndpoint: Endpoint {
         switch self {
         case .newPost(let post):
             return post
-        case .getPresignedUrl(let file):
+        case .uploadImage(let file):
             return file
         case .getMoreTimeline(let createdAt):
             return createdAt
-        case .deletePost(let post):
+        case .deletePost(_, let post):
             return post
         case .replyPost(_, let reply):
             return reply
