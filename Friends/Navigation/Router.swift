@@ -16,6 +16,7 @@ enum ScreenEnum: Hashable {
     case friendRequest
     case profile
     case profilePosts(selectedID: Int, namespace: Namespace.ID)
+    case friendProfile(userID: Int, username: String)
     case friendList
     case settings
     case editProfile
@@ -43,6 +44,8 @@ enum ScreenEnum: Hashable {
         case .profilePosts(let id, let namespace):
             ProfilePostsScreen(factory: factory, selectedID: id)
                 .navigationTransition(.zoom(sourceID: id, in: namespace))
+        case .friendProfile(let id, let username):
+            FriendProfileScreen(factory: factory, userID: id, username: username)
         case .friendList:
             FriendListScreen(factory: factory)
         case .settings:

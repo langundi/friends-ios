@@ -117,6 +117,10 @@ final class ViewModelFactory {
         return DeleteAccountViewModel(userStore: userStore, postStore: postStore)
     }
     
+    func makeFriendProfileViewModel() -> FriendProfileViewModel {
+        return FriendProfileViewModel(userService: userService, postService: postService)
+    }
+    
     // MARK: - Search Tab ViewModels
     
     func makeSearchViewModel() -> SearchViewModel {

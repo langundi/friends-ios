@@ -21,7 +21,7 @@ struct FriendListScreen: View {
     var body: some View {
         List {
             ForEach(sortedFriends) { friend in
-                FriendRowView(username: friend.username, imageURL: friend.profilePicture) {
+                FriendRowView(id: friend.userID, username: friend.username, imageURL: friend.profilePicture) {
                     Task {
                         await viewModel.unfriend(id: friend.id)
                     }

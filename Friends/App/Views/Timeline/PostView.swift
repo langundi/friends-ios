@@ -10,6 +10,7 @@ import SwiftUI
 struct PostView: View {
     var viewModel: TimelineViewModel
     var post: PostResponse
+    @Environment(AppRouter.self) var router
     @State private var isPostLiked: Bool
     @State private var showComment: Bool = false
     
@@ -21,12 +22,19 @@ struct PostView: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: 12) {
-            HStack(spacing: 12) {
-                ProfilePictureView(imageURL: post.profilePicture, size: .xsmall)
-                
-                Text("@\(post.username)")
+            Button {
+                router.push(to: .friendProfile(userID: post.userID, username: post.username))
+            } label: {
+                HStack(spacing: 12) {
+                    ProfilePictureView(imageURL: post.profilePicture, size: .xsmall)
+                    
+                    Text("@\(post.username)")
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .buttonStyle(.plain)
+            .contentShape(.rect)
+            .allowsHitTesting(post.username != viewModel.username)
             
             ImageView(imageURL: post.imageURL)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -86,8 +94,10 @@ struct PostView: View {
 
 #Preview("Post") {
     PostView(viewModel: TimelineViewModel.mockTimeline, post: PostResponse.postDummy)
+        .appPreviewEnvironments()
 }
 
 #Preview("Captionless") {
     PostView(viewModel: TimelineViewModel.mockTimeline, post: PostResponse.noCaptionPostDummy)
+        .appPreviewEnvironments()
 }

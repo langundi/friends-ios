@@ -22,6 +22,10 @@ final class TimelineViewModel {
         replyStore.replies
     }
     
+    var username: String {
+        userStore.username
+    }
+    
     private let timelineStore: TimelineStore
     private let postStore: PostStore
     private let replyStore: ReplyStore

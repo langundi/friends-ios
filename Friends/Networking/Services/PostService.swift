@@ -41,8 +41,8 @@ final class PostService {
         try await client.requestOptional(endpoint: UserEndpoint.getMyPosts)
     }
     
-    func getFriendPosts(userID: Int) async throws -> [PostResponse] {
-        try await client.request(endpoint: UserEndpoint.getFriendPosts(id: userID))
+    func getFriendPosts(userID: Int) async throws -> [PostResponse]? {
+        try await client.requestOptional(endpoint: UserEndpoint.getFriendPosts(id: userID))
     }
     
     func deletePost(postID: Int, request: DeletePostRequest) async throws {
