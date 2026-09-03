@@ -17,6 +17,7 @@ enum ScreenEnum: Hashable {
     case profile
     case profilePosts(selectedID: Int, namespace: Namespace.ID)
     case friendProfile(userID: Int, username: String)
+    case friendProfilePosts(selectedID: Int, namespace: Namespace.ID)
     case friendList
     case settings
     case editProfile
@@ -27,27 +28,43 @@ enum ScreenEnum: Hashable {
     @ViewBuilder
     func build(factory: ViewModelFactory) -> some View {
         switch self {
+            // Auth
         case .signIn:
             SignInScreen(factory: factory)
         case .signUp:
             SignUpScreen(factory: factory)
+            
+            // Timeline
         case .timeline:
             TimelineScreen(factory: factory)
         case .newPost:
             NewPostScreen(factory: factory)
+            
+            // Notifications
         case .notification:
             NotificationScreen(factory: factory)
         case .friendRequest:
             FriendRequestScreen(factory: factory)
+            
+            // User Profile
         case .profile:
             ProfileScreen(factory: factory)
         case .profilePosts(let id, let namespace):
             ProfilePostsScreen(factory: factory, selectedID: id)
                 .navigationTransition(.zoom(sourceID: id, in: namespace))
+            
+            // Friend Profile
         case .friendProfile(let id, let username):
             FriendProfileScreen(factory: factory, userID: id, username: username)
+        case .friendProfilePosts(let id, let namespace):
+            FriendProfilePostsScreen(factory: factory, selectedID: id)
+                .navigationTransition(.zoom(sourceID: id, in: namespace))
+            
+            // Friend List
         case .friendList:
             FriendListScreen(factory: factory)
+            
+            // Settings
         case .settings:
             SettingsScreen(factory: factory)
         case .editProfile:
@@ -56,6 +73,8 @@ enum ScreenEnum: Hashable {
             ChangePasswordScreen(factory: factory)
         case .deleteAccount:
             DeleteAccountScreen(factory: factory)
+            
+            // Search
         case .search:
             SearchFriendScreen(factory: factory)
         }

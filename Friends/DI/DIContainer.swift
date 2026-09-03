@@ -63,6 +63,10 @@ final class ViewModelFactory {
         return ProfileViewModel(userStore: userStore, postStore: postStore, friendStore: friendStore, timelineStore: timelineStore)
     }()
     
+    lazy var friendProfileViewModel: FriendProfileViewModel = {
+        return FriendProfileViewModel(userService: userService, postStore: postStore)
+    }()
+    
     lazy var searchViewModel: SearchViewModel = {
         return SearchViewModel(userStore: userStore, friendService: friendService)
     }()
@@ -101,6 +105,10 @@ final class ViewModelFactory {
         profileViewModel
     }
     
+    func makeFriendProfileViewModel() -> FriendProfileViewModel {
+        friendProfileViewModel
+    }
+    
     func makeSettingsViewModel() -> SettingsViewModel {
         return SettingsViewModel(authService: authService)
     }
@@ -115,10 +123,6 @@ final class ViewModelFactory {
     
     func makeDeleteAccountViewModel() -> DeleteAccountViewModel {
         return DeleteAccountViewModel(userStore: userStore, postStore: postStore)
-    }
-    
-    func makeFriendProfileViewModel() -> FriendProfileViewModel {
-        return FriendProfileViewModel(userService: userService, postService: postService)
     }
     
     // MARK: - Search Tab ViewModels

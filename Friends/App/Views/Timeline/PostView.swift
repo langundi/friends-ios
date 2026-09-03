@@ -11,13 +11,11 @@ struct PostView: View {
     var viewModel: TimelineViewModel
     var post: PostResponse
     @Environment(AppRouter.self) var router
-    @State private var isPostLiked: Bool
     @State private var showComment: Bool = false
     
     init(viewModel: TimelineViewModel, post: PostResponse) {
         self.viewModel = viewModel
         self.post = post
-        _isPostLiked = State(initialValue: post.likedByMe)
     }
     
     var body: some View {
@@ -77,16 +75,10 @@ struct PostView: View {
         if post.likedByMe {
             Task {
                 await viewModel.unlikePost(id: post.id)
-                withAnimation(.snappy) {
-                    isPostLiked = false
-                }
             }
         } else {
             Task {
                 await viewModel.likePost(id: post.id)
-                withAnimation(.snappy) {
-                    isPostLiked = true
-                }
             }
         }
     }

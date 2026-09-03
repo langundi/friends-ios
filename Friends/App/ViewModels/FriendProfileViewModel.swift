@@ -13,17 +13,18 @@ final class FriendProfileViewModel {
     
     var isLoading: Bool = false
     var profilePicture: String?
-    var posts: [PostResponse] = []
     
-    private let userService: UserService
-    private let postService: PostService
-    
-    init(userService: UserService, postService: PostService) {
-        self.userService = userService
-        self.postService = postService
+    var posts: [PostResponse] {
+        postStore.friendPosts
     }
     
-    // MARK: - TODO: Add fetch ttl
+    private let userService: UserService
+    private let postStore: PostStore
+    
+    init(userService: UserService, postStore: PostStore) {
+        self.userService = userService
+        self.postStore = postStore
+    }
     
     func loadProfileAndPosts(id: Int) async {
         isLoading = true
@@ -53,7 +54,7 @@ final class FriendProfileViewModel {
     
     func getFriendPosts(id: Int) async {
         do {
-            posts = try await postService.getFriendPosts(userID: id) ?? []
+            try await postStore.getFriendPosts(userID: id)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error fetching posts: \(networkError.message)")

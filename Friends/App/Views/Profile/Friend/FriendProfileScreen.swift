@@ -60,7 +60,7 @@ struct FriendProfileScreen: View {
                     ImageView(imageURL: post.imageURL)
                         .matchedTransitionSource(id: post.id, in: namespace)
                         .onTapGesture {
-//                            router.push(to: .profilePosts(selectedID: post.id, namespace: namespace))
+                            router.push(to: .friendProfilePosts(selectedID: post.id, namespace: namespace))
                         }
                 }
             }

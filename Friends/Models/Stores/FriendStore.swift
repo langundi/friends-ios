@@ -14,10 +14,10 @@ final class FriendStore {
     private var lastFetchAt: Date?
     private let staleDuration: TimeInterval = 500
     
-    private let service: FriendService
+    private let friendService: FriendService
     
     init(friendService: FriendService) {
-        self.service = friendService
+        self.friendService = friendService
     }
     
     func setFriends(_ friends: [FriendResponse]) {
@@ -29,7 +29,7 @@ final class FriendStore {
     }
     
     /// Fetch friends when last fetch time has passed stale duration.
-    func loadDataIfNeeded() async throws {
+    func loadFriendList() async throws {
         if let lastFetchAt, Date().timeIntervalSince(lastFetchAt) < staleDuration {
             return
         }
@@ -39,14 +39,14 @@ final class FriendStore {
     
     /// Fetch user's friends.
     func getFriendList() async throws {
-        friends = try await service.getFriendList() ?? []
+        friends = try await friendService.getFriendList() ?? []
         lastFetchAt = Date()
     }
     
     /// Remove a friend from user's friend list.
     /// - Parameter id: Friendship ID.
     func unfriend(id: Int) async throws {
-        try await service.unfriend(userID: id)
+        try await friendService.unfriend(userID: id)
         friends.removeAll { $0.id == id }
     }
 }

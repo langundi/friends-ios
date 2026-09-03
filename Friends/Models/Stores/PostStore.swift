@@ -12,6 +12,7 @@ import Foundation
 final class PostStore {
     
     private(set) var posts: [PostResponse] = []
+    private(set) var friendPosts: [PostResponse] = []
     private var lastFetchAt: Date?
     private let staleDuration: TimeInterval = 500
     
@@ -47,8 +48,14 @@ final class PostStore {
         lastFetchAt = Date()
     }
     
+    /// Fetch a friend's posts
+    /// - Parameter userID: User ID.
+    func getFriendPosts(userID: Int) async throws {
+        friendPosts = try await postService.getFriendPosts(userID: userID) ?? []
+    }
+    
     /// Delete user's posts
-    /// - Parameter request: Payload.
+    /// - Parameter request: DeletePostRequest.
     func deletePost(postID: Int, request: DeletePostRequest) async throws {
         try await postService.deletePost(postID: postID, request: request)
         posts.removeAll { $0.id == postID }
@@ -73,20 +80,36 @@ final class PostStore {
     }
     
     /// Like a post.
-    /// - Parameter id: PostID.
+    ///
+    /// Post can be user's or a friend's
+    /// - Parameter id: Post ID.
     func likePost(id: Int) async throws {
         if let index = posts.firstIndex(where: { $0.id == id }) {
             posts[index].likeCount += 1
             posts[index].likedByMe = true
         }
+        
+        // Case for friend
+        if let friendIndex = friendPosts.firstIndex(where: { $0.id == id }) {
+            friendPosts[friendIndex].likeCount += 1
+            friendPosts[friendIndex].likedByMe = true
+        }
     }
     
     /// Unlike a post.
-    /// - Parameter id: PostID.
+    ///
+    /// Post can be user's or a friend's
+    /// - Parameter id: Post ID.
     func unlikePost(id: Int) async throws {
         if let index = posts.firstIndex(where: { $0.id == id }) {
             posts[index].likeCount -= 1
             posts[index].likedByMe = false
+        }
+        
+        // Case for friend
+        if let friendIndex = friendPosts.firstIndex(where: { $0.id == id }) {
+            friendPosts[friendIndex].likeCount -= 1
+            friendPosts[friendIndex].likedByMe = false
         }
     }
 }

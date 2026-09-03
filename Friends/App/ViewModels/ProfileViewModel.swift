@@ -131,7 +131,7 @@ final class ProfileViewModel {
         defer { isLoading = false }
         
         do {
-            try await friendStore.loadDataIfNeeded()
+            try await friendStore.loadFriendList()
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error fetching friend list: \(networkError.message)")

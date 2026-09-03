@@ -24,5 +24,6 @@ struct LikeButton: View {
             }
             .buttonStyle(ToolbarButtonStyle())
         }
+        .animation(.snappy(duration: 0.25), value: liked)
     }
 }

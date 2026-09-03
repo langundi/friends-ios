@@ -87,7 +87,7 @@ final class TimelineViewModel {
     func likePost(id: Int) async {
         do {
             try await timelineStore.likePost(id: id)
-            // Change like state for posts that are both in timeline and profile
+            // Change like state for posts that are both in timeline and profile or a friend profile
             try await postStore.likePost(id: id)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
@@ -104,7 +104,7 @@ final class TimelineViewModel {
     func unlikePost(id: Int) async {
         do {
             try await timelineStore.unlikePost(id: id)
-            // Change state for posts that are both in timeline and profile
+            // Change state for posts that are both in timeline and profile or a friend profile
             try await postStore.unlikePost(id: id)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)

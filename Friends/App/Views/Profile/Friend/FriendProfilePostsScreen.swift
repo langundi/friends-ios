@@ -1,5 +1,5 @@
 //
-//  ProfilePostsScreen.swift
+//  FriendProfilePostsScreen.swift
 //  Friends
 //
 //  Created by Ziqa on 01/09/26.
@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct ProfilePostsScreen: View {
+struct FriendProfilePostsScreen: View {
     var selectedID: Int
-    @State private var profileViewModel: ProfileViewModel
+    @State private var friendProfileViewModel: FriendProfileViewModel
     @State private var timelineViewModel: TimelineViewModel
     
     init(factory: ViewModelFactory, selectedID: Int) {
-        self.profileViewModel = factory.profileViewModel
+        self.friendProfileViewModel = factory.friendProfileViewModel
         self.timelineViewModel = factory.timelineViewModel
         self.selectedID = selectedID
     }
@@ -22,7 +22,7 @@ struct ProfilePostsScreen: View {
         ScrollViewReader { proxy in
             ScrollView(.vertical) {
                 LazyVStack(alignment: .center, spacing: 0) {
-                    ForEach(profileViewModel.posts) { post in
+                    ForEach(friendProfileViewModel.posts) { post in
                         PostView(viewModel: timelineViewModel, post: post)
                             .id(post.id)
                     }
