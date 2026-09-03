@@ -62,9 +62,9 @@ enum UserEndpoint: Endpoint {
         case .getFriendProfile(let id):
             return "/user/\(id)"
         case .getMyPosts:
-            return "/user/post/me"
+            return "/user/me/posts"
         case .getFriendPosts(let id):
-            return"/user/post/\(id)"
+            return "/user/\(id)/posts"
         case .searchUsername(let username):
             return "/user/search/\(username)"
         case .setProfilePicture:

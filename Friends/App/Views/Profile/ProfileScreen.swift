@@ -10,11 +10,9 @@ import Kingfisher
 import OSLog
 
 struct ProfileScreen: View {
-    @AppStorage(Constants.isUserLoggedIn) var isLoggedIn: Bool = true
     @Environment(AppRouter.self) var router
     @Namespace private var namespace
     @State private var viewModel: ProfileViewModel
-    @State private var timelineViewModel: TimelineViewModel
     
     private var columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 3)
     
@@ -28,8 +26,6 @@ struct ProfileScreen: View {
     
     init(factory: ViewModelFactory) {
         _viewModel = State(initialValue: factory.makeProfileViewModel())
-        
-        timelineViewModel = factory.timelineViewModel
     }
     
     var body: some View {

@@ -38,7 +38,6 @@ final class PostStore {
         if let lastFetchAt, Date().timeIntervalSince(lastFetchAt) < staleDuration {
             return
         }
-        
         try await getMyPosts()
     }
     
