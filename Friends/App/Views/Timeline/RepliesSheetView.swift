@@ -12,10 +12,12 @@ struct RepliesSheetView: View {
     @FocusState private var isReplyFieldFocused: Bool
     var viewModel: TimelineViewModel
     var postID: Int
+    var receiverID: Int
     
-    init(viewModel: TimelineViewModel, postID: Int) {
+    init(viewModel: TimelineViewModel, postID: Int, receiverID: Int) {
         self.viewModel = viewModel
         self.postID = postID
+        self.receiverID = receiverID
     }
     
     var body: some View {
@@ -90,7 +92,7 @@ struct RepliesSheetView: View {
                     
                     Button {
                         Task {
-                            await viewModel.replyPost(id: postID, reply: reply)
+                            await viewModel.replyPost(id: postID, reply: reply, receiverID: receiverID)
                             reply = ""
                             isReplyFieldFocused = false
                         }
@@ -114,5 +116,5 @@ struct RepliesSheetView: View {
 }
 
 #Preview {
-    RepliesSheetView(viewModel: TimelineViewModel.mockTimeline, postID: 1)
+    RepliesSheetView(viewModel: TimelineViewModel.mockTimeline, postID: 1, receiverID: 1)
 }

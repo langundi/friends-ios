@@ -10,4 +10,11 @@ import Foundation
 struct ReplyRequest: Encodable {
     let reply: String
     let username: String
+    let receiverID: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case reply
+        case username
+        case receiverID = "receiver_id"
+    }
 }

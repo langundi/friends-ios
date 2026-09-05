@@ -139,12 +139,12 @@ final class TimelineViewModel {
     /// - Parameters:
     ///   - id: Post ID.
     ///   - reply: Reply text.
-    func replyPost(id: Int, reply: String) async {
+    func replyPost(id: Int, reply: String, receiverID: Int) async {
         isSheetLoading = true
         defer { isSheetLoading = false }
         
         do {
-            let request = ReplyRequest(reply: reply, username: userStore.username)
+            let request = ReplyRequest(reply: reply, username: userStore.username, receiverID: receiverID)
             let replyResult = try await replyStore.replyPost(id: id, request: request)
             replyStore.insert(replyResult)
         } catch let networkError as NetworkError {
