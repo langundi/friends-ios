@@ -84,9 +84,10 @@ final class TimelineViewModel {
     
     /// Like post.
     /// - Parameter id: Post ID.
-    func likePost(id: Int) async {
+    func likePost(id: Int, receiverID: Int) async {
         do {
-            try await timelineStore.likePost(id: id)
+            let request = LikePostRequest(senderUsername: userStore.username, receiverID: receiverID)
+            try await timelineStore.likePost(id: id, request: request)
             // Change like state for posts that are both in timeline and profile or a friend profile
             try await postStore.likePost(id: id)
         } catch let networkError as NetworkError {

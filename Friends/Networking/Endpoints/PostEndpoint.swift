@@ -16,7 +16,7 @@ enum PostEndpoint: Endpoint {
     case getMoreTimeline(request: MoreTimelineRequest)
     case getPost(id: Int)
     case getPostReplies(id: Int)
-    case likePost(id: Int)
+    case likePost(id: Int, request: LikePostRequest)
     case replyPost(id: Int, request: ReplyRequest)
     case unlikePost(id: Int)
     case deleteReply(id: Int)
@@ -81,7 +81,7 @@ enum PostEndpoint: Endpoint {
             return "/post/\(id)"
         case .getPostReplies(let id):
             return "/post/\(id)/replies"
-        case .likePost(let id):
+        case .likePost(let id, _):
             return "/post/\(id)/like"
         case .deletePost(let id, _):
             return "/post/\(id)"
@@ -111,6 +111,8 @@ enum PostEndpoint: Endpoint {
             return createdAt
         case .deletePost(_, let post):
             return post
+        case .likePost(_, let like):
+            return like
         case .replyPost(_, let reply):
             return reply
         case .deleteAllImage(let images):

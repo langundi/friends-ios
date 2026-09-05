@@ -19,9 +19,11 @@ final class SettingsViewModel {
     }
     
     private let authService: AuthService
+    private let deviceService: DeviceService
     
-    init(authService: AuthService) {
+    init(authService: AuthService, deviceService: DeviceService) {
         self.authService = authService
+        self.deviceService = deviceService
     }
     
     /// Sign out user and delete access and refresh tokens from keychain.
@@ -31,9 +33,13 @@ final class SettingsViewModel {
         
         do {
             guard let refreshToken: String = try? Keychain.get(Constants.refreshToken) else {
+                try await deleteDeviceToken()
+                
                 isLoggedIn = false
                 throw NetworkError.sessionExpired
             }
+            
+            try await deleteDeviceToken()
             
             let refresh = RefreshRequest(refreshToken: refreshToken)
             try await authService.logoutUser(request: refresh)
@@ -48,6 +54,13 @@ final class SettingsViewModel {
             if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error signing out: \(error)")
+        }
+    }
+    
+    func deleteDeviceToken() async throws {
+        if let deviceToken = UserDefaults.standard.string(forKey: Constants.deviceToken) {
+            let device = DeviceTokenRequest(deviceToken: deviceToken)
+            try await deviceService.deleteDeviceToken(request: device)
         }
     }
     

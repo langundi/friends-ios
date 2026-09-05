@@ -71,8 +71,8 @@ final class TimelineStore {
     
     /// Like a post.
     /// - Parameter id: PostID.
-    func likePost(id: Int) async throws {
-        try await postService.likePost(postID: id)
+    func likePost(id: Int, request: LikePostRequest) async throws {
+        try await postService.likePost(postID: id, request: request)
         if let index = timeline.firstIndex(where: { $0.id == id }) {
             timeline[index].likeCount += 1
             timeline[index].likedByMe = true

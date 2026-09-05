@@ -48,9 +48,11 @@ final class AuthViewModel {
     }
     
     private let authService: AuthService
+    private let deviceService: DeviceService
     
-    init(authService: AuthService) {
+    init(authService: AuthService, deviceService: DeviceService) {
         self.authService = authService
+        self.deviceService = deviceService
     }
     
     /// Register a new user.
@@ -95,10 +97,19 @@ final class AuthViewModel {
         isLoading = true
         defer { isLoading = false }
         
-        let user = LoginRequest(email: email, password: password)
-        
         do {
-            let _ = try await authService.loginUser(request: user)
+            let loginRequest = LoginRequest(email: email, password: password)
+            let result = try await authService.loginUser(request: loginRequest)
+            
+            setAccessAndRefreshTokensKeychain(accessToken: result.accessToken, refreshToken: result.refreshToken)
+            
+            try await Task.sleep(for: .seconds(1))
+            
+            if let deviceToken = UserDefaults.standard.string(forKey: Constants.deviceToken) {
+                let deviceRequest = DeviceTokenRequest(deviceToken: deviceToken)
+                try await deviceService.registerDeviceToken(request: deviceRequest)
+            }
+            
             isLoggedIn = true
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
@@ -108,6 +119,30 @@ final class AuthViewModel {
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error sign in user: \(error)")
         }
+    }
+    
+    func registerDevice() async {
+        isLoading = true
+        defer { isLoading = false }
+        
+        do {
+            if let deviceToken = UserDefaults.standard.string(forKey: Constants.deviceToken) {
+                let deviceRequest = DeviceTokenRequest(deviceToken: deviceToken)
+                try await deviceService.registerDeviceToken(request: deviceRequest)
+            }
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error registering device: \(networkError.message)")
+        } catch {
+            if error.isCancellation { return }
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error registering device: \(error)")
+        }
+    }
+    
+    func setAccessAndRefreshTokensKeychain(accessToken: String, refreshToken: String) {
+        try? Keychain.set(accessToken, Constants.accessToken)
+        try? Keychain.set(refreshToken, Constants.refreshToken)
     }
     
     func clearField() {

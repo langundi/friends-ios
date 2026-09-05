@@ -52,3 +52,13 @@ struct MoreTimelineRequest: Encodable {
         case createdAt = "created_at"
     }
 }
+
+struct LikePostRequest: Encodable {
+    let senderUsername: String
+    let receiverID: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case senderUsername = "sender_username"
+        case receiverID = "receiver_id"
+    }
+}

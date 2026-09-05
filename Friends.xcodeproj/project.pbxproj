@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		81083763304AE8DB00E5EC71 /* DeviceTokenEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81083762304AE8DB00E5EC71 /* DeviceTokenEndpoint.swift */; };
+		81083765304AE90B00E5EC71 /* DeviceRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81083764304AE90B00E5EC71 /* DeviceRequests.swift */; };
+		81083767304AEBA200E5EC71 /* DeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81083766304AEBA200E5EC71 /* DeviceService.swift */; };
 		810AEDF13037477F001773C7 /* Error+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AEDF03037477F001773C7 /* Error+Extensions.swift */; };
 		810AEDF330374E7F001773C7 /* FriendStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AEDF230374E7F001773C7 /* FriendStore.swift */; };
 		810AEDF530375A4F001773C7 /* TimelineStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810AEDF430375A4F001773C7 /* TimelineStore.swift */; };
@@ -105,6 +108,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		81083762304AE8DB00E5EC71 /* DeviceTokenEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTokenEndpoint.swift; sourceTree = "<group>"; };
+		81083764304AE90B00E5EC71 /* DeviceRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRequests.swift; sourceTree = "<group>"; };
+		81083766304AEBA200E5EC71 /* DeviceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceService.swift; sourceTree = "<group>"; };
 		810AEDF03037477F001773C7 /* Error+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Extensions.swift"; sourceTree = "<group>"; };
 		810AEDF230374E7F001773C7 /* FriendStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendStore.swift; sourceTree = "<group>"; };
 		810AEDF430375A4F001773C7 /* TimelineStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineStore.swift; sourceTree = "<group>"; };
@@ -181,6 +187,7 @@
 		818FFF5D3034AA0000D55DE4 /* FriendRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestView.swift; sourceTree = "<group>"; };
 		819DFB7C30356F90007E94DE /* FriendEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendEndpoint.swift; sourceTree = "<group>"; };
 		819DFB7E303576C7007E94DE /* FriendRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRowView.swift; sourceTree = "<group>"; };
+		81A3EB22304BD284002D8F38 /* Friends.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Friends.entitlements; sourceTree = "<group>"; };
 		81C0AC4E303EA3B000A37E2D /* EditProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileScreen.swift; sourceTree = "<group>"; };
 		81C0AC50303EA46400A37E2D /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		81C0AC52303EAB8C00A37E2D /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -272,6 +279,7 @@
 				811E6056302B2E4A00542203 /* PostService.swift */,
 				811E605A302B372300542203 /* UserService.swift */,
 				81DA67AC303333010079EE35 /* FriendService.swift */,
+				81083766304AEBA200E5EC71 /* DeviceService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -387,6 +395,7 @@
 		818F24F73018B0BC00678EF5 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
+				81A3EB22304BD284002D8F38 /* Friends.entitlements */,
 				818F252B3018BBA900678EF5 /* Info.plist */,
 				818F24F43018B0BC00678EF5 /* Assets.xcassets */,
 				818F24FF3018B14500678EF5 /* App */,
@@ -482,6 +491,7 @@
 				81DA67B030333C340079EE35 /* FriendRequests.swift */,
 				81458B77303DDDD30089469F /* ReplyRequests.swift */,
 				8137EDCC30400B7A00F3F9E7 /* UserRequests.swift */,
+				81083764304AE90B00E5EC71 /* DeviceRequests.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -519,6 +529,7 @@
 				811E6058302B364700542203 /* UserEndpoint.swift */,
 				81DA67AA303332120079EE35 /* FriendRequestEndpoint.swift */,
 				819DFB7C30356F90007E94DE /* FriendEndpoint.swift */,
+				81083762304AE8DB00E5EC71 /* DeviceTokenEndpoint.swift */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -635,6 +646,7 @@
 			files = (
 				8137EDCB303FF11900F3F9E7 /* ReplyStore.swift in Sources */,
 				8168746C3031AEED000D7DCA /* LikeButton.swift in Sources */,
+				81083763304AE8DB00E5EC71 /* DeviceTokenEndpoint.swift in Sources */,
 				81F0DCE6303728CA009074D0 /* UserStore.swift in Sources */,
 				8137EDCD30400B7A00F3F9E7 /* UserRequests.swift in Sources */,
 				81EC28663045B107009EA9C9 /* PickerSource.swift in Sources */,
@@ -679,6 +691,7 @@
 				814772B63041780D0070F130 /* ChangePasswordScreen.swift in Sources */,
 				81687407302F27AE000D7DCA /* SearchFriendScreen.swift in Sources */,
 				818F250B3018B41400678EF5 /* APIClient.swift in Sources */,
+				81083767304AEBA200E5EC71 /* DeviceService.swift in Sources */,
 				81DA67AF3033337C0079EE35 /* FriendResponses.swift in Sources */,
 				814772B8304179450070F130 /* ChangePasswordViewModel.swift in Sources */,
 				818FFF5E3034AA0000D55DE4 /* FriendRequestView.swift in Sources */,
@@ -700,6 +713,7 @@
 				816B5AB93046C16300FE70BB /* ProfilePostsScreen.swift in Sources */,
 				810EE0213019EB68005FED56 /* LoadingOverlay.swift in Sources */,
 				811E6059302B364700542203 /* UserEndpoint.swift in Sources */,
+				81083765304AE90B00E5EC71 /* DeviceRequests.swift in Sources */,
 				81DA67AB303332120079EE35 /* FriendRequestEndpoint.swift in Sources */,
 				811E6053302B293800542203 /* PostEndpoint.swift in Sources */,
 				81C0AC51303EA46400A37E2D /* SettingsScreen.swift in Sources */,
@@ -858,6 +872,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Friends/Friends.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LS68HMX5XZ;
@@ -877,7 +892,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.langundi.Friends;
+				PRODUCT_BUNDLE_IDENTIFIER = com.langundi.Friends;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -894,6 +909,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Friends/Friends.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LS68HMX5XZ;
@@ -913,7 +929,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.langundi.Friends;
+				PRODUCT_BUNDLE_IDENTIFIER = com.langundi.Friends;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;

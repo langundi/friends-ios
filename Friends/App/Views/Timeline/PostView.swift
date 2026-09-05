@@ -78,7 +78,7 @@ struct PostView: View {
             }
         } else {
             Task {
-                await viewModel.likePost(id: post.id)
+                await viewModel.likePost(id: post.id, receiverID: post.userID)
             }
         }
     }

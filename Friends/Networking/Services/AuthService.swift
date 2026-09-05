@@ -20,11 +20,8 @@ final class AuthService {
     }
     
     func loginUser(request: LoginRequest) async throws -> LoginResponse {
-        let response: LoginResponse
-        response = try await client.request(endpoint: AuthEndpoint.login(request: request))
-        try Keychain.set(response.accessToken, Constants.accessToken)
-        try Keychain.set(response.refreshToken, Constants.refreshToken)
-        return response
+        try await client.request(endpoint: AuthEndpoint.login(request: request))
+        
     }
     
     func logoutUser(request: RefreshRequest) async throws {

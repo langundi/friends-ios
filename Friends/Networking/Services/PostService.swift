@@ -49,8 +49,8 @@ final class PostService {
         try await client.requestVoid(endpoint: PostEndpoint.deletePost(id: postID, request: request))
     }
     
-    func likePost(postID: Int) async throws {
-        try await client.requestVoid(endpoint: PostEndpoint.likePost(id: postID))
+    func likePost(postID: Int, request: LikePostRequest) async throws {
+        try await client.requestVoid(endpoint: PostEndpoint.likePost(id: postID, request: request))
     }
     
     func unlikePost(postID: Int) async throws {

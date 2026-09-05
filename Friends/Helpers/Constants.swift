@@ -11,6 +11,7 @@ nonisolated struct Constants {
     
     // MARK: - User Defaults
     static let isUserLoggedIn = "isUserLoggedIn"
+    static let deviceToken = "deviceToken"
     
     // MARK: - Keychains
     static let accessToken = "accessToken"

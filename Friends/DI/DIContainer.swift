@@ -27,6 +27,10 @@ final class ViewModelFactory {
         FriendService(client: APIClient.shared)
     }()
     
+    lazy var deviceService: DeviceService = {
+        DeviceService(client: APIClient.shared)
+    }()
+    
     // MARK: - Stores
     
     lazy var timelineStore: TimelineStore = {
@@ -52,7 +56,7 @@ final class ViewModelFactory {
     // MARK: - ViewModels
     
     lazy var authViewModel: AuthViewModel = {
-        return AuthViewModel(authService: authService)
+        return AuthViewModel(authService: authService, deviceService: deviceService)
     }()
     
     lazy var timelineViewModel: TimelineViewModel = {
@@ -110,7 +114,7 @@ final class ViewModelFactory {
     }
     
     func makeSettingsViewModel() -> SettingsViewModel {
-        return SettingsViewModel(authService: authService)
+        return SettingsViewModel(authService: authService, deviceService: deviceService)
     }
     
     func makeEditProfileViewModel() -> EditProfileViewModel {
