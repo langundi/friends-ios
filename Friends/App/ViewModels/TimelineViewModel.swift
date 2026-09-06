@@ -149,11 +149,11 @@ final class TimelineViewModel {
             replyStore.insert(replyResult)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
-            Logger.network.error("Error fetching replies: \(networkError.message)")
+            Logger.network.error("Error replying: \(networkError.message)")
         } catch {
             if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
-            Logger.network.error("Error fetching replies: \(error)")
+            Logger.network.error("Error replying: \(error)")
         }
     }
     
@@ -167,12 +167,16 @@ final class TimelineViewModel {
             try await replyStore.deleteReply(id: id)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
-            Logger.network.error("Error fetching replies: \(networkError.message)")
+            Logger.network.error("Error deleting reply: \(networkError.message)")
         } catch {
             if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
-            Logger.network.error("Error fetching replies: \(error)")
+            Logger.network.error("Error deleting reply: \(error)")
         }
+    }
+    
+    func clearReplies() {
+        replyStore.clearReplies()
     }
 }
 

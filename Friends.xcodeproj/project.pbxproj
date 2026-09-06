@@ -20,6 +20,9 @@
 		810EE0253019F587005FED56 /* ToolbarButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810EE0243019F587005FED56 /* ToolbarButtonStyle.swift */; };
 		810EE02C301A5539005FED56 /* PostResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810EE02B301A5539005FED56 /* PostResponses.swift */; };
 		810EE02E301A5CE1005FED56 /* NotificationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810EE02D301A5CE1005FED56 /* NotificationScreen.swift */; };
+		81100E0F304D54EE00B96E37 /* NotificationResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81100E0E304D54EE00B96E37 /* NotificationResponses.swift */; };
+		81100E11304D561900B96E37 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81100E10304D561900B96E37 /* NotificationService.swift */; };
+		81100E13304D564300B96E37 /* NotificationEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81100E12304D564300B96E37 /* NotificationEndpoint.swift */; };
 		811B9477302C13F500C3F545 /* NewPostScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811B9476302C13F500C3F545 /* NewPostScreen.swift */; };
 		811E6053302B293800542203 /* PostEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E6052302B293800542203 /* PostEndpoint.swift */; };
 		811E6055302B2D7900542203 /* PostRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E6054302B2D7900542203 /* PostRequests.swift */; };
@@ -121,6 +124,9 @@
 		810EE0243019F587005FED56 /* ToolbarButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonStyle.swift; sourceTree = "<group>"; };
 		810EE02B301A5539005FED56 /* PostResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostResponses.swift; sourceTree = "<group>"; };
 		810EE02D301A5CE1005FED56 /* NotificationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScreen.swift; sourceTree = "<group>"; };
+		81100E0E304D54EE00B96E37 /* NotificationResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationResponses.swift; sourceTree = "<group>"; };
+		81100E10304D561900B96E37 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		81100E12304D564300B96E37 /* NotificationEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationEndpoint.swift; sourceTree = "<group>"; };
 		811B9476302C13F500C3F545 /* NewPostScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostScreen.swift; sourceTree = "<group>"; };
 		811E6052302B293800542203 /* PostEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEndpoint.swift; sourceTree = "<group>"; };
 		811E6054302B2D7900542203 /* PostRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRequests.swift; sourceTree = "<group>"; };
@@ -280,6 +286,7 @@
 				811E605A302B372300542203 /* UserService.swift */,
 				81DA67AC303333010079EE35 /* FriendService.swift */,
 				81083766304AEBA200E5EC71 /* DeviceService.swift */,
+				81100E10304D561900B96E37 /* NotificationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -505,6 +512,7 @@
 				811E605C302B375C00542203 /* UserResponses.swift */,
 				81DA67AE3033337C0079EE35 /* FriendResponses.swift */,
 				81458B79303DDE070089469F /* ReplyResponses.swift */,
+				81100E0E304D54EE00B96E37 /* NotificationResponses.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -530,6 +538,7 @@
 				81DA67AA303332120079EE35 /* FriendRequestEndpoint.swift */,
 				819DFB7C30356F90007E94DE /* FriendEndpoint.swift */,
 				81083762304AE8DB00E5EC71 /* DeviceTokenEndpoint.swift */,
+				81100E12304D564300B96E37 /* NotificationEndpoint.swift */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -671,6 +680,7 @@
 				81458B78303DDDD30089469F /* ReplyRequests.swift in Sources */,
 				81DA67A93032F7D10079EE35 /* SearchViewModel.swift in Sources */,
 				810AEDF530375A4F001773C7 /* TimelineStore.swift in Sources */,
+				81100E0F304D54EE00B96E37 /* NotificationResponses.swift in Sources */,
 				812841CF30495EE10019D877 /* FriendProfileScreen.swift in Sources */,
 				816874683031A322000D7DCA /* PostView.swift in Sources */,
 				81EC286030454C6B009EA9C9 /* ProfilePictureView.swift in Sources */,
@@ -681,6 +691,7 @@
 				818F250E3018B44400678EF5 /* AuthService.swift in Sources */,
 				810EE0123019D9D9005FED56 /* AlertManager.swift in Sources */,
 				8161816D301F4A8D00A2DDA0 /* FriendRequestViewModel.swift in Sources */,
+				81100E13304D564300B96E37 /* NotificationEndpoint.swift in Sources */,
 				81458B74303D81210089469F /* RepliesSheetView.swift in Sources */,
 				81EC286230454CA6009EA9C9 /* ProfilePictureSize.swift in Sources */,
 				810EE0233019EC0D005FED56 /* Constants.swift in Sources */,
@@ -715,6 +726,7 @@
 				811E6059302B364700542203 /* UserEndpoint.swift in Sources */,
 				81083765304AE90B00E5EC71 /* DeviceRequests.swift in Sources */,
 				81DA67AB303332120079EE35 /* FriendRequestEndpoint.swift in Sources */,
+				81100E11304D561900B96E37 /* NotificationService.swift in Sources */,
 				811E6053302B293800542203 /* PostEndpoint.swift in Sources */,
 				81C0AC51303EA46400A37E2D /* SettingsScreen.swift in Sources */,
 				818F25233018BACF00678EF5 /* SignUpScreen.swift in Sources */,

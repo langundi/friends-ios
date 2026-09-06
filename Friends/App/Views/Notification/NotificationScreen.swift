@@ -16,29 +16,22 @@ struct NotificationScreen: View {
     }
     
     var body: some View {
-        Group {
-            List {
-                ForEach(0..<10) { i in
-                    HStack(spacing: 16) {
-                        ProfilePictureView(imageURL: nil, size: .small)
+        List {
+            ForEach(viewModel.notifications) { notification in
+                HStack(spacing: 16) {
+                    ProfilePictureView(imageURL: notification.profilePicture, size: .small)
+                    
+                    VStack(alignment: .leading) {
+                        Text(notification.message)
                         
-                        VStack(alignment: .leading) {
-                            Text("@manny")
-                            
-                            HStack {
-                                Text("Liked your post")
-                                
-                                Text("Today")
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
-                        .padding(.vertical)
+                        Text(formatDate(date: notification.createdAt))
+                            .foregroundStyle(.secondary)
                     }
-                    .listRowSeparator(.hidden)
                 }
+                .listRowSeparator(.hidden)
             }
-            .listStyle(.plain)
         }
+        .listStyle(.plain)
         .navigationTitle("Notifications")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -49,8 +42,19 @@ struct NotificationScreen: View {
                     Label("Friend Request", systemImage: "person.badge.plus")
                         .labelStyle(.iconOnly)
                 }
-                .badge(viewModel.friendRequest)
+                //                .badge(viewModel.friendRequest)
             }
+        }
+        .overlay(alignment: .center) {
+            if viewModel.isLoading {
+                LoadingOverlay()
+            }
+        }
+        .task {
+            await viewModel.getAllNotification()
+        }
+        .refreshable {
+            await viewModel.getAllNotification()
         }
     }
 }

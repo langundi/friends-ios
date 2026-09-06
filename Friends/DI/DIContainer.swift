@@ -31,6 +31,10 @@ final class ViewModelFactory {
         DeviceService(client: APIClient.shared)
     }()
     
+    lazy var notificationService: NotificationService = {
+        NotificationService(client: APIClient.shared)
+    }()
+    
     // MARK: - Stores
     
     lazy var timelineStore: TimelineStore = {
@@ -88,7 +92,7 @@ final class ViewModelFactory {
     }
     
     func makeNotificationViewModel() -> NotificationViewModel {
-        return NotificationViewModel()
+        return NotificationViewModel(notificationService: notificationService)
     }
     
     func makeNewPostViewModel() -> NewPostViewModel {

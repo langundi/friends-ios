@@ -62,6 +62,11 @@ struct PostView: View {
         .padding(.horizontal)
         .padding(.bottom, 80)
         .containerRelativeFrame(.vertical, alignment: .center)
+        .onChange(of: showComment) { _, newValue in
+            if newValue == false {
+                viewModel.clearReplies()
+            }
+        }
         .sheet(isPresented: $showComment) {
             VStack {
                 RepliesSheetView(viewModel: viewModel, postID: post.id, receiverID: post.userID)

@@ -45,4 +45,8 @@ final class ReplyStore {
         try await postService.deleteReply(replyID: id)
         replies.removeAll { $0.id == id }
     }
+    
+    func clearReplies() {
+        replies.removeAll()
+    }
 }
