@@ -11,7 +11,7 @@ struct FriendRequestView: View {
     var id: Int
     var username: String
     let imageURL: String?
-    var viewModel: FriendRequestViewModel
+    var viewModel: NotificationViewModel
     
     var body: some View {
         HStack(spacing: 24) {

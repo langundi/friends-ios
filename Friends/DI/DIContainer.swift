@@ -67,6 +67,10 @@ final class ViewModelFactory {
         return TimelineViewModel(timelineStore: timelineStore, postStore: postStore, replyStore: replyStore, userStore: userStore)
     }()
     
+    lazy var notificationViewModel: NotificationViewModel = {
+        return NotificationViewModel(notificationService: notificationService, friendService: friendService)
+    }()
+    
     lazy var profileViewModel: ProfileViewModel = {
         return ProfileViewModel(userStore: userStore, postStore: postStore, friendStore: friendStore, timelineStore: timelineStore)
     }()
@@ -92,7 +96,7 @@ final class ViewModelFactory {
     }
     
     func makeNotificationViewModel() -> NotificationViewModel {
-        return NotificationViewModel(notificationService: notificationService)
+        notificationViewModel
     }
     
     func makeNewPostViewModel() -> NewPostViewModel {

@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct FriendRequestScreen: View {
-    @State private var viewModel: FriendRequestViewModel
+    @State private var viewModel: NotificationViewModel
     
     init(factory: ViewModelFactory) {
-        _viewModel = State(initialValue: factory.makeFriendRequestViewModel())
+        _viewModel = State(initialValue: factory.makeNotificationViewModel())
     }
     
     var body: some View {
