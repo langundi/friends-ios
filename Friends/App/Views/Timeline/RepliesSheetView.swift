@@ -44,7 +44,7 @@ struct RepliesSheetView: View {
                                                 Menu("", systemImage: "ellipsis") {
                                                     Button("Delete", systemImage: "trash") {
                                                         Task {
-                                                            await viewModel.deleteReply(id: reply.id)
+                                                            await viewModel.deleteReply(id: postID, replyID: reply.id)
                                                             await viewModel.getReplies(id: postID)
                                                         }
                                                     }

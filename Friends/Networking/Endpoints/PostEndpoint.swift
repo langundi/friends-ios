@@ -19,7 +19,7 @@ enum PostEndpoint: Endpoint {
     case likePost(id: Int, request: LikePostRequest)
     case replyPost(id: Int, request: ReplyRequest)
     case unlikePost(id: Int)
-    case deleteReply(id: Int)
+    case deleteReply(id: Int, request: DeleteReplyRequest)
     
     var headers: [String : String]? {
         switch self {
@@ -89,7 +89,7 @@ enum PostEndpoint: Endpoint {
             return "/post/\(id)/reply"
         case .unlikePost(let id):
             return "/post/\(id)/unlike"
-        case .deleteReply(let id):
+        case .deleteReply(let id, _):
             return "/post/\(id)/reply"
         }
     }
@@ -114,6 +114,8 @@ enum PostEndpoint: Endpoint {
         case .likePost(_, let like):
             return like
         case .replyPost(_, let reply):
+            return reply
+        case .deleteReply(_, let reply):
             return reply
         case .deleteAllImage(let images):
             return images

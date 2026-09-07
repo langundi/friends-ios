@@ -62,3 +62,11 @@ struct LikePostRequest: Encodable {
         case receiverID = "receiver_id"
     }
 }
+
+struct DeleteReplyRequest: Encodable {
+    let replyID: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case replyID = "reply_id"
+    }
+}

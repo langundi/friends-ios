@@ -39,10 +39,14 @@ final class ReplyStore {
         try await postService.replyPost(postID: id, request: request)
     }
     
+    
+    
     /// Delete a reply from post.
-    /// - Parameter id: ReplyID.
-    func deleteReply(id: Int) async throws {
-        try await postService.deleteReply(replyID: id)
+    /// - Parameters:
+    ///   - id: PostID.
+    ///   - request: DeleteReplyRequest
+    func deleteReply(id: Int, request: DeleteReplyRequest) async throws {
+        try await postService.deleteReply(replyID: id, request: request)
         replies.removeAll { $0.id == id }
     }
     

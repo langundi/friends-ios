@@ -157,14 +157,18 @@ final class TimelineViewModel {
         }
     }
     
-    /// Delete reply from post.
-    /// - Parameter id: ReplyID.
-    func deleteReply(id: Int) async {
+    
+    /// Delete reply from a post.
+    /// - Parameters:
+    ///   - id: PostID.
+    ///   - replyID: ReplyID.
+    func deleteReply(id: Int, replyID: Int) async {
         isSheetLoading = true
         defer { isSheetLoading = false }
         
         do {
-            try await replyStore.deleteReply(id: id)
+            let request = DeleteReplyRequest(replyID: replyID)
+            try await replyStore.deleteReply(id: id, request: request)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error deleting reply: \(networkError.message)")
