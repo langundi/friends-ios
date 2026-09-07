@@ -16,22 +16,36 @@ struct NotificationScreen: View {
     }
     
     var body: some View {
-        List {
-            ForEach(viewModel.notifications) { notification in
-                HStack(spacing: 16) {
-                    ProfilePictureView(imageURL: notification.profilePicture, size: .small)
-                    
-                    VStack(alignment: .leading) {
-                        Text(notification.message)
-                        
-                        Text(formatDate(date: notification.createdAt))
-                            .foregroundStyle(.secondary)
+        Group {
+            if viewModel.friendRequests.isEmpty {
+                ScrollView {
+                    ContentUnavailableView {
+                        Image(systemName: "bell.fill")
+                            .font(.largeTitle)
+                            .foregroundStyle(.gray)
+                    } description: {
+                        Text("There's nothing here fam.")
                     }
                 }
-                .listRowSeparator(.hidden)
+            } else {
+                List {
+                    ForEach(viewModel.notifications) { notification in
+                        HStack(spacing: 16) {
+                            ProfilePictureView(imageURL: notification.profilePicture, size: .small)
+                            
+                            VStack(alignment: .leading) {
+                                Text(notification.message)
+                                
+                                Text(formatDate(date: notification.createdAt))
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        .listRowSeparator(.hidden)
+                    }
+                }
+                .listStyle(.plain)
             }
         }
-        .listStyle(.plain)
         .navigationTitle("Notifications")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

@@ -39,11 +39,12 @@ struct SignInScreen: View {
             
             Section {
                 Button("Forgot password?") {
-                    
+                    router.push(to: .forgotPassword)
                 }
                 .padding(.leading, 12)
             }
-            .removeRowInset()
+            .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             .listSectionSpacing(12)
             
             Section {

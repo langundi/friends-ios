@@ -10,6 +10,7 @@ import SwiftUI
 enum ScreenEnum: Hashable {
     case signIn
     case signUp
+    case forgotPassword
     case timeline
     case newPost
     case notification
@@ -33,6 +34,8 @@ enum ScreenEnum: Hashable {
             SignInScreen(factory: factory)
         case .signUp:
             SignUpScreen(factory: factory)
+        case .forgotPassword:
+            ForgotPasswordScreen()
             
             // Timeline
         case .timeline:

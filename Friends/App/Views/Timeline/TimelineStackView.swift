@@ -35,11 +35,14 @@ struct TimelineStackView: View {
             if viewModel.timeline.isEmpty {
                 ScrollView {
                     ContentUnavailableView {
-                        Image(systemName: "person.2.fill")
-                            .font(.largeTitle)
-                            .foregroundStyle(.gray)
+                        Image("megamind")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 150)
                     } description: {
-                        Text("Let's add some friends!")
+                        Text("No friends?")
+                            .font(.title)
+                            .fontWeight(.bold)
                     } actions: {
                         Button {
                             router.push(to: .search)
@@ -152,7 +155,7 @@ struct TimelineStackView: View {
     
     private func setNextScrollID(id: Int) {
         guard id != -1 else {
-            AlertManager.shared.showAlert(title: "Hooray!", message: "You've reached the end. Go outside!")
+            AlertManager.shared.showAlert(title: "Hmmm", message: "Go outside bro.")
             noMorePost = true
             return
         }
@@ -162,6 +165,6 @@ struct TimelineStackView: View {
 }
 
 #Preview {
-    TimelineStackView(viewModel: TimelineViewModel.mockTimeline)
+    TimelineStackView(viewModel: TimelineViewModel.mockEmpty)
         .appPreviewEnvironments()
 }
