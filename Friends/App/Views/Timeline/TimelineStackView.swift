@@ -16,6 +16,7 @@ struct TimelineStackView: View {
     @State private var scrollID: Int?
     @State private var pendingScrollID: Int?
     @State private var showLoadMore: Bool = false
+    @State private var showScrollToTop: Bool = false
     @State private var noMorePost: Bool = false
     
     private var currentCreatedAt: Date {
@@ -83,8 +84,26 @@ struct TimelineStackView: View {
                             .padding(.bottom)
                         }
                     }
-                    .onChange(of: scrollID) { oldValue, newValue in
+                    .overlay(alignment: .topTrailing) {
+                        if showScrollToTop {
+                            Button {
+                                withAnimation(.snappy) {
+                                    let top = viewModel.timeline.first?.id
+                                    proxy.scrollTo(top, anchor: .top)
+                                    scrollID = top
+                                }
+                            } label: {
+                                Image(systemName: "arrow.up")
+                            }
+                            .disabled(viewModel.isLoading)
+                            .buttonStyle(ToolbarButtonStyle())
+                            .padding(.trailing)
+                            .transition(.blurReplace)
+                        }
+                    }
+                    .onChange(of: scrollID) { _, newValue in
                         checkForLoadMore(currentID: newValue)
+                        checkForScrollToTop(currentID: newValue)
                     }
                     .onChange(of: viewModel.timeline) { _, _ in
                         if let id = pendingScrollID {
@@ -101,6 +120,7 @@ struct TimelineStackView: View {
                         await viewModel.refreshTimeline()
                     }
                     .animation(.snappy, value: showLoadMore)
+                    .animation(.snappy, value: showScrollToTop)
                 }
             }
         }
@@ -115,6 +135,18 @@ struct TimelineStackView: View {
             showLoadMore = true
         } else {
             showLoadMore = false
+        }
+    }
+    
+    private func checkForScrollToTop(currentID: Int?) {
+        guard let currentID, let index = viewModel.timeline.firstIndex(where: { $0.id == currentID }) else {
+            return
+        }
+        
+        if index >= 1 {
+            showScrollToTop = true
+        } else {
+            showScrollToTop = false
         }
     }
     
