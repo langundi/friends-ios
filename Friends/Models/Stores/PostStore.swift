@@ -30,6 +30,26 @@ final class PostStore {
         posts.insert(post, at: 0)
     }
     
+    func increaseReplyCount(postID: Int) {
+        if let index = posts.firstIndex(where: { $0.id == postID }) {
+            posts[index].replyCount += 1
+        }
+        
+        if let index = friendPosts.firstIndex(where: { $0.id == postID }) {
+            posts[index].replyCount += 1
+        }
+    }
+    
+    func decreaseReplyCount(postID: Int) {
+        if let index = posts.firstIndex(where: { $0.id == postID }) {
+            posts[index].replyCount -= 1
+        }
+        
+        if let index = friendPosts.firstIndex(where: { $0.id == postID }) {
+            posts[index].replyCount -= 1
+        }
+    }
+    
     func invalidateLastFetch() {
         lastFetchAt = nil
     }

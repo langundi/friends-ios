@@ -48,12 +48,12 @@ struct PostView: View {
                 Spacer()
                 
                 HStack(alignment: .top, spacing: 16) {
-                    LikeButton(liked: post.likedByMe) {
-                        likeUnlikePost()
+                    CommentButton(replyCount: post.replyCount) {
+                        showComment.toggle()
                     }
                     
-                    CommentButton() {
-                        showComment.toggle()
+                    LikeButton(liked: post.likedByMe, likeCount: post.likeCount) {
+                        likeUnlikePost()
                     }
                 }
                 .layoutPriority(0)

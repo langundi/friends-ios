@@ -11,6 +11,7 @@ import Kingfisher
 import OSLog
 
 struct CommentButton: View {
+    var replyCount: Int
     var onAction: () -> Void
     
     var body: some View {
@@ -18,7 +19,13 @@ struct CommentButton: View {
             Button {
                 onAction()
             } label: {
-                Image(systemName: "bubble.right")
+                HStack {
+                    Image(systemName: "bubble.right")
+                    
+                    Text("\(replyCount)")
+                        .monospaced()
+                }
+                .padding(.horizontal, 8)
             }
             .buttonStyle(ToolbarButtonStyle())
         }

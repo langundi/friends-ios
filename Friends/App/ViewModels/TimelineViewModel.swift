@@ -166,6 +166,8 @@ final class TimelineViewModel {
             let request = ReplyRequest(reply: reply, username: userStore.username, receiverID: receiverID)
             let replyResult = try await replyStore.replyPost(id: id, request: request)
             replyStore.insert(replyResult)
+            timelineStore.increaseReplyCount(postID: id)
+            postStore.increaseReplyCount(postID: id)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error replying: \(networkError.message)")
@@ -188,6 +190,8 @@ final class TimelineViewModel {
         do {
             let request = DeleteReplyRequest(replyID: replyID)
             try await replyStore.deleteReply(id: id, request: request)
+            timelineStore.decreaseReplyCount(postID: id)
+            postStore.decreaseReplyCount(postID: id)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error deleting reply: \(networkError.message)")

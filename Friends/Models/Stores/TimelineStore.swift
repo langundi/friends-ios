@@ -36,6 +36,18 @@ final class TimelineStore {
         timeline.removeAll { $0.id == post.id }
     }
     
+    func increaseReplyCount(postID: Int) {
+        if let index = timeline.firstIndex(where: { $0.id == postID }) {
+            timeline[index].replyCount += 1
+        }
+    }
+    
+    func decreaseReplyCount(postID: Int) {
+        if let index = timeline.firstIndex(where: { $0.id == postID }) {
+            timeline[index].replyCount -= 1
+        }
+    }
+    
     func invalidateLastFetch() {
         lastFetchAt = nil
     }

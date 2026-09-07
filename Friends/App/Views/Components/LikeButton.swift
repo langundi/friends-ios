@@ -12,6 +12,7 @@ import OSLog
 
 struct LikeButton: View {
     var liked: Bool = false
+    var likeCount: Int
     var onAction: () -> Void
     
     var body: some View {
@@ -19,8 +20,14 @@ struct LikeButton: View {
             Button {
                 onAction()
             } label: {
-                Image(systemName: liked ? "heart.fill" : "heart")
-                    .foregroundStyle(liked ? .red : .primary)
+                HStack {
+                    Image(systemName: liked ? "heart.fill" : "heart")
+                        .foregroundStyle(liked ? .red : .primary)
+                    
+                    Text("\(likeCount)")
+                        .monospaced()
+                }
+                .padding(.horizontal, 8)
             }
             .buttonStyle(ToolbarButtonStyle())
         }

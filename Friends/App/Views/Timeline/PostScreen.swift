@@ -51,12 +51,12 @@ struct PostScreen: View {
                     Spacer()
                     
                     HStack(alignment: .top, spacing: 16) {
-                        LikeButton(liked: viewModel.post!.likedByMe) {
-                            likeUnlikePost()
+                        CommentButton(replyCount: viewModel.post!.replyCount) {
+                            showComment.toggle()
                         }
                         
-                        CommentButton() {
-                            showComment.toggle()
+                        LikeButton(liked: viewModel.post!.likedByMe, likeCount: viewModel.post!.likeCount) {
+                            likeUnlikePost()
                         }
                     }
                     .layoutPriority(0)
@@ -96,11 +96,13 @@ struct PostScreen: View {
                 Task {
                     await viewModel.unlikePost(id: viewModel.post!.id)
                     viewModel.post!.likedByMe = false
+                    viewModel.post!.likeCount -= 1
                 }
             } else {
                 Task {
                     await viewModel.likePost(id: viewModel.post!.id, receiverID: viewModel.post!.userID)
                     viewModel.post!.likedByMe = true
+                    viewModel.post!.likeCount += 1
                 }
             }
         }
