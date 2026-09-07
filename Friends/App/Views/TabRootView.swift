@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TabRootView: View {
-    @State private var timelineRouter = AppRouter()
+    @State private var timelineRouter = AppRouter.shared
     @State private var profileRouter = AppRouter()
     @State private var searchRouter = AppRouter()
     

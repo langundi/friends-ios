@@ -69,6 +69,13 @@ final class TimelineStore {
         try await getTimeline()
     }
     
+    /// Fetch a post
+    /// - Parameter postID: PostID.
+    /// - Returns: PostResponse
+    func getPost(postID: Int) async throws -> PostResponse {
+        try await postService.getPost(postID: postID)
+    }
+    
     /// Like a post.
     /// - Parameter id: PostID.
     func likePost(id: Int, request: LikePostRequest) async throws {

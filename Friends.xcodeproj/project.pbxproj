@@ -26,6 +26,7 @@
 		811645E5304E82E1001A7888 /* NotificationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811645E4304E82E1001A7888 /* NotificationStore.swift */; };
 		811645E7304E8732001A7888 /* FriendRequestStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811645E6304E8732001A7888 /* FriendRequestStore.swift */; };
 		811645ED304EFF12001A7888 /* ForgotPasswordScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811645EC304EFF12001A7888 /* ForgotPasswordScreen.swift */; };
+		811645EF304F0AE7001A7888 /* PostScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811645EE304F0AE7001A7888 /* PostScreen.swift */; };
 		811B9477302C13F500C3F545 /* NewPostScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811B9476302C13F500C3F545 /* NewPostScreen.swift */; };
 		811E6053302B293800542203 /* PostEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E6052302B293800542203 /* PostEndpoint.swift */; };
 		811E6055302B2D7900542203 /* PostRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811E6054302B2D7900542203 /* PostRequests.swift */; };
@@ -131,6 +132,7 @@
 		811645E4304E82E1001A7888 /* NotificationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStore.swift; sourceTree = "<group>"; };
 		811645E6304E8732001A7888 /* FriendRequestStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestStore.swift; sourceTree = "<group>"; };
 		811645EC304EFF12001A7888 /* ForgotPasswordScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordScreen.swift; sourceTree = "<group>"; };
+		811645EE304F0AE7001A7888 /* PostScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostScreen.swift; sourceTree = "<group>"; };
 		811B9476302C13F500C3F545 /* NewPostScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostScreen.swift; sourceTree = "<group>"; };
 		811E6052302B293800542203 /* PostEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostEndpoint.swift; sourceTree = "<group>"; };
 		811E6054302B2D7900542203 /* PostRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRequests.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				818F25243018BAED00678EF5 /* TimelineScreen.swift */,
 				8168746D3031AF03000D7DCA /* TimelineStackView.swift */,
 				816874673031A322000D7DCA /* PostView.swift */,
+				811645EE304F0AE7001A7888 /* PostScreen.swift */,
 				81458B73303D81210089469F /* RepliesSheetView.swift */,
 			);
 			path = Timeline;
@@ -747,6 +750,7 @@
 				818F24FA3018B0BC00678EF5 /* ContentView.swift in Sources */,
 				818F25153018B4B200678EF5 /* Keychain.swift in Sources */,
 				810EE02E301A5CE1005FED56 /* NotificationScreen.swift in Sources */,
+				811645EF304F0AE7001A7888 /* PostScreen.swift in Sources */,
 				818F25023018B23400678EF5 /* SignInScreen.swift in Sources */,
 				818F24FB3018B0BC00678EF5 /* FriendsApp.swift in Sources */,
 				818F251C3018B66A00678EF5 /* AuthResponses.swift in Sources */,

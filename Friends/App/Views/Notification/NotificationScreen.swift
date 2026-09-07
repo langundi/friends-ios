@@ -17,7 +17,7 @@ struct NotificationScreen: View {
     
     var body: some View {
         Group {
-            if viewModel.friendRequests.isEmpty {
+            if viewModel.notifications.isEmpty {
                 ScrollView {
                     ContentUnavailableView {
                         Image(systemName: "bell.fill")
@@ -30,16 +30,21 @@ struct NotificationScreen: View {
             } else {
                 List {
                     ForEach(viewModel.notifications) { notification in
-                        HStack(spacing: 16) {
-                            ProfilePictureView(imageURL: notification.profilePicture, size: .small)
-                            
-                            VStack(alignment: .leading) {
-                                Text(notification.message)
+                        Button {
+                            router.push(to: .post(postID: notification.postID))
+                        } label: {
+                            HStack(spacing: 16) {
+                                ProfilePictureView(imageURL: notification.profilePicture, size: .small)
                                 
-                                Text(formatDate(date: notification.createdAt))
-                                    .foregroundStyle(.secondary)
+                                VStack(alignment: .leading) {
+                                    Text(notification.message)
+                                    
+                                    Text(formatDate(date: notification.createdAt))
+                                        .foregroundStyle(.secondary)
+                                }
                             }
                         }
+                        .buttonStyle(.plain)
                         .listRowSeparator(.hidden)
                     }
                 }

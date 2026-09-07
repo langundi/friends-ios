@@ -13,6 +13,7 @@ enum ScreenEnum: Hashable {
     case forgotPassword
     case timeline
     case newPost
+    case post(postID: Int)
     case notification
     case friendRequest
     case profile
@@ -42,6 +43,8 @@ enum ScreenEnum: Hashable {
             TimelineScreen(factory: factory)
         case .newPost:
             NewPostScreen(factory: factory)
+        case .post(let postID):
+            PostScreen(factory: factory, postID: postID)
             
             // Notifications
         case .notification:
@@ -93,6 +96,8 @@ protocol Router {
 
 @Observable
 final class AppRouter: Router {
+    static let shared = AppRouter()
+    
     var path = NavigationPath()
     
     func push(to screen: ScreenEnum) {

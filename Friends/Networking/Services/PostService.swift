@@ -37,6 +37,10 @@ final class PostService {
         try await client.uploadImage(presignedUrl: uploadUrl, imageData: imageData)
     }
     
+    func getPost(postID: Int) async throws -> PostResponse {
+        try await client.request(endpoint: PostEndpoint.getPost(id: postID))
+    }
+    
     func getMyPosts() async throws -> [PostResponse]? {
         try await client.requestOptional(endpoint: UserEndpoint.getMyPosts)
     }

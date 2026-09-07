@@ -26,6 +26,9 @@ final class TimelineViewModel {
         userStore.username
     }
     
+    // Single post view for on notification tap
+    var post: PostResponse? = nil
+    
     private let timelineStore: TimelineStore
     private let postStore: PostStore
     private let replyStore: ReplyStore
@@ -67,11 +70,11 @@ final class TimelineViewModel {
             completion(nextID)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
-            Logger.network.error("Error fetching timeline: \(networkError.message)")
+            Logger.network.error("Error fetching more timeline: \(networkError.message)")
         } catch {
             if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
-            Logger.network.error("Error fetching timeline: \(error)")
+            Logger.network.error("Error fetching more timeline: \(error)")
         }
     }
     
@@ -81,6 +84,22 @@ final class TimelineViewModel {
         await getTimeline()
     }
     
+    /// Fetch a post.
+    /// - Parameters:
+    ///   - postID: PostID.
+    ///   - onError: Error completion.
+    func getPost(postID: Int, onError: @escaping (String) -> Void) async {
+        do {
+            post = try await timelineStore.getPost(postID: postID)
+        } catch let networkError as NetworkError {
+            onError(networkError.message)
+            Logger.network.error("Error fetching post: \(networkError.message)")
+        } catch {
+            if error.isCancellation { return }
+            onError(error.localizedDescription)
+            Logger.network.error("Error fetching post: \(error)")
+        }
+    }
     
     /// Like post.
     /// - Parameter id: Post ID.
@@ -92,11 +111,11 @@ final class TimelineViewModel {
             try await postStore.likePost(id: id)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
-            Logger.network.error("Error fetching timeline: \(networkError.message)")
+            Logger.network.error("Error liking post: \(networkError.message)")
         } catch {
             if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
-            Logger.network.error("Error fetching timeline: \(error)")
+            Logger.network.error("Error liking post: \(error)")
         }
     }
     
@@ -109,11 +128,11 @@ final class TimelineViewModel {
             try await postStore.unlikePost(id: id)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
-            Logger.network.error("Error fetching timeline: \(networkError.message)")
+            Logger.network.error("Error unlike post: \(networkError.message)")
         } catch {
             if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
-            Logger.network.error("Error fetching timeline: \(error)")
+            Logger.network.error("Error unlike post: \(error)")
         }
     }
     
@@ -177,6 +196,10 @@ final class TimelineViewModel {
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error deleting reply: \(error)")
         }
+    }
+    
+    func emptyPost() {
+        post = nil
     }
     
     func clearReplies() {
