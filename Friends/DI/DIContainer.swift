@@ -57,6 +57,10 @@ final class ViewModelFactory {
         ReplyStore(postService: postService)
     }()
     
+    lazy var notificationStore: NotificationStore = {
+        NotificationStore(notificationService: notificationService)
+    }()
+    
     // MARK: - ViewModels
     
     lazy var authViewModel: AuthViewModel = {
@@ -68,7 +72,7 @@ final class ViewModelFactory {
     }()
     
     lazy var notificationViewModel: NotificationViewModel = {
-        return NotificationViewModel(notificationService: notificationService, friendService: friendService)
+        return NotificationViewModel(notificationStore: notificationStore, friendService: friendService)
     }()
     
     lazy var profileViewModel: ProfileViewModel = {
@@ -101,14 +105,6 @@ final class ViewModelFactory {
     
     func makeNewPostViewModel() -> NewPostViewModel {
         return NewPostViewModel(postStore: postStore, timelineStore: timelineStore, userStore: userStore)
-    }
-    
-    func makeFriendRequestViewModel() -> FriendRequestViewModel {
-        return FriendRequestViewModel(friendService: friendService)
-    }
-    
-    func makeReplyViewModel() -> ReplyViewModel {
-        return ReplyViewModel()
     }
     
     // MARK: - Profile Tab ViewModels

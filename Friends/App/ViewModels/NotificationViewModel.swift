@@ -12,39 +12,44 @@ import OSLog
 final class NotificationViewModel {
     
     var isLoading: Bool = false
-    var notifications: [NotificationResponse] = []
+    
+    var notifications: [NotificationResponse] {
+        notificationStore.notifications
+    }
+    
     var friendRequests: [FriendRequestResponse] = []
     
-    private let notificationService: NotificationService
+    private let notificationStore: NotificationStore
     private let friendService: FriendService
     
-    init(notificationService: NotificationService, friendService: FriendService) {
-        self.notificationService = notificationService
+    init(notificationStore: NotificationStore, friendService: FriendService) {
+        self.notificationStore = notificationStore
         self.friendService = friendService
     }
     
     // MARK: - Notifications
     
-    /// Fetch all notifications
+    /// Fetch all notifications.
     func getAllNotification() async {
         isLoading = true
         defer { isLoading = false }
         
         do {
-            notifications = try await notificationService.getAllNotification() ?? []
+            try await notificationStore.loadNotificationsIfNeeded()
         } catch let networkError as NetworkError {
-            switch networkError {
-            case .noDataRecieved:
-                Logger.network.warning("Notifications: \(networkError.message)")
-            default:
-                AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
-                Logger.network.error("Error fetching notifications: \(networkError.message)")
-            }
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error fetching notifications: \(networkError.message)")
         } catch {
             if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error fetching notifications: \(error)")
         }
+    }
+    
+    /// Refresh notifications.
+    func refreshNotifications() async {
+        notificationStore.invalidateLastFetch()
+        await getAllNotification()
     }
     
     // MARK: - Friend Request
@@ -55,16 +60,10 @@ final class NotificationViewModel {
         defer { isLoading = false }
         
         do {
-            let response = try await friendService.getFriendRequests()
-            friendRequests = response
+            friendRequests = try await friendService.getFriendRequests() ?? []
         } catch let networkError as NetworkError {
-            switch networkError {
-            case .noDataRecieved:
-                Logger.network.warning("Friend requests: \(networkError.message)")
-            default:
-                AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
-                Logger.network.error("Error fetching friend requests: \(networkError.message)")
-            }
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error fetching friend requests: \(networkError.message)")
         } catch {
             if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)

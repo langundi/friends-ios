@@ -54,7 +54,7 @@ struct NotificationScreen: View {
             await viewModel.getAllNotification()
         }
         .refreshable {
-            await viewModel.getAllNotification()
+            await viewModel.refreshNotifications()
         }
     }
 }

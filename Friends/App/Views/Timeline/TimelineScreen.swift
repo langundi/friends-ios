@@ -13,11 +13,10 @@ struct TimelineScreen: View {
     @Environment(AppRouter.self) var router
     @Environment(\.scenePhase) var scenePhase
     @State private var viewModel: TimelineViewModel
-    private var factory: ViewModelFactory
-    
+    @State private var notificationViewModel: NotificationViewModel
     init(factory: ViewModelFactory) {
-        self.factory = factory
         _viewModel = State(initialValue: factory.makeTimelineViewModel())
+        _notificationViewModel = State(initialValue: factory.makeNotificationViewModel())
     }
     
     var body: some View {
@@ -31,6 +30,7 @@ struct TimelineScreen: View {
                         Label("Notifications", systemImage: "bell")
                             .labelStyle(.iconOnly)
                     }
+                    .badge(notificationViewModel.notifications.count(where: { $0.isRead == false }))
                     
                     Button {
                         router.push(to: .newPost)
@@ -46,6 +46,7 @@ struct TimelineScreen: View {
                 }
             }
             .task {
+                await notificationViewModel.getAllNotification()
                 await viewModel.getTimeline()
             }
             .environment(viewModel)
