@@ -61,6 +61,10 @@ final class ViewModelFactory {
         NotificationStore(notificationService: notificationService)
     }()
     
+    lazy var friendRequestStore: FriendRequestStore = {
+        FriendRequestStore(friendService: friendService)
+    }()
+    
     // MARK: - ViewModels
     
     lazy var authViewModel: AuthViewModel = {
@@ -72,7 +76,7 @@ final class ViewModelFactory {
     }()
     
     lazy var notificationViewModel: NotificationViewModel = {
-        return NotificationViewModel(notificationStore: notificationStore, friendService: friendService)
+        return NotificationViewModel(notificationStore: notificationStore, friendRequestStore: friendRequestStore)
     }()
     
     lazy var profileViewModel: ProfileViewModel = {

@@ -15,7 +15,7 @@ final class NotificationService {
         self.client = client
     }
     
-    func getAllNotification() async throws -> [NotificationResponse]? {
+    func getNotifications() async throws -> [NotificationResponse]? {
         try await client.requestOptional(endpoint: NotificationEndpoint.getAllNotifications)
     }
 }

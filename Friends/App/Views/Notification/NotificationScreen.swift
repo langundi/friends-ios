@@ -42,7 +42,7 @@ struct NotificationScreen: View {
                     Label("Friend Request", systemImage: "person.badge.plus")
                         .labelStyle(.iconOnly)
                 }
-                //                .badge(viewModel.friendRequest)
+                .badge(viewModel.friendRequests.count)
             }
         }
         .overlay(alignment: .center) {
@@ -51,7 +51,7 @@ struct NotificationScreen: View {
             }
         }
         .task {
-            await viewModel.getAllNotification()
+            await viewModel.loadNotificationsAndFriendRequests()
         }
         .refreshable {
             await viewModel.refreshNotifications()

@@ -23,15 +23,15 @@ final class NotificationStore {
         if let lastFetchAt, Date().timeIntervalSince(lastFetchAt) < staleDuration {
             return
         }
-        try await getAllNotification()
+        try await getNotifications()
     }
     
     func invalidateLastFetch() {
         lastFetchAt = nil
     }
     
-    func getAllNotification() async throws {
-        notifications = try await notificationService.getAllNotification() ?? []
+    func getNotifications() async throws {
+        notifications = try await notificationService.getNotifications() ?? []
         lastFetchAt = Date()
     }
 }

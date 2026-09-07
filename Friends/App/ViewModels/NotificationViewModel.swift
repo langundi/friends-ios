@@ -17,20 +17,29 @@ final class NotificationViewModel {
         notificationStore.notifications
     }
     
-    var friendRequests: [FriendRequestResponse] = []
+    var friendRequests: [FriendRequestResponse] {
+        friendRequestStore.friendRequests
+    }
     
     private let notificationStore: NotificationStore
-    private let friendService: FriendService
+    private let friendRequestStore: FriendRequestStore
     
-    init(notificationStore: NotificationStore, friendService: FriendService) {
+    init(notificationStore: NotificationStore, friendRequestStore: FriendRequestStore) {
         self.notificationStore = notificationStore
-        self.friendService = friendService
+        self.friendRequestStore = friendRequestStore
+    }
+    
+    /// Load notifications and friend requests.
+    func loadNotificationsAndFriendRequests() async {
+        async let notifications: () = getNotifications()
+        async let friendRequests: () = getFriendRequests()
+        _ = await (notifications, friendRequests)
     }
     
     // MARK: - Notifications
     
     /// Fetch all notifications.
-    func getAllNotification() async {
+    func getNotifications() async {
         isLoading = true
         defer { isLoading = false }
         
@@ -49,7 +58,7 @@ final class NotificationViewModel {
     /// Refresh notifications.
     func refreshNotifications() async {
         notificationStore.invalidateLastFetch()
-        await getAllNotification()
+        await getNotifications()
     }
     
     // MARK: - Friend Request
@@ -60,7 +69,7 @@ final class NotificationViewModel {
         defer { isLoading = false }
         
         do {
-            friendRequests = try await friendService.getFriendRequests() ?? []
+            try await friendRequestStore.loadFriendRequestsIfNeeded()
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error fetching friend requests: \(networkError.message)")
@@ -71,6 +80,11 @@ final class NotificationViewModel {
         }
     }
     
+    func refreshFriendRequests() async {
+        friendRequestStore.invalidateLastFetch()
+        await getFriendRequests()
+    }
+    
     /// Decline a friend request.
     /// - Parameter id: Friend Request ID.
     func declineFriendRequest(id: Int) async {
@@ -78,8 +92,7 @@ final class NotificationViewModel {
         defer { isLoading = false }
         
         do {
-            try await friendService.declineFriendRequest(id: id)
-            friendRequests.removeAll { $0.id == id }
+            try await friendRequestStore.declineFriendRequest(id: id)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error declining friend request: \(networkError.message)")
@@ -97,8 +110,7 @@ final class NotificationViewModel {
         defer { isLoading = false }
         
         do {
-            try await friendService.acceptFriendRequest(id: id)
-            friendRequests.removeAll { $0.id == id }
+            try await friendRequestStore.acceptFriendRequest(id: id)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error declining friend request: \(networkError.message)")
@@ -108,5 +120,4 @@ final class NotificationViewModel {
             Logger.network.error("Error declining friend request: \(error)")
         }
     }
-    
 }

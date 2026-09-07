@@ -17,12 +17,14 @@ struct FriendRequestScreen: View {
     var body: some View {
         Group {
             if viewModel.friendRequests.isEmpty {
-                ContentUnavailableView {
-                    Image(systemName: "person.2.fill")
-                        .font(.largeTitle)
-                        .foregroundStyle(.gray)
-                } description: {
-                    Text("No friend requests.")
+                ScrollView {
+                    ContentUnavailableView {
+                        Image(systemName: "person.2.fill")
+                            .font(.largeTitle)
+                            .foregroundStyle(.gray)
+                    } description: {
+                        Text("No friend requests.")
+                    }
                 }
             } else {
                 ScrollView(.vertical) {
@@ -44,6 +46,9 @@ struct FriendRequestScreen: View {
         }
         .task {
             await viewModel.getFriendRequests()
+        }
+        .refreshable {
+            await viewModel.refreshFriendRequests()
         }
     }
 }

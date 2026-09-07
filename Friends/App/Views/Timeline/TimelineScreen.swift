@@ -46,7 +46,7 @@ struct TimelineScreen: View {
                 }
             }
             .task {
-                await notificationViewModel.getAllNotification()
+                await notificationViewModel.getNotifications() // load notification badge
                 await viewModel.getTimeline()
             }
             .environment(viewModel)
