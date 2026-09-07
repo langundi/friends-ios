@@ -52,6 +52,7 @@ struct NotificationScreen: View {
         }
         .task {
             await viewModel.loadNotificationsAndFriendRequests()
+            await viewModel.readNotifications()
         }
         .refreshable {
             await viewModel.refreshNotifications()

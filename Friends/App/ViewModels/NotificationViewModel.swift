@@ -61,6 +61,19 @@ final class NotificationViewModel {
         await getNotifications()
     }
     
+    func readNotifications() async {
+        do {
+            try await notificationStore.readNotifications()
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error fetching notifications: \(networkError.message)")
+        } catch {
+            if error.isCancellation { return }
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error fetching notifications: \(error)")
+        }
+    }
+    
     // MARK: - Friend Request
     
     /// Fetch user's friend requests.

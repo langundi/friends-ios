@@ -18,4 +18,8 @@ final class NotificationService {
     func getNotifications() async throws -> [NotificationResponse]? {
         try await client.requestOptional(endpoint: NotificationEndpoint.getAllNotifications)
     }
+    
+    func readNotifications() async throws {
+        try await client.requestVoid(endpoint: NotificationEndpoint.readNotifications)
+    }
 }

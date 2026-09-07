@@ -19,6 +19,7 @@ final class NotificationStore {
         self.notificationService = notificationService
     }
     
+    /// Load notifications with stale duration.
     func loadNotificationsIfNeeded() async throws {
         if let lastFetchAt, Date().timeIntervalSince(lastFetchAt) < staleDuration {
             return
@@ -30,8 +31,21 @@ final class NotificationStore {
         lastFetchAt = nil
     }
     
+    /// Fetch all notification.
     func getNotifications() async throws {
         notifications = try await notificationService.getNotifications() ?? []
         lastFetchAt = Date()
+    }
+    
+    /// Read unread notifications.
+    func readNotifications() async throws {
+        guard notifications.contains(where: { $0.isRead == false }) else {
+            return
+        }
+        
+        try await notificationService.readNotifications()
+        for index in notifications.indices {
+            notifications[index].isRead = true
+        }
     }
 }
