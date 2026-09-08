@@ -48,7 +48,7 @@ final class FriendService {
         try await client.requestOptional(endpoint: UserEndpoint.getMyFriendList)
     }
     
-    func getFriendList(userID: Int) async throws -> [FriendResponse]? {
+    func getFriendList(userID: Int) async throws -> [FriendsFriendResponse]? {
         try await client.requestOptional(endpoint: UserEndpoint.getFriendList(id: userID))
     }
     

@@ -13,7 +13,7 @@ final class FriendProfileViewModel {
     
     var isLoading: Bool = false
     var profilePicture: String?
-    var friends: [FriendResponse] = []
+    var friends: [FriendsFriendResponse] = []
     
     var posts: [PostResponse] {
         postStore.friendPosts
@@ -73,6 +73,7 @@ final class FriendProfileViewModel {
     func getFriendList(id: Int) async {
         do {
             friends = try await friendService.getFriendList(userID: id) ?? []
+            print(friends)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error fetching friend list: \(networkError.message)")

@@ -64,3 +64,19 @@ struct FriendResponse: Identifiable, Decodable {
         case profilePicture = "profile_picture"
     }
 }
+
+struct FriendsFriendResponse: Identifiable, Decodable {
+    let id: Int
+    let userID: Int
+    let username: String
+    let profilePicture: String?
+    var friendsWithMe: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case userID = "user_id"
+        case username
+        case profilePicture = "profile_picture"
+        case friendsWithMe = "friends_with_me"
+    }
+}
