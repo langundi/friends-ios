@@ -8,14 +8,11 @@
 import Foundation
 
 enum FriendEndpoint: Endpoint {
-    case getFriendList
     case getFriendshipStatus(id: Int)
     case unfriend(id: Int)
     
     var method: HTTPMethod {
         switch self {
-        case .getFriendList:
-            return .get
         case .getFriendshipStatus:
             return .get
         case .unfriend:
@@ -25,8 +22,6 @@ enum FriendEndpoint: Endpoint {
     
     var path: String {
         switch self {
-        case .getFriendList:
-            return "/friend"
         case .getFriendshipStatus(let id):
             return "/friend/\(id)/status"
         case .unfriend(let id):

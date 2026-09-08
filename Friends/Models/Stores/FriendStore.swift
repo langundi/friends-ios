@@ -29,17 +29,17 @@ final class FriendStore {
     }
     
     /// Fetch friends when last fetch time has passed stale duration.
-    func loadFriendList() async throws {
+    func loadMyFriendList() async throws {
         if let lastFetchAt, Date().timeIntervalSince(lastFetchAt) < staleDuration {
             return
         }
         
-        try await getFriendList()
+        try await getMyFriendList()
     }
     
     /// Fetch user's friends.
-    func getFriendList() async throws {
-        friends = try await friendService.getFriendList() ?? []
+    func getMyFriendList() async throws {
+        friends = try await friendService.getMyFriendList() ?? []
         lastFetchAt = Date()
     }
     

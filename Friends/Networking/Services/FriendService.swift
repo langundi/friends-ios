@@ -34,10 +34,6 @@ final class FriendService {
     
     // MARK: - Friends Endpoints
     
-    func getFriendList() async throws -> [FriendResponse]? {
-        try await client.requestOptional(endpoint: FriendEndpoint.getFriendList)
-    }
-    
     func getFriendshipStatus(searchedUserID: Int) async throws -> FriendshipStatusResponse {
         try await client.request(endpoint: FriendEndpoint.getFriendshipStatus(id: searchedUserID))
     }
@@ -45,4 +41,15 @@ final class FriendService {
     func unfriend(userID: Int) async throws {
         try await client.requestVoid(endpoint: FriendEndpoint.unfriend(id: userID))
     }
+    
+    // MARK: - User Endpoints
+    
+    func getMyFriendList() async throws -> [FriendResponse]? {
+        try await client.requestOptional(endpoint: UserEndpoint.getMyFriendList)
+    }
+    
+    func getFriendList(userID: Int) async throws -> [FriendResponse]? {
+        try await client.requestOptional(endpoint: UserEndpoint.getFriendList(id: userID))
+    }
+    
 }

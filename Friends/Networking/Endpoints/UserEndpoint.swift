@@ -10,9 +10,11 @@ import Foundation
 enum UserEndpoint: Endpoint {
     case profileImageURL(request: UploadImageRequest)
     case getMyProfile
-    case getFriendProfile(id: Int)
     case getMyPosts
+    case getMyFriendList
+    case getFriendProfile(id: Int)
     case getFriendPosts(id: Int)
+    case getFriendList(id: Int)
     case searchUsername(username: String)
     case setProfilePicture(request: SetProfilePictureRequest)
     case changeUsername(request: ChangeUsernameRequest)
@@ -28,11 +30,15 @@ enum UserEndpoint: Endpoint {
             return .post
         case .getMyProfile:
             return .get
-        case .getFriendProfile:
-            return .get
         case .getMyPosts:
             return .get
+        case .getMyFriendList:
+            return .get
+        case .getFriendProfile:
+            return .get
         case .getFriendPosts:
+            return .get
+        case .getFriendList:
             return .get
         case .searchUsername:
             return .get
@@ -59,12 +65,16 @@ enum UserEndpoint: Endpoint {
             return "/user/upload-image"
         case .getMyProfile:
             return "/user"
-        case .getFriendProfile(let id):
-            return "/user/\(id)"
         case .getMyPosts:
             return "/user/me/posts"
+        case .getMyFriendList:
+            return "/user/me/friends"
+        case .getFriendProfile(let id):
+            return "/user/\(id)"
         case .getFriendPosts(let id):
             return "/user/\(id)/posts"
+        case .getFriendList(let id):
+            return "/user/\(id)/friends"
         case .searchUsername(let username):
             return "/user/search/\(username)"
         case .setProfilePicture:

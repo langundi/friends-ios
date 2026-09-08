@@ -13,17 +13,21 @@ final class FriendProfileViewModel {
     
     var isLoading: Bool = false
     var profilePicture: String?
+    var friends: [FriendResponse] = []
     
     var posts: [PostResponse] {
         postStore.friendPosts
     }
     
+    
     private let userService: UserService
     private let postStore: PostStore
+    private let friendService: FriendService
     
-    init(userService: UserService, postStore: PostStore) {
+    init(userService: UserService, postStore: PostStore, friendService: FriendService) {
         self.userService = userService
         self.postStore = postStore
+        self.friendService = friendService
     }
     
     func loadProfileAndPosts(id: Int) async {
@@ -32,7 +36,8 @@ final class FriendProfileViewModel {
         
         async let profile: () = getFriendProfile(id: id)
         async let posts: () = getFriendPosts(id: id)
-        _ = await (profile, posts)
+        async let friends: () = getFriendList(id: id)
+        _ = await (profile, posts, friends)
     }
     
     func getFriendProfile(id: Int) async {
@@ -62,6 +67,19 @@ final class FriendProfileViewModel {
             if error.isCancellation { return }
             AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
             Logger.network.error("Error fetching posts: \(error)")
+        }
+    }
+    
+    func getFriendList(id: Int) async {
+        do {
+            friends = try await friendService.getFriendList(userID: id) ?? []
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error fetching friend list: \(networkError.message)")
+        } catch {
+            if error.isCancellation { return }
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error fetching friend list: \(error)")
         }
     }
 }
