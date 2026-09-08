@@ -70,7 +70,8 @@ struct NotificationScreen: View {
             }
         }
         .task {
-            await viewModel.loadNotificationsAndFriendRequests()
+            await viewModel.getFriendRequests()
+            await viewModel.getNotifications()
             await viewModel.readNotifications()
         }
         .refreshable {

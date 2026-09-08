@@ -30,7 +30,9 @@ struct TimelineScreen: View {
                         Label("Notifications", systemImage: "bell")
                             .labelStyle(.iconOnly)
                     }
-                    .badge(notificationViewModel.notifications.count(where: { $0.isRead == false }))
+                    .badge(
+                        notificationViewModel.notifications.count(where: { $0.isRead == false }) + notificationViewModel.friendRequests.count
+                    )
                     
                     Button {
                         router.push(to: .newPost)
@@ -47,6 +49,7 @@ struct TimelineScreen: View {
             }
             .task {
                 await notificationViewModel.getNotifications() // load notification badge
+                await notificationViewModel.getFriendRequests()
                 await viewModel.getTimeline()
             }
             .environment(viewModel)

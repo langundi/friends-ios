@@ -44,8 +44,10 @@ final class DeleteAccountViewModel {
         do {
             try await userStore.deleteAccount()
             
-            let request = DeleteAllImageRequest(objectKeys: objectKeys)
-            try await postStore.deleteAllImage(request: request)
+            if !objectKeys.isEmpty {
+                let request = DeleteAllImageRequest(objectKeys: objectKeys)
+                try await postStore.deleteAllImage(request: request)
+            }
             
             deleteTokensFromKeychain()
             isLoggedIn = false

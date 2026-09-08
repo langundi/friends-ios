@@ -10,6 +10,7 @@ import SwiftUI
 struct FriendRequestView: View {
     var id: Int
     var username: String
+    let senderID: Int
     let imageURL: String?
     var viewModel: NotificationViewModel
     
@@ -29,7 +30,7 @@ struct FriendRequestView: View {
             
             Button("Accept") {
                 Task {
-                    await viewModel.acceptFriendRequest(id: id)
+                    await viewModel.acceptFriendRequest(id: id, senderID: senderID)
                 }
             }
             .foregroundStyle(.blue)

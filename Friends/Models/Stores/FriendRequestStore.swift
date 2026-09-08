@@ -46,8 +46,8 @@ final class FriendRequestStore {
     
     /// Accept friend request.
     /// - Parameter id: Friend Request ID
-    func acceptFriendRequest(id: Int) async throws {
-        try await friendService.acceptFriendRequest(id: id)
+    func acceptFriendRequest(id: Int, request: AcceptFriendRequestNotification) async throws {
+        try await friendService.acceptFriendRequest(id: id, request: request)
         friendRequests.removeAll { $0.id == id }
     }
 }

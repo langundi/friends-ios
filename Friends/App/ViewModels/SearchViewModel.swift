@@ -80,7 +80,8 @@ final class SearchViewModel {
         defer { isLoading = false }
         
         do {
-            let result = try await friendService.sendFriendRequest(receiverID: receiverID)
+            let request = SendFriendRequestNotification(senderUsername: userStore.username, receiverID: receiverID)
+            let result = try await friendService.sendFriendRequest(request: request)
             completion()
             Logger.network.info("Friend request sent to: userID \(result.receiverID) by userID \(result.senderID)")
         } catch let networkError as NetworkError {

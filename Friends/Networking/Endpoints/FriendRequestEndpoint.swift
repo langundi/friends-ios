@@ -8,9 +8,9 @@
 import Foundation
 
 enum FriendRequestEndpoint: Endpoint {
-    case sendFriendRequest(id: Int)
+    case sendFriendRequest(request: SendFriendRequestNotification)
     case getFriendRequests
-    case acceptFriendRequest(id: Int)
+    case acceptFriendRequest(id: Int, request: AcceptFriendRequestNotification)
     case declineFriendRequest(id: Int)
     
     var method: HTTPMethod {
@@ -28,11 +28,11 @@ enum FriendRequestEndpoint: Endpoint {
     
     var path: String {
         switch self {
-        case .sendFriendRequest(let id):
-            return "/friend-request/\(id)"
+        case .sendFriendRequest:
+            return "/friend-request"
         case .getFriendRequests:
             return "/friend-request"
-        case .acceptFriendRequest(let id):
+        case .acceptFriendRequest(let id, _):
             return "/friend-request/\(id)"
         case .declineFriendRequest(let id):
             return "/friend-request/\(id)"
@@ -48,6 +48,10 @@ enum FriendRequestEndpoint: Endpoint {
     
     var body: (any Encodable)? {
         switch self {
+        case .sendFriendRequest(let notification):
+            return notification
+        case .acceptFriendRequest(_, let notification):
+            return notification
         default:
             return nil
         }

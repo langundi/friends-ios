@@ -30,7 +30,7 @@ struct FriendRequestScreen: View {
                 ScrollView(.vertical) {
                     LazyVStack(alignment: .center, spacing: 0) {
                         ForEach(viewModel.friendRequests) { request in
-                            FriendRequestView(id: request.id, username: request.senderUsername, imageURL: request.profilePicture, viewModel: viewModel)
+                            FriendRequestView(id: request.id, username: request.senderUsername, senderID: request.senderID, imageURL: request.profilePicture, viewModel: viewModel)
                         }
                     }
                 }

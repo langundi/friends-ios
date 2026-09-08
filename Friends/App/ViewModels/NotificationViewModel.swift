@@ -23,10 +23,12 @@ final class NotificationViewModel {
     
     private let notificationStore: NotificationStore
     private let friendRequestStore: FriendRequestStore
+    private let userStore: UserStore
     
-    init(notificationStore: NotificationStore, friendRequestStore: FriendRequestStore) {
+    init(notificationStore: NotificationStore, friendRequestStore: FriendRequestStore, userStore: UserStore) {
         self.notificationStore = notificationStore
         self.friendRequestStore = friendRequestStore
+        self.userStore = userStore
     }
     
     /// Load notifications and friend requests.
@@ -118,12 +120,13 @@ final class NotificationViewModel {
     
     /// Accept a friend request.
     /// - Parameter id: Friend Request ID.
-    func acceptFriendRequest(id: Int) async {
+    func acceptFriendRequest(id: Int, senderID: Int) async {
         isLoading = true
         defer { isLoading = false }
         
         do {
-            try await friendRequestStore.acceptFriendRequest(id: id)
+            let request = AcceptFriendRequestNotification(senderUsername: userStore.username, senderID: senderID)
+            try await friendRequestStore.acceptFriendRequest(id: id, request: request)
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error declining friend request: \(networkError.message)")

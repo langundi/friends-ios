@@ -39,6 +39,7 @@
 		812841CF30495EE10019D877 /* FriendProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812841CE30495EE10019D877 /* FriendProfileScreen.swift */; };
 		812841D130495F7A0019D877 /* FriendProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812841D030495F7A0019D877 /* FriendProfileViewModel.swift */; };
 		812841D5304990AF0019D877 /* FriendProfilePostsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812841D4304990AF0019D877 /* FriendProfilePostsScreen.swift */; };
+		81358311304FCA2300974051 /* FriendRequestRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81358310304FCA2300974051 /* FriendRequestRequests.swift */; };
 		8137EDCB303FF11900F3F9E7 /* ReplyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8137EDCA303FF11900F3F9E7 /* ReplyStore.swift */; };
 		8137EDCD30400B7A00F3F9E7 /* UserRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8137EDCC30400B7A00F3F9E7 /* UserRequests.swift */; };
 		8137EDD130403A0100F3F9E7 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8137EDD030403A0100F3F9E7 /* Validator.swift */; };
@@ -145,6 +146,7 @@
 		812841CE30495EE10019D877 /* FriendProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileScreen.swift; sourceTree = "<group>"; };
 		812841D030495F7A0019D877 /* FriendProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileViewModel.swift; sourceTree = "<group>"; };
 		812841D4304990AF0019D877 /* FriendProfilePostsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfilePostsScreen.swift; sourceTree = "<group>"; };
+		81358310304FCA2300974051 /* FriendRequestRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestRequests.swift; sourceTree = "<group>"; };
 		8137EDCA303FF11900F3F9E7 /* ReplyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyStore.swift; sourceTree = "<group>"; };
 		8137EDCC30400B7A00F3F9E7 /* UserRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequests.swift; sourceTree = "<group>"; };
 		8137EDD030403A0100F3F9E7 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
@@ -503,6 +505,7 @@
 				81458B77303DDDD30089469F /* ReplyRequests.swift */,
 				8137EDCC30400B7A00F3F9E7 /* UserRequests.swift */,
 				81083764304AE90B00E5EC71 /* DeviceRequests.swift */,
+				81358310304FCA2300974051 /* FriendRequestRequests.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -698,6 +701,7 @@
 				81100E13304D564300B96E37 /* NotificationEndpoint.swift in Sources */,
 				81458B74303D81210089469F /* RepliesSheetView.swift in Sources */,
 				81EC286230454CA6009EA9C9 /* ProfilePictureSize.swift in Sources */,
+				81358311304FCA2300974051 /* FriendRequestRequests.swift in Sources */,
 				810EE0233019EC0D005FED56 /* Constants.swift in Sources */,
 				81C0AC57303EDACD00A37E2D /* EditUsernameSheet.swift in Sources */,
 				811E6063302B7E2B00542203 /* ImagePicker.swift in Sources */,
