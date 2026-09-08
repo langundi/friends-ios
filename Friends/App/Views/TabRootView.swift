@@ -47,7 +47,7 @@ struct TabRootView: View {
             
             Tab(role: .search) {
                 NavigationStack(path: $searchRouter.path) {
-                    ScreenEnum.search.build(factory: factory)
+                    ScreenEnum.search(username: nil).build(factory: factory)
                         .navigationDestination(for: ScreenEnum.self) { screen in
                             screen.build(factory: factory)
                         }

@@ -146,4 +146,8 @@ final class UserStore {
         profilePicture = nil
         objectKey = nil
     }
+    
+    func getFriendProfile(userID: Int) async throws -> UserResponse {
+        try await userService.getFriendProfile(userID: userID)
+    }
 }

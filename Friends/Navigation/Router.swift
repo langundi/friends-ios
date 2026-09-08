@@ -21,11 +21,12 @@ enum ScreenEnum: Hashable {
     case friendProfile(userID: Int, username: String)
     case friendProfilePosts(selectedID: Int, namespace: Namespace.ID)
     case friendList
+    case friendList2(userID: Int)
     case settings
     case editProfile
     case changePassword
     case deleteAccount
-    case search
+    case search(username: String?)
     
     @ViewBuilder
     func build(factory: ViewModelFactory) -> some View {
@@ -69,6 +70,8 @@ enum ScreenEnum: Hashable {
             // Friend List
         case .friendList:
             FriendListScreen(factory: factory)
+        case .friendList2(let userID):
+            FriendListScreen2(factory: factory, userID: userID)
             
             // Settings
         case .settings:
@@ -81,8 +84,8 @@ enum ScreenEnum: Hashable {
             DeleteAccountScreen(factory: factory)
             
             // Search
-        case .search:
-            SearchFriendScreen(factory: factory)
+        case .search(let username):
+            SearchFriendScreen(factory: factory, username: username)
         }
     }
 }

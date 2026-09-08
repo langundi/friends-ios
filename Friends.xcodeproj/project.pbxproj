@@ -40,6 +40,7 @@
 		812841D130495F7A0019D877 /* FriendProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812841D030495F7A0019D877 /* FriendProfileViewModel.swift */; };
 		812841D5304990AF0019D877 /* FriendProfilePostsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812841D4304990AF0019D877 /* FriendProfilePostsScreen.swift */; };
 		81358311304FCA2300974051 /* FriendRequestRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81358310304FCA2300974051 /* FriendRequestRequests.swift */; };
+		813583143050017500974051 /* FriendListScreen2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813583133050017500974051 /* FriendListScreen2.swift */; };
 		8137EDCB303FF11900F3F9E7 /* ReplyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8137EDCA303FF11900F3F9E7 /* ReplyStore.swift */; };
 		8137EDCD30400B7A00F3F9E7 /* UserRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8137EDCC30400B7A00F3F9E7 /* UserRequests.swift */; };
 		8137EDD130403A0100F3F9E7 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8137EDD030403A0100F3F9E7 /* Validator.swift */; };
@@ -147,6 +148,7 @@
 		812841D030495F7A0019D877 /* FriendProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileViewModel.swift; sourceTree = "<group>"; };
 		812841D4304990AF0019D877 /* FriendProfilePostsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfilePostsScreen.swift; sourceTree = "<group>"; };
 		81358310304FCA2300974051 /* FriendRequestRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequestRequests.swift; sourceTree = "<group>"; };
+		813583133050017500974051 /* FriendListScreen2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListScreen2.swift; sourceTree = "<group>"; };
 		8137EDCA303FF11900F3F9E7 /* ReplyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyStore.swift; sourceTree = "<group>"; };
 		8137EDCC30400B7A00F3F9E7 /* UserRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequests.swift; sourceTree = "<group>"; };
 		8137EDD030403A0100F3F9E7 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 		812841D33049909A0019D877 /* FriendList */ = {
 			isa = PBXGroup;
 			children = (
+				813583123050016800974051 /* Friend */,
 				815DCAAE301DADAC00AD470A /* FriendListScreen.swift */,
 				819DFB7E303576C7007E94DE /* FriendRowView.swift */,
 			);
@@ -325,6 +328,14 @@
 				81EC28633045AC8B009EA9C9 /* SetProfilePictureSheet.swift */,
 			);
 			path = Sheets;
+			sourceTree = "<group>";
+		};
+		813583123050016800974051 /* Friend */ = {
+			isa = PBXGroup;
+			children = (
+				813583133050017500974051 /* FriendListScreen2.swift */,
+			);
+			path = Friend;
 			sourceTree = "<group>";
 		};
 		815DCAA9301DA41600AD470A /* Profile */ = {
@@ -758,6 +769,7 @@
 				818F25023018B23400678EF5 /* SignInScreen.swift in Sources */,
 				818F24FB3018B0BC00678EF5 /* FriendsApp.swift in Sources */,
 				818F251C3018B66A00678EF5 /* AuthResponses.swift in Sources */,
+				813583143050017500974051 /* FriendListScreen2.swift in Sources */,
 				81687402302F1BE4000D7DCA /* Logger+Extensions.swift in Sources */,
 				811E605D302B375C00542203 /* UserResponses.swift in Sources */,
 				81C0AC59303EDD3A00A37E2D /* EditEmailSheet.swift in Sources */,

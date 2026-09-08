@@ -41,7 +41,7 @@ struct FriendProfileScreen: View {
                             .font(.title3)
                         
                         Button {
-//                            router.push(to: .friendList)
+                            router.push(to: .friendList2(userID: userID))
                         } label: {
                             Text("\(viewModel.friends.count) Friends")
                                 .font(.title3)

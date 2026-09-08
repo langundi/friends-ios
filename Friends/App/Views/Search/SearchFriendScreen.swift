@@ -13,8 +13,12 @@ struct SearchFriendScreen: View {
     @State private var searchText: String = ""
     @FocusState private var isTextFieldActive: Bool
     
-    init(factory: ViewModelFactory) {
+    init(factory: ViewModelFactory, username: String? = nil) {
         _viewModel = State(initialValue: factory.makeSearchViewModel())
+        
+        if let username {
+            _searchText = State(initialValue: username)
+        }
     }
     
     var body: some View {

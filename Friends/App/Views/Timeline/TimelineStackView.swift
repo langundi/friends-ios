@@ -45,7 +45,7 @@ struct TimelineStackView: View {
                             .fontWeight(.bold)
                     } actions: {
                         Button {
-                            router.push(to: .search)
+                            router.push(to: .search(username: nil))
                         } label: {
                             Label("Find Friends", systemImage: "magnifyingglass")
                         }

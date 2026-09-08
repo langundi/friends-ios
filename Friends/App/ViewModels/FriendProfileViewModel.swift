@@ -19,13 +19,16 @@ final class FriendProfileViewModel {
         postStore.friendPosts
     }
     
+    var myUsername: String {
+        userStore.username
+    }
     
-    private let userService: UserService
+    private let userStore: UserStore
     private let postStore: PostStore
     private let friendService: FriendService
     
-    init(userService: UserService, postStore: PostStore, friendService: FriendService) {
-        self.userService = userService
+    init(userStore: UserStore, postStore: PostStore, friendService: FriendService) {
+        self.userStore = userStore
         self.postStore = postStore
         self.friendService = friendService
     }
@@ -42,7 +45,7 @@ final class FriendProfileViewModel {
     
     func getFriendProfile(id: Int) async {
         do {
-            let result = try await userService.getFriendProfile(userID: id)
+            let result = try await userStore.getFriendProfile(userID: id)
             
             if let profilePicture = result.profilePicture {
                 self.profilePicture = profilePicture
@@ -73,7 +76,10 @@ final class FriendProfileViewModel {
     func getFriendList(id: Int) async {
         do {
             friends = try await friendService.getFriendList(userID: id) ?? []
-            print(friends)
+            
+            if let index = friends.firstIndex(where: { $0.username == userStore.username }) {
+                friends[index].friendsWithMe = true
+            }
         } catch let networkError as NetworkError {
             AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
             Logger.network.error("Error fetching friend list: \(networkError.message)")
