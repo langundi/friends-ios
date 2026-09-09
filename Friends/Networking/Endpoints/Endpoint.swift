@@ -27,7 +27,7 @@ protocol Endpoint {
 }
 
 extension Endpoint {
-    var baseURL: String { "https://twitch-groom-easeful.ngrok-free.dev" }
+    var baseURL: String { Config.apiBaseURL }
     
     var queryItems: [URLQueryItem]? { return nil }
     var headers: [String: String]? { return nil }

@@ -75,6 +75,7 @@ struct NotificationScreen: View {
             await viewModel.readNotifications()
         }
         .refreshable {
+            await viewModel.refreshFriendRequests()
             await viewModel.refreshNotifications()
         }
     }

@@ -103,6 +103,10 @@
 		81DA67AD303333010079EE35 /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67AC303333010079EE35 /* FriendService.swift */; };
 		81DA67AF3033337C0079EE35 /* FriendResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67AE3033337C0079EE35 /* FriendResponses.swift */; };
 		81DA67B130333C340079EE35 /* FriendRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DA67B030333C340079EE35 /* FriendRequests.swift */; };
+		81DF1D383050DA2E00A277C5 /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 81DF1D373050DA2E00A277C5 /* Debug.xcconfig */; };
+		81DF1D3A3050DA8200A277C5 /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 81DF1D393050DA8200A277C5 /* Release.xcconfig */; };
+		81DF1D3C3050DAFF00A277C5 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81DF1D3B3050DAFF00A277C5 /* Config.swift */; };
+		81DF1D3F3050E8E700A277C5 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 81DF1D3E3050E8E700A277C5 /* AppIcon.icon */; };
 		81EC286030454C6B009EA9C9 /* ProfilePictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EC285F30454C6B009EA9C9 /* ProfilePictureView.swift */; };
 		81EC286230454CA6009EA9C9 /* ProfilePictureSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EC286130454CA6009EA9C9 /* ProfilePictureSize.swift */; };
 		81EC28643045AC8B009EA9C9 /* SetProfilePictureSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EC28633045AC8B009EA9C9 /* SetProfilePictureSheet.swift */; };
@@ -213,6 +217,10 @@
 		81DA67AC303333010079EE35 /* FriendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendService.swift; sourceTree = "<group>"; };
 		81DA67AE3033337C0079EE35 /* FriendResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendResponses.swift; sourceTree = "<group>"; };
 		81DA67B030333C340079EE35 /* FriendRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendRequests.swift; sourceTree = "<group>"; };
+		81DF1D373050DA2E00A277C5 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		81DF1D393050DA8200A277C5 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		81DF1D3B3050DAFF00A277C5 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		81DF1D3E3050E8E700A277C5 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		81EC285F30454C6B009EA9C9 /* ProfilePictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureView.swift; sourceTree = "<group>"; };
 		81EC286130454CA6009EA9C9 /* ProfilePictureSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureSize.swift; sourceTree = "<group>"; };
 		81EC28633045AC8B009EA9C9 /* SetProfilePictureSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetProfilePictureSheet.swift; sourceTree = "<group>"; };
@@ -424,6 +432,7 @@
 				81A3EB22304BD284002D8F38 /* Friends.entitlements */,
 				818F252B3018BBA900678EF5 /* Info.plist */,
 				818F24F43018B0BC00678EF5 /* Assets.xcassets */,
+				81DF1D3E3050E8E700A277C5 /* AppIcon.icon */,
 				818F24FF3018B14500678EF5 /* App */,
 				811E605E302B751C00542203 /* Core */,
 				81618149301F13DA00A2DDA0 /* DI */,
@@ -431,6 +440,8 @@
 				818F25163018B4D700678EF5 /* Models */,
 				818F24F23018B0BC00678EF5 /* Navigation */,
 				818F24F33018B0BC00678EF5 /* Networking */,
+				81DF1D373050DA2E00A277C5 /* Debug.xcconfig */,
+				81DF1D393050DA8200A277C5 /* Release.xcconfig */,
 			);
 			path = Friends;
 			sourceTree = "<group>";
@@ -492,6 +503,7 @@
 				8137EDD030403A0100F3F9E7 /* Validator.swift */,
 				81EC28673045BEB8009EA9C9 /* Utils.swift */,
 				818F25323018EF5A00678EF5 /* Extensions */,
+				81DF1D3B3050DAFF00A277C5 /* Config.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -662,7 +674,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81DF1D3F3050E8E700A277C5 /* AppIcon.icon in Resources */,
+				81DF1D383050DA2E00A277C5 /* Debug.xcconfig in Resources */,
 				818F24F83018B0BC00678EF5 /* Assets.xcassets in Resources */,
+				81DF1D3A3050DA8200A277C5 /* Release.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,6 +733,7 @@
 				811E6063302B7E2B00542203 /* ImagePicker.swift in Sources */,
 				818F252D3018BBD700678EF5 /* JSONResponse.swift in Sources */,
 				8168745E302F7A53000D7DCA /* NewPostViewModel.swift in Sources */,
+				81DF1D3C3050DAFF00A277C5 /* Config.swift in Sources */,
 				811645E5304E82E1001A7888 /* NotificationStore.swift in Sources */,
 				814772B63041780D0070F130 /* ChangePasswordScreen.swift in Sources */,
 				81687407302F27AE000D7DCA /* SearchFriendScreen.swift in Sources */,
@@ -784,6 +800,7 @@
 /* Begin XCBuildConfiguration section */
 		818F24D03018AFB600678EF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81DF1D373050DA2E00A277C5 /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -848,6 +865,7 @@
 		};
 		818F24D13018AFB600678EF5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81DF1D393050DA8200A277C5 /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -905,9 +923,11 @@
 		};
 		818F24D33018AFB600678EF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81DF1D373050DA2E00A277C5 /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Friends/Friends.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -915,13 +935,15 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Friends/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Friends;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to capture photos.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app uses the photo library to select photos.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -942,9 +964,11 @@
 		};
 		818F24D43018AFB600678EF5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 81DF1D393050DA8200A277C5 /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Friends/Friends.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -952,13 +976,15 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Friends/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Friends;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to capture photos.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app uses the photo library to select photos.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
