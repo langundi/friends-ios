@@ -15,6 +15,7 @@ struct ReplyResponse: Identifiable, Decodable {
     let createdAt: Date
     let repliedByMe: Bool
     let username: String
+    let profilePicture: String?
     
     enum CodingKeys: String, CodingKey {
         case id, reply, username
@@ -22,5 +23,6 @@ struct ReplyResponse: Identifiable, Decodable {
         case postID = "post_id"
         case createdAt = "created_at"
         case repliedByMe = "replied_by_me"
+        case profilePicture = "profile_picture"
     }
 }

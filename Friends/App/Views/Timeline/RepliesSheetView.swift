@@ -30,9 +30,7 @@ struct RepliesSheetView: View {
                         LazyVStack(alignment: .leading, spacing: 24) {
                             ForEach(viewModel.replies) { reply in
                                 HStack(alignment: .top, spacing: 16) {
-                                    Circle()
-                                        .foregroundStyle(.gray.opacity(0.15))
-                                        .frame(maxWidth: 45, maxHeight: 45)
+                                    ProfilePictureView(imageURL: reply.profilePicture, size: .xsmall)
                                     
                                     VStack(alignment: .leading) {
                                         HStack(alignment: .top) {
