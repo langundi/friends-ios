@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct RepliesSheetView: View {
+    @Environment(AppRouter.self) var router
     @State private var reply: String = ""
+    @State private var selectedReply: ReplyResponse? = nil
+    @State private var showReplyToUserSheet: Bool = false
     @FocusState private var isReplyFieldFocused: Bool
     var viewModel: TimelineViewModel
     var postID: Int
@@ -33,27 +36,32 @@ struct RepliesSheetView: View {
                                     ProfilePictureView(imageURL: reply.profilePicture, size: .xsmall)
                                     
                                     VStack(alignment: .leading) {
-                                        HStack(alignment: .top) {
-                                            Text("@\(reply.username)")
-                                            
-                                            Spacer(minLength: 0)
-                                            
-                                            if reply.repliedByMe {
-                                                Menu("", systemImage: "ellipsis") {
-                                                    Button("Delete", systemImage: "trash") {
-                                                        Task {
-                                                            await viewModel.deleteReply(id: postID, replyID: reply.id)
-                                                            await viewModel.getReplies(id: postID)
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
+                                        Text("@\(reply.username)")
                                         
                                         Text(reply.reply)
                                             .multilineTextAlignment(.leading)
                                     }
+                                    
+                                    Spacer(minLength: 0)
+                                    
+                                    if reply.repliedByMe {
+                                        Menu("", systemImage: "ellipsis") {
+                                            Button("Delete", systemImage: "trash") {
+                                                Task {
+                                                    await viewModel.deleteReply(id: postID, replyID: reply.id)
+                                                    await viewModel.getReplies(id: postID)
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        Button {
+                                            selectedReply = reply
+                                        } label: {
+                                            Text("Reply")
+                                        }
+                                    }
                                 }
+                                
                             }
                         }
                         .padding(.horizontal)
@@ -90,7 +98,7 @@ struct RepliesSheetView: View {
                     
                     Button {
                         Task {
-                            await viewModel.replyPost(id: postID, reply: reply, receiverID: receiverID)
+                            await viewModel.replyPost(id: postID, reply: reply, receiverID: receiverID, postOwnerID: receiverID)
                             reply = ""
                             isReplyFieldFocused = false
                         }
@@ -105,6 +113,9 @@ struct RepliesSheetView: View {
                 if viewModel.isSheetLoading {
                     LoadingOverlay()
                 }
+            }
+            .sheet(item: $selectedReply) { reply in
+                ReplyToUserScreen(viewModel: viewModel, reply: reply, postOwnerID: receiverID)
             }
             .task {
                 await viewModel.getReplies(id: postID)

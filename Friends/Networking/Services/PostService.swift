@@ -69,6 +69,10 @@ final class PostService {
         try await client.request(endpoint: PostEndpoint.replyPost(id: postID, request: request))
     }
     
+    func replyUser(postID: Int, request: ReplyRequest) async throws -> ReplyResponse {
+        try await client.request(endpoint: PostEndpoint.replyUser(id: postID, request: request))
+    }
+    
     func deleteReply(replyID: Int, request: DeleteReplyRequest) async throws {
         try await client.requestVoid(endpoint: PostEndpoint.deleteReply(id: replyID, request: request))
     }

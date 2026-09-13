@@ -51,6 +51,7 @@
 		81458B7A303DDE070089469F /* ReplyResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81458B79303DDE070089469F /* ReplyResponses.swift */; };
 		814772B63041780D0070F130 /* ChangePasswordScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814772B53041780D0070F130 /* ChangePasswordScreen.swift */; };
 		814772B8304179450070F130 /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814772B7304179450070F130 /* ChangePasswordViewModel.swift */; };
+		815DC9B230556ABC00BBC879 /* ReplyToUserScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815DC9B130556ABC00BBC879 /* ReplyToUserScreen.swift */; };
 		815DCAA6301D9A4200AD470A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 815DCAA5301D9A4200AD470A /* Kingfisher */; };
 		815DCAA8301DA16F00AD470A /* TabRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815DCAA7301DA16F00AD470A /* TabRootView.swift */; };
 		815DCAAB301DA41E00AD470A /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815DCAAA301DA41E00AD470A /* ProfileScreen.swift */; };
@@ -163,6 +164,7 @@
 		81458B79303DDE070089469F /* ReplyResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyResponses.swift; sourceTree = "<group>"; };
 		814772B53041780D0070F130 /* ChangePasswordScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordScreen.swift; sourceTree = "<group>"; };
 		814772B7304179450070F130 /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
+		815DC9B130556ABC00BBC879 /* ReplyToUserScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyToUserScreen.swift; sourceTree = "<group>"; };
 		815DCAA7301DA16F00AD470A /* TabRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabRootView.swift; sourceTree = "<group>"; };
 		815DCAAA301DA41E00AD470A /* ProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		815DCAAC301DA4A100AD470A /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				816874673031A322000D7DCA /* PostView.swift */,
 				811645EE304F0AE7001A7888 /* PostScreen.swift */,
 				81458B73303D81210089469F /* RepliesSheetView.swift */,
+				815DC9B130556ABC00BBC879 /* ReplyToUserScreen.swift */,
 			);
 			path = Timeline;
 			sourceTree = "<group>";
@@ -699,6 +702,7 @@
 				81F0DCDD3036F706009074D0 /* ImageView.swift in Sources */,
 				810EE0253019F587005FED56 /* ToolbarButtonStyle.swift in Sources */,
 				818F25053018B2D000678EF5 /* AuthViewModel.swift in Sources */,
+				815DC9B230556ABC00BBC879 /* ReplyToUserScreen.swift in Sources */,
 				8168746E3031AF03000D7DCA /* TimelineStackView.swift in Sources */,
 				818F25093018B3F600678EF5 /* NetworkError.swift in Sources */,
 				818FFF5C30345E8A00D55DE4 /* FriendshipStatus.swift in Sources */,
@@ -930,7 +934,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Friends/Friends.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = LS68HMX5XZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -949,7 +953,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.langundi.Friends;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -971,7 +975,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Friends/Friends.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = LS68HMX5XZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -990,7 +994,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.langundi.Friends;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;

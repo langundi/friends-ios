@@ -18,6 +18,7 @@ enum PostEndpoint: Endpoint {
     case getPostReplies(id: Int)
     case likePost(id: Int, request: LikePostRequest)
     case replyPost(id: Int, request: ReplyRequest)
+    case replyUser(id: Int, request: ReplyRequest)
     case unlikePost(id: Int)
     case deleteReply(id: Int, request: DeleteReplyRequest)
     
@@ -54,6 +55,8 @@ enum PostEndpoint: Endpoint {
             return .post
         case .replyPost:
             return .post
+        case .replyUser:
+            return .post
             
         case .unlikePost:
             return .delete
@@ -87,6 +90,8 @@ enum PostEndpoint: Endpoint {
             return "/post/\(id)"
         case .replyPost(let id, _):
             return "/post/\(id)/reply"
+        case .replyUser(let id, _):
+            return "/post/\(id)/reply-user"
         case .unlikePost(let id):
             return "/post/\(id)/unlike"
         case .deleteReply(let id, _):
@@ -114,6 +119,8 @@ enum PostEndpoint: Endpoint {
         case .likePost(_, let like):
             return like
         case .replyPost(_, let reply):
+            return reply
+        case .replyUser(_, let reply):
             return reply
         case .deleteReply(_, let reply):
             return reply

@@ -15,7 +15,7 @@ struct ReplyResponse: Identifiable, Decodable {
     let createdAt: Date
     let repliedByMe: Bool
     let username: String
-    let profilePicture: String?
+    var profilePicture: String?
     
     enum CodingKeys: String, CodingKey {
         case id, reply, username
@@ -25,4 +25,9 @@ struct ReplyResponse: Identifiable, Decodable {
         case repliedByMe = "replied_by_me"
         case profilePicture = "profile_picture"
     }
+}
+
+extension ReplyResponse {
+    static let mockReply = ReplyResponse(id: 1, userID: 1, postID: 1, reply: "mock", createdAt: Date(), repliedByMe: false, username: "username", profilePicture: nil)
+    
 }

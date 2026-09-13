@@ -158,13 +158,14 @@ final class TimelineViewModel {
     /// - Parameters:
     ///   - id: Post ID.
     ///   - reply: Reply text.
-    func replyPost(id: Int, reply: String, receiverID: Int) async {
+    func replyPost(id: Int, reply: String, receiverID: Int, postOwnerID: Int) async {
         isSheetLoading = true
         defer { isSheetLoading = false }
         
         do {
-            let request = ReplyRequest(reply: reply, username: userStore.username, receiverID: receiverID)
-            let replyResult = try await replyStore.replyPost(id: id, request: request)
+            let request = ReplyRequest(reply: reply, username: userStore.username, receiverID: receiverID, postOwnerID: postOwnerID)
+            var replyResult = try await replyStore.replyPost(id: id, request: request)
+            replyResult.profilePicture = userStore.profilePicture
             replyStore.insert(replyResult)
             timelineStore.increaseReplyCount(postID: id)
             postStore.increaseReplyCount(postID: id)
@@ -178,6 +179,30 @@ final class TimelineViewModel {
         }
     }
     
+    /// Reply to a user.
+    /// - Parameters:
+    ///   - id: Post ID.
+    ///   - reply: Reply text.
+    func replyUser(id: Int, reply: String, receiverID: Int, postOwnerID: Int) async {
+        isSheetLoading = true
+        defer { isSheetLoading = false }
+        
+        do {
+            let request = ReplyRequest(reply: reply, username: userStore.username, receiverID: receiverID, postOwnerID: postOwnerID)
+            var replyResult = try await replyStore.replyUser(id: id, request: request)
+            replyResult.profilePicture = userStore.profilePicture
+            replyStore.insert(replyResult)
+            timelineStore.increaseReplyCount(postID: id)
+            postStore.increaseReplyCount(postID: id)
+        } catch let networkError as NetworkError {
+            AlertManager.shared.showAlert(title: "An error occured", message: networkError.message)
+            Logger.network.error("Error replying: \(networkError.message)")
+        } catch {
+            if error.isCancellation { return }
+            AlertManager.shared.showAlert(title: "An error occured", message: error.localizedDescription)
+            Logger.network.error("Error replying: \(error)")
+        }
+    }
     
     /// Delete reply from a post.
     /// - Parameters:
